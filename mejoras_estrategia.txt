@@ -1,0 +1,24 @@
+==========================================
+MEJORAS DE ESTRATEGIA - 2026-08-30 13:08 UTC
+==========================================
+
+=== RESULTADOS DE LOS PARCHES ===
+  elon-48h: FIXVAR anadido, FIXCAL anadido | SINTAXIS OK
+  elon-semanal: FIXVAR anadido, FIXCAL anadido | SINTAXIS OK
+  elon-mensual: FIXVAR anadido, FIXCAL anadido | SINTAXIS OK
+  zelenskyy: CUOTA_MINIMA: no encontrada, FIXVAR anadido, FIXCAL anadido | SINTAXIS OK
+
+=== REINICIANDO SERVICIOS ===
+  poly-elon: reiniciado
+  poly-semanal: reiniciado
+  poly-mensual: reiniciado
+  poly-zelenskyy: reiniciado
+
+=== ESTADO SERVICIOS ===
+  poly-elon: active
+  poly-semanal: active
+  poly-mensual: active
+  poly-zelenskyy: active
+
+=== VERIFICACION FIXVAR en primer log (zelenskyy, 10s) ===
+(sin mensajes FIXVAR/FIXCAL aun - normal, espera el proximo ciclo)
