@@ -1,0 +1,89 @@
+== 1. QUE HACE CADA SCRIPT (cabecera + operaciones clave) ==
+--- /root/backup_poly.sh ---
+#!/bin/bash
+# BACKUP POLY (compacto) - codigo+datos sin secretos, sube a GitHub
+REPO=/root/bots-repo
+BASE=/opt/polymarket
+DEST="$REPO/poly"
+mkdir -p "$DEST/codigo" "$DEST/datos"
+cp "$BASE"/*.py "$DEST/codigo/" 2>/dev/null
+for r in bot-polymarket-elon bot-polymarket-elon-semanal bot-polymarket-elon-mensual bot-polymarket-zelenskyy; do
+25:git pull --rebase origin 2>/dev/null
+26:git push origin HEAD 2>/dev/null && echo "OK: subido a GitHub." || echo "AVISO: push fallo"
+--- /root/backup_github.sh ---
+#!/bin/bash
+# Backup SEMANAL del CÓDIGO de los bots (bot-poly) a GitHub (repo privado).
+# Sube solo código y configs NO secretos. NUNCA: tokens, claves, sesiones,
+# bases de datos, Excel ni estado de trading.
+set -e
+TOKEN_FILE=/root/.gh_backup_token
+REPO_USER=lamegawi
+REPO_NAME=bot-trading-bitget-demo
+23:    git clone --quiet "$URL" .
+32:tar -C /opt/polymarket \
+36:    -cf - . | tar -C "$SNAP/polymarket" -xf -
+44:    tar -C "/opt/polymarket/$b" \
+52:        -cf - . | tar -C "$SNAP/bots/$b" -xf -
+64:# ---- commit y push ----
+71:    git push --quiet "$URL" "HEAD:$BRANCH"
+72:    echo "bot-poly: push OK ($STAMP)"
+--- /root/backup_cruzado.sh ---
+#!/bin/bash
+# Replica el último backup LOCAL de bot-poly al otro VPS (vm4), como copia doble.
+set -e
+DEST_HOST=root@49.13.84.168
+DEST_DIR=/root/backups-remoto/bot-poly
+ULTIMO=$(ls -t /root/backups/poly_*.tar.gz 2>/dev/null | head -1)
+[ -z "$ULTIMO" ] && { echo "no hay backup local aún"; exit 0; }
+ssh -i /root/.ssh/backup_cross -o StrictHostKeyChecking=no $DEST_HOST "mkdir -p $DEST_DIR"
+9:scp -i /root/.ssh/backup_cross -o StrictHostKeyChecking=no $ULTIMO $DEST_HOST:$DEST_DIR/
+
+== 2. TIMERS Y SERVICIOS DE BACKUP ACTUALES ==
+poly-backup-cruzado.service
+poly-backup-cruzado.timer
+poly-backup-github.service
+poly-backup-github.timer
+poly-backup-github.timer.bak
+poly-backup.service
+poly-backup.timer
+--- /etc/systemd/system/poly-backup-cruzado.timer ---
+[Unit]
+Description=Copia doble bot-poly->vm4 cada día (05:15)
+
+[Timer]
+OnCalendar=*-*-* 05:15:00 Europe/Madrid
+Persistent=true
+Unit=poly-backup-cruzado.service
+
+[Install]
+WantedBy=timers.target
+--- /etc/systemd/system/poly-backup-github.timer ---
+[Unit]
+Description=Backup semanal del código a GitHub (domingos)
+
+[Timer]
+OnCalendar=*-*-* 04:30:00 Europe/Madrid
+Persistent=true
+Unit=poly-backup-github.service
+
+[Install]
+WantedBy=timers.target
+--- /etc/systemd/system/poly-backup.timer ---
+[Unit]
+Description=Backup diario bot-poly (04:15 Madrid)
+
+[Timer]
+OnCalendar=*-*-* 04:15:00 Europe/Madrid
+Persistent=true
+Unit=poly-backup.service
+
+[Install]
+WantedBy=timers.target
+
+== 3. DONDE QUEDA GUARDADO LOCALMENTE (para rescatar sin GitHub) ==
+/var/log/poly-backup.log
+/root/backup_poly.sh
+/root/backup_poly.log
+
+== 4. REPO GITHUB DE BACKUPS: ESTADO ACTUAL ==
+(no encuentro /root/bots-backup)
