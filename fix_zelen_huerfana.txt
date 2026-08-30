@@ -1,0 +1,46 @@
+== 1. Limpiando lock caducado (agosto 21-28) ==
+Eliminada clave caducada: zelenskyy-of-tweets-august-21-august-28-2026|60-79
+Lock limpiado
+
+== 2. Adoptando posicion 160-179 en real_zelen.json ==
+Estado actual activa: {
+  "slug": "zelenskyy-of-tweets-august-28-september-4-2026",
+  "fecha": "2026-08-28",
+  "bin_titulo": "140-159",
+  "lo": 140,
+  "hi": 159,
+  "lado": "YES",
+  "precio": 0.046,
+  "cuota": 21.74,
+  "p_modelo": 0.4788,
+  "paso": 3,
+  "stake": 0.78,
+  "motor": "motor_v2_ev_escalones_tope10",
+  "ev": 10.409,
+  "size": 17,
+  "parcial": true,
+  "pendiente": false,
+  "token_id": "36200638224973682994147204189011164268325230880529345999336333166319369378580",
+  "nota": "FIXZEL: restaurada tras limpieza - orden parcial 17 shares x 0.046 = 0.78 reales",
+  "ventana_fin": "2026-09-04T16:00:00+00:00"
+}
+Saldo: 759.96
+
+CONCLUSION: la unica forma de silenciar permanentemente sin cambiar
+el codigo de check_integral es parchear coinciden() o posiciones_abiertas()
+
+== 3. Solucion: parchear check_integral para excluir posiciones en lock ==
+PARCHE OK: check_integral ahora respeta el lock para huerfanas
+
+== 4. Verificacion sintaxis check_integral ==
+SINTAXIS OK
+
+== 5. Test check integral zelenskyy ==
+✅ *TEST DIARIO ZELENSKYY: TODO OK*
+30/08/2026 14:51
+
+• 1 bot(s) + telegram activos
+• IP de salida 85.85.41.76 · CLOB OK
+• Sin posiciones fantasma · sin huérfanas
+telegram enviado: False
+resultado: OK
