@@ -1,0 +1,186 @@
+== ESTRUCTURA /opt/polymarket ==
+apuestas_compartidas.json
+apuestas_compartidas.json.bak_20260822_044155
+_backup_motor_v1
+balance_bot.json
+bot-polymarket-elon
+bot-polymarket-elon-mensual
+bot-polymarket-elon-mensual-v2
+bot-polymarket-elon-semanal
+bot-polymarket-elon-semanal-v2
+bot-polymarket-elon-v2
+bot-polymarket-zelenskyy
+check_abiertas2.py
+check_abiertas.py
+check_estado.py
+check_final.py
+check_ganadoras.py
+check_integral.py
+check_integral.py.bakZB
+check_ordenes.py
+check_posiciones.py
+check_salud.py
+check_ventanas2.py
+check_ventanas_ahora.py
+check_ventanas.py
+cierres_anticipados.json
+gestionar_posiciones.py
+motores
+motores.json
+motores.py
+poly_telegram_bot.py
+poly_telegram_zelen.py
+poly_tg_offset.txt
+posiciones_reales.py
+proxy_pc.bat
+proxy_pc.py
+salud_estado.json
+salud_estado_zelen.json
+zelen_tg_offset.txt
+
+== ESTRUCTURA bot-polymarket-elon ==
+avisos_cooldown.json
+bot_completo.zip
+bot.log
+bot.py
+carpeta del bot.txt
+chequear_cuenta.py
+compara_senal.py
+config.json
+config.json.bak_20260822_043610
+config_real.json.example
+construir_serie.py
+datos_ejemplo.csv
+datos_elon.csv
+datos_raw
+diagnostico.py
+estado_bot.json
+estado_tweets.json
+Estrategia_Polymarket_Elon_Musk.html
+excel_historial.py
+fuentes_serie.json
+generar_excel_resultados.py
+generar_xlsx.py
+GUIA_24H_GRATIS.md
+GUIA_24H_PASO_A_PASO.md
+GUIA_DINERO_REAL.md
+Historial_Operaciones.xlsx
+INICIAR.md
+mercado_activo.json
+mercado_polymarket.py
+notificar.py
+operar_real.py
+papel.py
+probar_orden.py
+__pycache__
+real.json
+recoger_tweets.py
+recoger_tweets.py.bakT
+recoger_tweets.py.bakT2
+recoger_tweets.py.bakT3
+resultados_real.csv
+resultados_simulacion.csv
+saldo_ntfy
+saldo_ntfy.py
+senal.py
+senal.py.bakS
+senal_vivo.py
+senal_vivo.py.bak_20260819103324
+simulador.py
+ventanas_vistas.json
+
+== BUSCANDO trump o truth-social ==
+
+== recoger_tweets.py (primeras 60 lineas) ==
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+RECOGIDA AUTOMÁTICA DE TWEETS DE @elonmusk — para mercados Polymarket
+=====================================================================
+Recoge la actividad de @elonmusk (posts + quote posts + reposts;
+SIN replies, igual que las reglas de resolución de los mercados
+«Elon Musk # tweets») y genera datos_elon.csv con el formato que
+espera senal.py (fecha,tweets) en días COMPLETOS (hora ET).
+
+FUENTES (por orden de preferencia):
+  1) x.com renderizado vía r.jina.ai (timestamps EXACTOS de posts Y
+     reposts — la hora que se ve en el perfil es la del repost).
+     Sin API key. ~15-20 tweets por pasada: en modo --loop se acumula.
+  2) xcancel.com (espejo Nitter, página 1) — respaldo si jina falla.
+     Ojo: los reposts muestran la fecha del tweet ORIGINAL.
+  3) X API v2 oficial (exacta, con paginación completa):
+     export X_BEARER_TOKEN=...   (plan Basic $100/mes para conteo
+     completo ~60k posts/mes; free tier insuficiente para esto)
+
+USO:
+  python3 recoger_tweets.py --dias 30              # pasada única
+  python3 recoger_tweets.py --resumen              # conteos diarios + métricas
+  python3 recoger_tweets.py --loop --intervalo 20  # continuo (recomendado)
+  python3 recoger_tweets.py --manual 2026-08-08 35 # corregir un día a mano
+  python3 recoger_tweets.py --limpiar              # borrar datos y empezar de cero
+
+CRON sugerido (1 vez al día basta para la señal del día):
+  0 12 * * * cd /ruta/estrategia_elon_tweets && python3 recoger_tweets.py --dias 30 >> recoger.log 2>&1
+"""
+import argparse
+import csv
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
+
+try:
+    import mercado_polymarket as mp
+except ImportError:
+    mp = None
+
+# ----------------------------------------------------------------------------
+SCREEN = "elonmusk"
+try:
+    ET = ZoneInfo("America/New_York")
+except Exception:
+    # Windows sin tzdata: fallback a hora fija de verano (UTC-4)
+    from datetime import timedelta
+    from datetime import timezone as _tz
+    ET = _tz(timedelta(hours=-4), name="EDT")
+CSV = "datos_elon.csv"
+ESTADO = "estado_tweets.json"
+RAW_DIR = "datos_raw"
+JINA_X = f"https://r.jina.ai/https://x.com/{SCREEN}"
+JINA_TW = f"https://r.jina.ai/https://twitter.com/{SCREEN}"
+
+== notificar.py (tokens y config) ==
+4:NOTIFICAR — avisos al móvil (ntfy.sh / Telegram)
+9:  1) ntfy.sh  ★ RECOMENDADO (gratis, sin registro, app iOS/Android)
+11:     - En el móvil: instala la app "ntfy" y suscríbete a ese tema.
+13:     - Crea un bot con @BotFather y copia el token.
+14:     - Consigue tu chat_id (p. ej. @userinfobot).
+30:import saldo_ntfy
+45:    """Carga config.json o lo crea con un tema ntfy aleatorio."""
+49:            if cfg.get("ntfy", {}).get("topic"):
+55:    cfg = {"ntfy": {"topic": tema, "token": None},
+56:           "telegram": {"token": "", "chat_id": ""},
+72:    # ------------------------------ ntfy.sh
+73:    nt = cfg.get("ntfy") or {}
+76:               f"https://ntfy.sh/{nt['topic']}"]
+83:        if nt.get("token"):
+84:            cmd += ["-H", f"Authorization: Bearer {nt['token']}"]
+89:                print(f"  [ntfy] FALLO al enviar (rc={r.returncode}): {r.stderr[:200]}")
+90:            resultados.append(("ntfy", ok))
+92:            print(f"  [ntfy] ERROR al enviar: {e}")
+93:            resultados.append(("ntfy", False))
+97:    if tg.get("token") and tg.get("chat_id"):
+100:               f"https://api.telegram.org/bot{tg['token']}/sendMessage",
+101:               "--data-urlencode", f"chat_id={tg['chat_id']}",
+121:        f"{saldo_ntfy.saldo_real_texto()}"
+140:        f"{saldo_ntfy.saldo_real_texto()}"
+149:    nt = cfg.get("ntfy") or {}
+151:        partes.append(f"ntfy → {nt['topic']}")
+153:    if tg.get("token") and tg.get("chat_id"):
+263:            f"{saldo_ntfy.saldo_real_texto()}"
+344:              f"{saldo_ntfy.saldo_real_texto()}",
+413:    ap.add_argument("--topic", help="fijar tema ntfy manualmente")
