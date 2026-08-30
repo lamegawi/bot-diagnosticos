@@ -1,0 +1,11 @@
+== timer instalado ==
+NEXT                            LEFT LAST PASSED UNIT                 ACTIVATES
+Sun 2026-08-30 14:00:00 UTC 1h 46min -         - poly-backup-2h.timer poly-backup-github.service
+
+1 timers listed.
+Pass --all to see loaded but inactive timers, too.
+
+== los 3 timers originales, intactos ==
+poly-backup.timer: enabled
+poly-backup-github.timer: enabled
+poly-backup-cruzado.timer: enabled
