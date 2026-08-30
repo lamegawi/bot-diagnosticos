@@ -1,14 +1,14 @@
 ###############################################
-# DIAGNOSTICO POLYMARKET - Sun Aug 30 11:33:40 AM UTC 2026
+# DIAGNOSTICO POLYMARKET - Sun Aug 30 12:36:25 PM UTC 2026
 ###############################################
 
 ===== 1. SISTEMA =====
-Sun Aug 30 11:33:40 AM UTC 2026
- 11:33:40 up 3 days, 19:22,  4 users,  load average: 0.01, 0.05, 0.01
+Sun Aug 30 12:36:25 PM UTC 2026
+ 12:36:25 up 3 days, 20:25,  2 users,  load average: 0.04, 0.08, 0.06
 bot-poly
-               Local time: Sun 2026-08-30 11:33:40 UTC
-           Universal time: Sun 2026-08-30 11:33:40 UTC
-                 RTC time: Sun 2026-08-30 11:33:40
+               Local time: Sun 2026-08-30 12:36:25 UTC
+           Universal time: Sun 2026-08-30 12:36:25 UTC
+                 RTC time: Sun 2026-08-30 12:36:25
                 Time zone: Etc/UTC (UTC, +0000)
 
 ===== 2. SERVICIOS Y TIMERS =====
@@ -19,29 +19,29 @@ poly-semanal: active
 poly-telegram: active
 poly-telegram-zelen: active
 poly-zelenskyy: active
-Sun 2026-08-30 11:36:41 UTC  3min 0s Sun 2026-08-30 11:26:41 UTC     6min ago poly-salud-zelen.timer         poly-salud-zelen.service
-Sun 2026-08-30 11:36:41 UTC  3min 0s Sun 2026-08-30 11:26:41 UTC     6min ago poly-salud.timer               poly-salud.service
-Sun 2026-08-30 11:39:37 UTC     5min Sun 2026-08-30 11:09:37 UTC    24min ago poly-fantasmas.timer           poly-fantasmas.service
-Sun 2026-08-30 11:42:41 UTC     9min Sun 2026-08-30 11:12:41 UTC    20min ago poly-fantasmas-zelen.timer     poly-fantasmas-zelen.service
-Sun 2026-08-30 19:00:00 UTC       7h Sun 2026-08-30 07:00:11 UTC 4h 33min ago poly-test-diario.timer         poly-test-diario.service
-Sun 2026-08-30 19:05:00 UTC       7h Sun 2026-08-30 07:05:17 UTC 4h 28min ago poly-test-diario-zelen.timer   poly-test-diario-zelen.service
-Sun 2026-08-30 20:00:00 UTC       8h Sun 2026-08-30 06:00:11 UTC 5h 33min ago poly-salud-diario.timer        poly-salud-diario.service
-Mon 2026-08-31 02:15:00 UTC      14h Sun 2026-08-30 02:15:21 UTC       9h ago poly-backup.timer              poly-backup.service
+Sun 2026-08-30 12:37:31 UTC  1min 6s Sun 2026-08-30 12:27:31 UTC     8min ago poly-salud-zelen.timer         poly-salud-zelen.service
+Sun 2026-08-30 12:37:31 UTC  1min 6s Sun 2026-08-30 12:27:31 UTC     8min ago poly-salud.timer               poly-salud.service
+Sun 2026-08-30 12:39:41 UTC 3min 16s Sun 2026-08-30 12:09:41 UTC    26min ago poly-fantasmas.timer           poly-fantasmas.service
+Sun 2026-08-30 12:43:03 UTC     6min Sun 2026-08-30 12:13:03 UTC    23min ago poly-fantasmas-zelen.timer     poly-fantasmas-zelen.service
+Sun 2026-08-30 14:00:00 UTC 1h 23min -                                      - poly-backup-2h.timer           poly-backup-github.service
+Sun 2026-08-30 19:00:00 UTC       6h Sun 2026-08-30 07:00:11 UTC 5h 36min ago poly-test-diario.timer         poly-test-diario.service
+Sun 2026-08-30 19:05:00 UTC       6h Sun 2026-08-30 07:05:17 UTC 5h 31min ago poly-test-diario-zelen.timer   poly-test-diario-zelen.service
+Sun 2026-08-30 20:00:00 UTC       7h Sun 2026-08-30 06:00:11 UTC       6h ago poly-salud-diario.timer        poly-salud-diario.service
 
 ===== 3. PROCESOS PYTHON =====
 root         833  0.0  0.5 109696 23312 ?        Ssl  Aug26   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
-root      126168  0.0  1.5  72568 61700 ?        Ss   Aug28   0:38 /usr/bin/python3 /opt/polymarket/poly_telegram_bot.py
-root      126172  0.0  1.6  74088 63228 ?        Ss   Aug28   0:38 /usr/bin/python3 /opt/polymarket/poly_telegram_zelen.py
-root      126365  0.0  1.6 184236 64960 ?        Ssl  Aug28   1:37 /usr/bin/python3 bot.py --loop --intervalo 5 --excel --modo real
+root      126168  0.0  1.5  72568 61700 ?        Ss   Aug28   0:39 /usr/bin/python3 /opt/polymarket/poly_telegram_bot.py
+root      126172  0.0  1.6  74088 63228 ?        Ss   Aug28   0:39 /usr/bin/python3 /opt/polymarket/poly_telegram_zelen.py
+root      126365  0.0  1.6 184236 64960 ?        Ssl  Aug28   1:39 /usr/bin/python3 bot.py --loop --intervalo 5 --excel --modo real
 root      126367  0.0  1.5  72540 61688 ?        Ss   Aug28   0:06 /usr/bin/python3 /opt/polymarket/gestionar_posiciones.py --loop 5
-root      209945  0.0  2.1 206316 84816 ?        Ssl  Aug29   0:46 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
-root      209959  0.0  2.1 206228 84920 ?        Ssl  Aug29   0:44 /usr/bin/python3 bot_mensual.py --loop --intervalo 5 --excel --modo real
-root      279158  0.0  2.2 212312 88284 ?        Ssl  06:35   0:14 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
+root      209945  0.0  2.1 206316 84816 ?        Ssl  Aug29   0:47 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
+root      209959  0.0  2.1 206228 84920 ?        Ssl  Aug29   0:46 /usr/bin/python3 bot_mensual.py --loop --intervalo 5 --excel --modo real
+root      279158  0.0  2.2 212312 88316 ?        Ssl  06:35   0:17 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
 
 ===== 4. RECOGIDA DE TWEETS =====
 parche v3 (x-no-cache): 1
 parche v2 (x_hasta):    3
-estado_tweets actualizado: 2026-08-30T11:29:38.975702 | tweets unicos: 613
+estado_tweets actualizado: 2026-08-30T12:32:50.653412 | tweets unicos: 613
 --- datos_elon.csv (ultimos 40 dias) ---
 fecha,tweets
 2025-01-24,1
@@ -176,16 +176,16 @@ fecha,tweets
 2026-08-28,9
 2026-08-29,11
 --- ultimas recogidas (jina-tw en bot.log) ---
-[2026-08-30 06:24:58 EDT]       · jina-tw: 5 items
-[2026-08-30 06:31:59 EDT]       · jina-tw: 5 items
-[2026-08-30 06:38:56 EDT]       · jina-tw: 5 items
-[2026-08-30 06:46:22 EDT]       · jina-tw: 5 items
-[2026-08-30 06:53:24 EDT]       · jina-tw: 5 items
-[2026-08-30 07:00:19 EDT]       · jina-tw: 5 items
-[2026-08-30 07:07:15 EDT]       · jina-tw: 5 items
-[2026-08-30 07:14:15 EDT]       · jina-tw: 5 items
-[2026-08-30 07:21:11 EDT]       · jina-tw: 5 items
 [2026-08-30 07:28:08 EDT]       · jina-tw: 5 items
+[2026-08-30 07:35:07 EDT]       · jina-tw: 5 items
+[2026-08-30 07:42:06 EDT]       · jina-tw: 5 items
+[2026-08-30 07:49:03 EDT]       · jina-tw: 5 items
+[2026-08-30 07:56:01 EDT]       · jina-tw: 5 items
+[2026-08-30 08:02:55 EDT]       · jina-tw: 5 items
+[2026-08-30 08:09:53 EDT]       · jina-tw: 5 items
+[2026-08-30 08:16:55 EDT]       · jina-tw: 5 items
+[2026-08-30 08:23:57 EDT]       · jina-tw: 5 items
+[2026-08-30 08:31:22 EDT]       · jina-tw: 5 items
 
 ===== 5. MOTOR EMPIRICO (senal en vivo) =====
 parche SENAL-EMP: 1
@@ -368,14 +368,14 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 }
 --- /opt/polymarket/bot-polymarket-elon/mercado_activo.json ---
 {
- "actualizado": "2026-08-30T11:33:46.591413+00:00",
+ "actualizado": "2026-08-30T12:36:30.812342+00:00",
  "mercados": [
   {
    "id": "921547",
    "titulo": "Elon Musk # tweets August 29 - August 31, 2026?",
    "slug": "elon-musk-of-tweets-august-29-august-31-2026",
    "cerrado": false,
-   "volumen": 224311.719614,
+   "volumen": 228570.90078899998,
    "endDate": "2026-08-31T16:00:00Z",
    "inicio_iso": "2026-08-29T12:00:00-04:00",
    "fin_iso": "2026-08-31T12:00:00-04:00",
@@ -386,51 +386,51 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
      "titulo": "<40",
      "lo": 0,
      "hi": 39,
-     "precio_yes": 0.1,
-     "precio_no": 0.9,
-     "cuota_yes": 10.0,
-     "cuota_no": 1.1111111111111112,
-     "volumen": 47926.16387800001
+     "precio_yes": 0.115,
+     "precio_no": 0.885,
+     "cuota_yes": 8.695652173913043,
+     "cuota_no": 1.1299435028248588,
+     "volumen": 49829.99387800001
     },
     {
      "titulo": "40-64",
      "lo": 40,
      "hi": 64,
-     "precio_yes": 0.675,
-     "precio_no": 0.325,
-     "cuota_yes": 1.4814814814814814,
-     "cuota_no": 3.0769230769230775,
-     "volumen": 29255.283101000008
+     "precio_yes": 0.68,
+     "precio_no": 0.32,
+     "cuota_yes": 1.4705882352941175,
+     "cuota_no": 3.1250000000000004,
+     "volumen": 29826.198979000008
     },
     {
      "titulo": "65-89",
      "lo": 65,
      "hi": 89,
-     "precio_yes": 0.195,
-     "precio_no": 0.805,
-     "cuota_yes": 5.128205128205128,
-     "cuota_no": 1.2422360248447206,
-     "volumen": 34712.631711
+     "precio_yes": 0.165,
+     "precio_no": 0.835,
+     "cuota_yes": 6.0606060606060606,
+     "cuota_no": 1.1976047904191618,
+     "volumen": 34994.63171100001
     },
     {
      "titulo": "90-114",
      "lo": 90,
      "hi": 114,
-     "precio_yes": 0.0275,
-     "precio_no": 0.9725,
-     "cuota_yes": 36.36363636363637,
-     "cuota_no": 1.0282776349614395,
-     "volumen": 39203.62689099999
+     "precio_yes": 0.0265,
+     "precio_no": 0.9735,
+     "cuota_yes": 37.735849056603776,
+     "cuota_no": 1.027221366204417,
+     "volumen": 39607.786891
     },
     {
      "titulo": "115-139",
      "lo": 115,
      "hi": 139,
-     "precio_yes": 0.0055,
-     "precio_no": 0.9945,
-     "cuota_yes": 181.81818181818184,
-     "cuota_no": 1.0055304172951232,
-     "volumen": 40494.376426999996
+     "precio_yes": 0.0085,
+     "precio_no": 0.9915,
+     "cuota_yes": 117.6470588235294,
+     "cuota_no": 1.0085728693898133,
+     "volumen": 42217.146427
     },
     {
      "titulo": "140-164",
@@ -440,7 +440,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
      "precio_no": 0.9985,
      "cuota_yes": 666.6666666666666,
      "cuota_no": 1.0015022533800702,
-     "volumen": 12784.1715
+     "volumen": 12784.171499999999
     },
     {
      "titulo": "165-189",
@@ -450,7 +450,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
      "precio_no": 0.9995,
      "cuota_yes": 2000.0,
      "cuota_no": 1.0005002501250624,
-     "volumen": 11912.062442
+     "volumen": 11912.062442000002
     },
     {
      "titulo": "190-214",
@@ -460,7 +460,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
      "precio_no": 0.9995,
      "cuota_yes": 2000.0,
      "cuota_no": 1.0005002501250624,
-     "volumen": 4937.914000000001
+     "volumen": 4937.914
     },
     {
      "titulo": "215-239",
@@ -489,7 +489,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
    "titulo": "Elon Musk # tweets in August 2026?",
    "slug": "elon-musk-of-tweets-august-2026",
    "cerrado": false,
-   "volumen": 511854.85421200003,
+   "volumen": 512265.714212,
    "endDate": "2026-09-01T04:00:00Z",
    "inicio_iso": "2026-08-01T00:00:00-04:00",
    "fin_iso": "2026-09-01T00:00:00-04:00",
@@ -601,8 +601,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
      "lo": 200,
      "hi": 219,
      "precio_yes": 0.0,
-     "precio_no": 1.0,
-     "cu
+     "precio_no":
 --- estado de cada bot (estado*.json) ---
 --- /opt/polymarket/bot-polymarket-elon/estado_bot.json ---
 {
@@ -610,7 +609,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 }
 --- /opt/polymarket/bot-polymarket-elon/estado_tweets.json ---
 {
- "actualizado": "2026-08-30T11:29:38.975702",
+ "actualizado": "2026-08-30T12:32:50.653412",
  "tweets": {
   "2085377974396752305": {
    "id": "2085377974396752305",
@@ -700,7 +699,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 }
 --- /opt/polymarket/bot-polymarket-elon-mensual/estado_tweets.json ---
 {
- "actualizado": "2026-08-30T11:29:22.562536",
+ "actualizado": "2026-08-30T12:32:25.187448",
  "tweets": {
   "2085377974396752305": {
    "id": "2085377974396752305",
@@ -880,7 +879,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 }
 --- /opt/polymarket/bot-polymarket-elon-semanal/estado_tweets.json ---
 {
- "actualizado": "2026-08-30T11:29:23.905633",
+ "actualizado": "2026-08-30T12:32:22.021490",
  "tweets": {
   "2085377974396752305": {
    "id": "2085377974396752305",
@@ -1150,7 +1149,7 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 }
 --- /opt/polymarket/bot-polymarket-zelenskyy/estado_tweets_zelen.json ---
 {
- "actualizado": "2026-08-30T11:30:20.345145",
+ "actualizado": "2026-08-30T12:35:15.732429",
  "tweets": {
   "2090497391921135677": {
    "id": "2090497391921135677",
@@ -3549,132 +3548,6 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 
 ===== 14. LOGS =====
 --- bot.log (elon, ultimas 150 lineas) ---
-[2026-08-30 06:18:07 EDT]       · jina-x: 5 items
-[2026-08-30 06:19:27 EDT]       · nitter: sin items
-[2026-08-30 06:19:27 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:19:27 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:19:49 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:19:49 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:19:49 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:19:49 EDT] 4/4 · Estado:
-[2026-08-30 06:19:49 EDT] Pasada completada en 120.7 s
-[2026-08-30 06:19:49 EDT] Próxima pasada en 5 min…
-[2026-08-30 06:24:49 EDT] ==============================================================
-[2026-08-30 06:24:49 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 06:24:49 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 06:24:58 EDT]       · jina-tw: 5 items
-[2026-08-30 06:25:09 EDT]       · jina-x: 5 items
-[2026-08-30 06:26:29 EDT]       · nitter: sin items
-[2026-08-30 06:26:29 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:26:29 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:26:51 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:26:51 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:26:51 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:26:51 EDT] 4/4 · Estado:
-[2026-08-30 06:26:51 EDT] Pasada completada en 121.9 s
-[2026-08-30 06:26:51 EDT] Próxima pasada en 5 min…
-[2026-08-30 06:31:51 EDT] ==============================================================
-[2026-08-30 06:31:51 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 06:31:51 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 06:31:59 EDT]       · jina-tw: 5 items
-[2026-08-30 06:32:06 EDT]       · jina-x: 5 items
-[2026-08-30 06:33:26 EDT]       · nitter: sin items
-[2026-08-30 06:33:26 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:33:26 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:33:47 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:33:47 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:33:47 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:33:47 EDT] 4/4 · Estado:
-[2026-08-30 06:33:47 EDT] Pasada completada en 116.7 s
-[2026-08-30 06:33:47 EDT] Próxima pasada en 5 min…
-[2026-08-30 06:38:47 EDT] ==============================================================
-[2026-08-30 06:38:47 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 06:38:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 06:38:56 EDT]       · jina-tw: 5 items
-[2026-08-30 06:39:04 EDT]       · jina-x: 5 items
-[2026-08-30 06:40:24 EDT]       · nitter: sin items
-[2026-08-30 06:40:24 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:40:24 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:40:45 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:40:45 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:40:46 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:40:46 EDT] 4/4 · Estado:
-[2026-08-30 06:40:46 EDT] Pasada completada en 118.1 s
-[2026-08-30 06:40:46 EDT] Próxima pasada en 5 min…
-[2026-08-30 06:45:46 EDT] ==============================================================
-[2026-08-30 06:45:46 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 06:45:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 06:46:22 EDT]       · jina-tw: 5 items
-[2026-08-30 06:46:33 EDT]       · jina-x: 5 items
-[2026-08-30 06:47:53 EDT]       · nitter: sin items
-[2026-08-30 06:47:53 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:47:53 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:48:13 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:48:13 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:48:13 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:48:13 EDT] 4/4 · Estado:
-[2026-08-30 06:48:13 EDT] Pasada completada en 147.5 s
-[2026-08-30 06:48:13 EDT] Próxima pasada en 5 min…
-[2026-08-30 06:53:13 EDT] ==============================================================
-[2026-08-30 06:53:13 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 06:53:13 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 06:53:24 EDT]       · jina-tw: 5 items
-[2026-08-30 06:53:33 EDT]       · jina-x: 5 items
-[2026-08-30 06:54:53 EDT]       · nitter: sin items
-[2026-08-30 06:54:53 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 06:54:53 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 06:55:13 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 06:55:13 EDT] 3/4 · Trading REAL…
-[2026-08-30 06:55:13 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 06:55:13 EDT] 4/4 · Estado:
-[2026-08-30 06:55:13 EDT] Pasada completada en 119.7 s
-[2026-08-30 06:55:13 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:00:13 EDT] ==============================================================
-[2026-08-30 07:00:13 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 07:00:13 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:00:19 EDT]       · jina-tw: 5 items
-[2026-08-30 07:00:25 EDT]       · jina-x: 5 items
-[2026-08-30 07:01:45 EDT]       · nitter: sin items
-[2026-08-30 07:01:45 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 07:01:45 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:02:05 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:02:05 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:02:05 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 07:02:05 EDT] 4/4 · Estado:
-[2026-08-30 07:02:05 EDT] Pasada completada en 112.4 s
-[2026-08-30 07:02:05 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:07:05 EDT] ==============================================================
-[2026-08-30 07:07:05 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 07:07:05 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:07:15 EDT]       · jina-tw: 5 items
-[2026-08-30 07:07:24 EDT]       · jina-x: 5 items
-[2026-08-30 07:08:44 EDT]       · nitter: sin items
-[2026-08-30 07:08:44 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 07:08:44 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:09:04 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:09:04 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:09:04 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 07:09:04 EDT] 4/4 · Estado:
-[2026-08-30 07:09:04 EDT] Pasada completada en 119.2 s
-[2026-08-30 07:09:04 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:14:04 EDT] ==============================================================
-[2026-08-30 07:14:04 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 07:14:04 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:14:15 EDT]       · jina-tw: 5 items
-[2026-08-30 07:14:23 EDT]       · jina-x: 5 items
-[2026-08-30 07:15:44 EDT]       · nitter: sin items
-[2026-08-30 07:15:44 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
-[2026-08-30 07:15:44 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:16:03 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:16:03 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:16:03 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
-[2026-08-30 07:16:03 EDT] 4/4 · Estado:
-[2026-08-30 07:16:03 EDT] Pasada completada en 118.9 s
-[2026-08-30 07:16:03 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:21:03 EDT] ==============================================================
-[2026-08-30 07:21:03 EDT] PASADA COMPLETA  ·  MODO: REAL
-[2026-08-30 07:21:03 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:21:11 EDT]       · jina-tw: 5 items
 [2026-08-30 07:21:20 EDT]       · jina-x: 5 items
 [2026-08-30 07:22:41 EDT]       · nitter: sin items
 [2026-08-30 07:22:41 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
@@ -3699,131 +3572,257 @@ carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '
 [2026-08-30 07:29:58 EDT] 4/4 · Estado:
 [2026-08-30 07:29:58 EDT] Pasada completada en 117.6 s
 [2026-08-30 07:29:58 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:34:58 EDT] ==============================================================
+[2026-08-30 07:34:58 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:34:58 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:35:07 EDT]       · jina-tw: 5 items
+[2026-08-30 07:35:16 EDT]       · jina-x: 5 items
+[2026-08-30 07:36:37 EDT]       · nitter: sin items
+[2026-08-30 07:36:37 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:36:37 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:36:57 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:36:57 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:36:57 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:36:57 EDT] 4/4 · Estado:
+[2026-08-30 07:36:57 EDT] Pasada completada en 119.2 s
+[2026-08-30 07:36:57 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:41:57 EDT] ==============================================================
+[2026-08-30 07:41:57 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:41:57 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:42:06 EDT]       · jina-tw: 5 items
+[2026-08-30 07:42:14 EDT]       · jina-x: 5 items
+[2026-08-30 07:43:35 EDT]       · nitter: sin items
+[2026-08-30 07:43:35 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:43:35 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:43:55 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:43:55 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:43:55 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:43:55 EDT] 4/4 · Estado:
+[2026-08-30 07:43:55 EDT] Pasada completada en 117.5 s
+[2026-08-30 07:43:55 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:48:55 EDT] ==============================================================
+[2026-08-30 07:48:55 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:48:55 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:49:03 EDT]       · jina-tw: 5 items
+[2026-08-30 07:49:11 EDT]       · jina-x: 5 items
+[2026-08-30 07:50:32 EDT]       · nitter: sin items
+[2026-08-30 07:50:32 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:50:32 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:50:51 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:50:51 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:50:51 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:50:51 EDT] 4/4 · Estado:
+[2026-08-30 07:50:51 EDT] Pasada completada en 116.6 s
+[2026-08-30 07:50:51 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:55:51 EDT] ==============================================================
+[2026-08-30 07:55:51 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:55:51 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:56:01 EDT]       · jina-tw: 5 items
+[2026-08-30 07:56:05 EDT]       · jina-x: 5 items
+[2026-08-30 07:57:26 EDT]       · nitter: sin items
+[2026-08-30 07:57:26 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:57:26 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:57:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:57:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:57:46 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:57:46 EDT] 4/4 · Estado:
+[2026-08-30 07:57:46 EDT] Pasada completada en 114.4 s
+[2026-08-30 07:57:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:02:46 EDT] ==============================================================
+[2026-08-30 08:02:46 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 08:02:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:02:55 EDT]       · jina-tw: 5 items
+[2026-08-30 08:02:59 EDT]       · jina-x: 5 items
+[2026-08-30 08:04:20 EDT]       · nitter: sin items
+[2026-08-30 08:04:20 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 08:04:20 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:04:44 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:04:44 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:04:44 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 08:04:44 EDT] 4/4 · Estado:
+[2026-08-30 08:04:44 EDT] Pasada completada en 118.0 s
+[2026-08-30 08:04:44 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:09:44 EDT] ==============================================================
+[2026-08-30 08:09:44 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 08:09:44 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:09:53 EDT]       · jina-tw: 5 items
+[2026-08-30 08:10:02 EDT]       · jina-x: 5 items
+[2026-08-30 08:11:22 EDT]       · nitter: sin items
+[2026-08-30 08:11:22 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 08:11:22 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:11:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:11:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:11:46 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 08:11:46 EDT] 4/4 · Estado:
+[2026-08-30 08:11:46 EDT] Pasada completada en 122.5 s
+[2026-08-30 08:11:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:16:46 EDT] ==============================================================
+[2026-08-30 08:16:46 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 08:16:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:16:55 EDT]       · jina-tw: 5 items
+[2026-08-30 08:17:04 EDT]       · jina-x: 5 items
+[2026-08-30 08:18:24 EDT]       · nitter: sin items
+[2026-08-30 08:18:24 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 08:18:24 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:18:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:18:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:18:46 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 08:18:46 EDT] 4/4 · Estado:
+[2026-08-30 08:18:46 EDT] Pasada completada en 119.9 s
+[2026-08-30 08:18:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:23:46 EDT] ==============================================================
+[2026-08-30 08:23:46 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 08:23:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:23:57 EDT]       · jina-tw: 5 items
+[2026-08-30 08:24:04 EDT]       · jina-x: 5 items
+[2026-08-30 08:25:25 EDT]       · nitter: sin items
+[2026-08-30 08:25:25 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 08:25:25 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:25:45 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:25:45 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:25:45 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 08:25:45 EDT] 4/4 · Estado:
+[2026-08-30 08:25:45 EDT] Pasada completada en 118.8 s
+[2026-08-30 08:25:45 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:30:45 EDT] ==============================================================
+[2026-08-30 08:30:45 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 08:30:45 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:31:22 EDT]       · jina-tw: 5 items
+[2026-08-30 08:31:30 EDT]       · jina-x: 5 items
+[2026-08-30 08:32:50 EDT]       · nitter: sin items
+[2026-08-30 08:32:50 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 08:32:50 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:33:10 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:33:10 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:33:10 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 08:33:10 EDT] 4/4 · Estado:
+[2026-08-30 08:33:10 EDT] Pasada completada en 145.2 s
+[2026-08-30 08:33:10 EDT] Próxima pasada en 5 min…
 --- logs de bot-polymarket-elon-semanal ---
 [/opt/polymarket/bot-polymarket-elon-semanal/bot_semanal.log]
-[2026-08-30 07:13:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:13:58 EDT]       · jina-tw: 5 items
-[2026-08-30 07:14:06 EDT]       · jina-x: 5 items
-[2026-08-30 07:15:27 EDT]       · nitter: sin items
-[2026-08-30 07:15:27 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:15:27 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:15:48 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:15:48 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:15:48 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
-[2026-08-30 07:15:48 EDT] 4/4 · Estado:
-[2026-08-30 07:15:48 EDT] Pasada completada en 120.6 s
-[2026-08-30 07:15:48 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:20:48 EDT] ==============================================================
-[2026-08-30 07:20:48 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
-[2026-08-30 07:20:48 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:20:53 EDT]       · jina-tw: 5 items
-[2026-08-30 07:21:03 EDT]       · jina-x: 5 items
-[2026-08-30 07:22:24 EDT]       · nitter: sin items
-[2026-08-30 07:22:24 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:22:24 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:22:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:22:46 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:22:46 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
-[2026-08-30 07:22:46 EDT] 4/4 · Estado:
-[2026-08-30 07:22:46 EDT] Pasada completada en 118.0 s
-[2026-08-30 07:22:46 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:27:46 EDT] ==============================================================
-[2026-08-30 07:27:46 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
-[2026-08-30 07:27:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:27:54 EDT]       · jina-tw: 5 items
-[2026-08-30 07:28:03 EDT]       · jina-x: 5 items
-[2026-08-30 07:29:23 EDT]       · nitter: sin items
-[2026-08-30 07:29:23 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:29:23 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:29:44 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
-[2026-08-30 07:29:44 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:29:44 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
-[2026-08-30 07:29:44 EDT] 4/4 · Estado:
-[2026-08-30 07:29:44 EDT] Pasada completada en 118.5 s
-[2026-08-30 07:29:44 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:16:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:16:53 EDT]       · jina-tw: 5 items
+[2026-08-30 08:17:02 EDT]       · jina-x: 5 items
+[2026-08-30 08:18:23 EDT]       · nitter: sin items
+[2026-08-30 08:18:23 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:18:23 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:18:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:18:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:18:46 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 08:18:46 EDT] 4/4 · Estado:
+[2026-08-30 08:18:46 EDT] Pasada completada en 119.9 s
+[2026-08-30 08:18:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:23:46 EDT] ==============================================================
+[2026-08-30 08:23:46 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 08:23:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:23:57 EDT]       · jina-tw: 5 items
+[2026-08-30 08:24:01 EDT]       · jina-x: 5 items
+[2026-08-30 08:25:22 EDT]       · nitter: sin items
+[2026-08-30 08:25:22 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:25:22 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:25:45 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:25:45 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:25:45 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 08:25:45 EDT] 4/4 · Estado:
+[2026-08-30 08:25:45 EDT] Pasada completada en 118.8 s
+[2026-08-30 08:25:45 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:30:45 EDT] ==============================================================
+[2026-08-30 08:30:45 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 08:30:45 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:30:51 EDT]       · jina-tw: 5 items
+[2026-08-30 08:31:01 EDT]       · jina-x: 5 items
+[2026-08-30 08:32:22 EDT]       · nitter: sin items
+[2026-08-30 08:32:22 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:32:22 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:32:44 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 08:32:44 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:32:44 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 08:32:44 EDT] 4/4 · Estado:
+[2026-08-30 08:32:44 EDT] Pasada completada en 119.4 s
+[2026-08-30 08:32:44 EDT] Próxima pasada en 5 min…
 --- logs de bot-polymarket-elon-mensual ---
 [/opt/polymarket/bot-polymarket-elon-mensual/bot_mensual.log]
-[2026-08-30 07:13:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:13:56 EDT]       · jina-tw: 5 items
-[2026-08-30 07:14:04 EDT]       · jina-x: 5 items
-[2026-08-30 07:15:25 EDT]       · nitter: sin items
-[2026-08-30 07:15:25 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:15:25 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:15:48 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
-[2026-08-30 07:15:48 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:15:48 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
-[2026-08-30 07:15:48 EDT] 4/4 · Estado:
-[2026-08-30 07:15:48 EDT] Pasada completada en 120.6 s
-[2026-08-30 07:15:48 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:20:48 EDT] ==============================================================
-[2026-08-30 07:20:48 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
-[2026-08-30 07:20:48 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:20:57 EDT]       · jina-tw: 5 items
-[2026-08-30 07:21:04 EDT]       · jina-x: 5 items
-[2026-08-30 07:22:25 EDT]       · nitter: sin items
-[2026-08-30 07:22:25 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:22:25 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:22:46 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
-[2026-08-30 07:22:46 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:22:46 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
-[2026-08-30 07:22:46 EDT] 4/4 · Estado:
-[2026-08-30 07:22:46 EDT] Pasada completada en 118.1 s
-[2026-08-30 07:22:46 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:27:46 EDT] ==============================================================
-[2026-08-30 07:27:46 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
-[2026-08-30 07:27:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
-[2026-08-30 07:27:52 EDT]       · jina-tw: 5 items
-[2026-08-30 07:28:01 EDT]       · jina-x: 5 items
-[2026-08-30 07:29:22 EDT]       · nitter: sin items
-[2026-08-30 07:29:22 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
-[2026-08-30 07:29:22 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:29:44 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
-[2026-08-30 07:29:44 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:29:44 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
-[2026-08-30 07:29:44 EDT] 4/4 · Estado:
-[2026-08-30 07:29:44 EDT] Pasada completada en 118.5 s
-[2026-08-30 07:29:44 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:16:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:16:59 EDT]       · jina-tw: 5 items
+[2026-08-30 08:17:10 EDT]       · jina-x: 5 items
+[2026-08-30 08:18:31 EDT]       · nitter: sin items
+[2026-08-30 08:18:31 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:18:31 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:18:51 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 08:18:51 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:18:51 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 08:18:51 EDT] 4/4 · Estado:
+[2026-08-30 08:18:51 EDT] Pasada completada en 124.7 s
+[2026-08-30 08:18:51 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:23:51 EDT] ==============================================================
+[2026-08-30 08:23:51 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
+[2026-08-30 08:23:51 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:24:01 EDT]       · jina-tw: 5 items
+[2026-08-30 08:24:08 EDT]       · jina-x: 5 items
+[2026-08-30 08:25:29 EDT]       · nitter: sin items
+[2026-08-30 08:25:29 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:25:29 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:25:49 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 08:25:49 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:25:49 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 08:25:49 EDT] 4/4 · Estado:
+[2026-08-30 08:25:49 EDT] Pasada completada en 117.5 s
+[2026-08-30 08:25:49 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:30:49 EDT] ==============================================================
+[2026-08-30 08:30:49 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
+[2026-08-30 08:30:49 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 08:30:58 EDT]       · jina-tw: 5 items
+[2026-08-30 08:31:04 EDT]       · jina-x: 5 items
+[2026-08-30 08:32:25 EDT]       · nitter: sin items
+[2026-08-30 08:32:25 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 08:32:25 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:32:45 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 08:32:45 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:32:45 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 08:32:45 EDT] 4/4 · Estado:
+[2026-08-30 08:32:45 EDT] Pasada completada en 116.0 s
+[2026-08-30 08:32:45 EDT] Próxima pasada en 5 min…
 --- logs de bot-polymarket-zelenskyy ---
 [/opt/polymarket/bot-polymarket-zelenskyy/bot_zelen.log]
-[2026-08-30 07:14:28 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
-[2026-08-30 07:14:28 EDT] 4/4 · Estado:
-[2026-08-30 07:14:28 EDT] Pasada completada en 23.9 s
-[2026-08-30 07:14:28 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:19:28 EDT] ==============================================================
-[2026-08-30 07:19:28 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
-[2026-08-30 07:19:28 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
-[2026-08-30 07:19:30 EDT]       · xtracker: 1968 items
-[2026-08-30 07:19:30 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
-[2026-08-30 07:19:30 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:19:52 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
-[2026-08-30 07:19:52 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:19:52 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
-[2026-08-30 07:19:52 EDT] 4/4 · Estado:
-[2026-08-30 07:19:52 EDT] Pasada completada en 24.1 s
-[2026-08-30 07:19:52 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:24:52 EDT] ==============================================================
-[2026-08-30 07:24:52 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
-[2026-08-30 07:24:52 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
-[2026-08-30 07:24:56 EDT]       · xtracker: 1968 items
-[2026-08-30 07:24:56 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
-[2026-08-30 07:24:56 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:25:18 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
-[2026-08-30 07:25:18 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:25:19 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
-[2026-08-30 07:25:19 EDT] 4/4 · Estado:
-[2026-08-30 07:25:19 EDT] Pasada completada en 26.4 s
-[2026-08-30 07:25:19 EDT] Próxima pasada en 5 min…
-[2026-08-30 07:30:19 EDT] ==============================================================
-[2026-08-30 07:30:19 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
-[2026-08-30 07:30:19 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
-[2026-08-30 07:30:20 EDT]       · xtracker: 1968 items
-[2026-08-30 07:30:20 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
-[2026-08-30 07:30:20 EDT] 2/4 · Actualizando mercados de Polymarket…
-[2026-08-30 07:30:43 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
-[2026-08-30 07:30:43 EDT] 3/4 · Trading REAL…
-[2026-08-30 07:30:43 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
-[2026-08-30 07:30:43 EDT] 4/4 · Estado:
-[2026-08-30 07:30:43 EDT] Pasada completada en 24.8 s
-[2026-08-30 07:30:43 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:19:25 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 08:19:25 EDT] 4/4 · Estado:
+[2026-08-30 08:19:25 EDT] Pasada completada en 24.4 s
+[2026-08-30 08:19:25 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:24:25 EDT] ==============================================================
+[2026-08-30 08:24:25 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 08:24:25 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 08:24:27 EDT]       · xtracker: 1968 items
+[2026-08-30 08:24:27 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 08:24:27 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:24:50 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 08:24:50 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:24:50 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 08:24:50 EDT] 4/4 · Estado:
+[2026-08-30 08:24:50 EDT] Pasada completada en 24.8 s
+[2026-08-30 08:24:50 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:29:50 EDT] ==============================================================
+[2026-08-30 08:29:50 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 08:29:50 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 08:29:51 EDT]       · xtracker: 1968 items
+[2026-08-30 08:29:51 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 08:29:51 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:30:14 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 08:30:14 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:30:14 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 08:30:14 EDT] 4/4 · Estado:
+[2026-08-30 08:30:14 EDT] Pasada completada en 24.0 s
+[2026-08-30 08:30:14 EDT] Próxima pasada en 5 min…
+[2026-08-30 08:35:14 EDT] ==============================================================
+[2026-08-30 08:35:14 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 08:35:14 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 08:35:15 EDT]       · xtracker: 1968 items
+[2026-08-30 08:35:15 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 08:35:15 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 08:35:38 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 08:35:38 EDT] 3/4 · Trading REAL…
+[2026-08-30 08:35:38 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 08:35:38 EDT] 4/4 · Estado:
+[2026-08-30 08:35:38 EDT] Pasada completada en 24.1 s
+[2026-08-30 08:35:38 EDT] Próxima pasada en 5 min…
 
 ===== FIN =====
