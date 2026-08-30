@@ -1,0 +1,27 @@
+Token Trump: ... Chat: 
+--- 1. recolector_poly.sh ---
+  servicios: ya presente o no encontrado
+  recolector_poly.sh actualizado
+--- 2. check_salud.py ---
+  --trump ya presente
+--- 3. check_integral.py ---
+  AVISO: no encontre entry de Zelenskyy en bots[] - revisar manualmente
+--- 4. limpieza.sh ---
+  Trump ya presente en limpieza.sh
+--- 5. Servicios systemd Trump ---
+  poly-salud-trump.timer: activo
+  poly-fantasmas-trump.timer: activo
+  poly-test-diario-trump.timer: activo
+
+=== ESTADO FINAL ===
+Sun 2026-08-30 18:21:38 UTC         9min Sun 2026-08-30 18:11:38 UTC      27s ago poly-salud-trump.timer         poly-salud-trump.service
+Sun 2026-08-30 18:41:38 UTC        29min Sun 2026-08-30 18:11:38 UTC      27s ago poly-fantasmas-trump.timer     poly-fantasmas-trump.service
+Sun 2026-08-30 19:10:00 UTC        57min -                                      - poly-test-diario-trump.timer   poly-test-diario-trump.service
+
+poly-trump: active
+poly-salud-trump: inactive
+enabled
+poly-fantasmas-trump: inactive
+enabled
+poly-test-diario-trump: inactive
+enabled
