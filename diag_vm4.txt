@@ -1,0 +1,3659 @@
+###############################################
+# DIAGNOSTICO COMPLETO - Sun Aug 30 11:31:24 AM UTC 2026
+###############################################
+
+===== 1. SISTEMA =====
+ 11:31:24 up 12 days, 22:38,  3 users,  load average: 0.08, 0.04, 0.01
+               Local time: Sun 2026-08-30 11:31:24 UTC
+           Universal time: Sun 2026-08-30 11:31:24 UTC
+                 RTC time: Sun 2026-08-30 11:31:24
+                Time zone: Etc/UTC (UTC, +0000)
+
+===== 2. SERVICIOS =====
+okx-real-bot: inactive
+okx-demo-bot: active
+okx-signal-bot: inactive
+empatebot: active
+bolsa-bot: active
+
+===== 3. PARCHES Y ESTADO =====
+FIX5 real: 1
+FIX5 demo: 1
+FIXPAUSA: 1
+bandera pausa: /root/.okx_real_pausado
+crontab: 30 21 * * * /usr/bin/python3 /root/salud_bots.py >/dev/null 2>&1 0 4 * * * /bin/bash /root/backup_okx.sh >> /root/backup_okx.log 2>&1 
+
+===== 4. CUENTA REAL =====
+SALDO: 
+  {"ccy": "USD", "available": 380.30157332812354, "equity": 400.63375253188354, "unrealized": 0.0}
+POSICIONES: 0
+ALGOS: 0
+
+===== 5. CUENTA DEMO (+ LIMPIEZA DE ZOMBIS) =====
+POSICION: {"adl": "1", "availPos": "", "avgPx": "7.481", "baseBal": "", "baseBorrowed": "", "baseInterest": "", "bePx": "7.473532447226784", "bizRefId": "", "bizRefType": "", "cTime": "1787947222277", "ccy": "USDC", "clSpotInUseAmt": "", "closeAllFlag": "0", "closeOrderAlgo": [], "deltaBS": "", "deltaPA": "",
+POSICION: {"adl": "1", "availPos": "", "avgPx": "93.9425513513513514", "baseBal": "", "baseBorrowed": "", "baseInterest": "", "bePx": "105.73420293606262", "bizRefId": "", "bizRefType": "", "cTime": "1787927233576", "ccy": "USDC", "clSpotInUseAmt": "", "closeAllFlag": "0", "closeOrderAlgo": [], "deltaBS": "",
+POSICION: {"adl": "1", "availPos": "", "avgPx": "0.0006", "baseBal": "", "baseBorrowed": "", "baseInterest": "", "bePx": "0.0006002123459594", "bizRefId": "", "bizRefType": "", "cTime": "1787807237754", "ccy": "USDC", "clSpotInUseAmt": "", "closeAllFlag": "0", "closeOrderAlgo": [], "deltaBS": "", "deltaPA": "
+POSICION: {"adl": "1", "availPos": "", "avgPx": "7.424", "baseBal": "", "baseBorrowed": "", "baseInterest": "", "bePx": "7.439541470735367", "bizRefId": "", "bizRefType": "", "cTime": "1787786778452", "ccy": "USDC", "clSpotInUseAmt": "", "closeAllFlag": "0", "closeOrderAlgo": [], "deltaBS": "", "deltaPA": "",
+POSICION: {"adl": "1", "availPos": "", "avgPx": "0.0059003146853147", "baseBal": "", "baseBorrowed": "", "baseInterest": "", "bePx": "0.0059836916529694", "bizRefId": "", "bizRefType": "", "cTime": "1787565962249", "ccy": "USDC", "clSpotInUseAmt": "", "closeAllFlag": "0", "closeOrderAlgo": [], "deltaBS": "", 
+ALGOS PENDIENTES: 15
+   HYPE-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   ETC-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   ETC-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   ETC-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   ETC-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   AVAX-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   IOST-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   IOST-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   IOST-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   IOST-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   IOST-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   ORBS-USD_UM_XPERP-310822 | vieja: si | tiene posicion: si
+   AVAX-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   AVAX-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+   AVAX-USD_UM_XPERP-310801 | vieja: si | tiene posicion: si
+ZOMBIS CANCELADAS: 0
+
+===== 6. CODIGO okx_client.py (COMPLETO) =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""Conector OKX (API v5) para el bot de trading — Europa (my.okx.com).
+     4	
+     5	Particularidades de OKX Europa (verificadas):
+     6	  - Dominio: https://my.okx.com  (las claves EEE NO valen en www.okx.com)
+     7	  - Cabecera "User-Agent" OBLIGATORIA (sin ella Cloudflare bloquea con 1010).
+     8	  - Demo: cabecera "x-simulated-trading: 1" + clave creada en el entorno demo.
+     9	  - X-Perps: instType=FUTURES, instId "XXX-USD_UM_XPERP-YYMMDD", liquidan en USD
+    10	    (USDC/USDG). El tamaño se da en CONTRATOS (sz entero), cada contrato vale
+    11	    ctVal unidades de la moneda base (p.ej. BTC: 0.0001 BTC/contrato).
+    12	
+    13	Uso:
+    14	    import okx_client as OKX
+    15	    c = OKX.Cliente(demo=True)          # o demo=False
+    16	    c.saldo()  c.posiciones()  c.orden_mercado(...)  c.cerrar(...)
+    17	"""
+    18	import base64
+    19	import hashlib
+    20	import hmac
+    21	import json
+    22	import time
+    23	import urllib.parse
+    24	import urllib.request
+    25	import urllib.error
+    26	from datetime import datetime, timezone
+    27	
+    28	BASE = "https://my.okx.com"
+    29	UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    30	      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+    31	
+    32	
+    33	class Cliente:
+    34	    def __init__(self, api_key, secret, passphrase, demo=False):
+    35	        self.key = api_key.strip()
+    36	        self.secret = secret.strip()
+    37	        self.passphrase = passphrase.strip()
+    38	        self.demo = demo
+    39	        self._instr_cache = {"ts": 0.0, "map": {}}   # base -> instId XPERP
+    40	
+    41	    # ------------------------------------------------------------- firma
+    42	    def _ts(self):
+    43	        now = datetime.now(timezone.utc)
+    44	        return now.strftime("%Y-%m-%dT%H:%M:%S.") + f"{int(time.time()*1000)%1000:03d}Z"
+    45	
+    46	    def _sign(self, ts, method, path, body):
+    47	        pre = ts + method + path + (body or "")
+    48	        mac = hmac.new(self.secret.encode(), pre.encode(), hashlib.sha256)
+    49	        return base64.b64encode(mac.digest()).decode()
+    50	
+    51	    def _req(self, method, path, body_dict=None):
+    52	        body = json.dumps(body_dict, separators=(",", ":")) if body_dict else ""
+    53	        ts = self._ts()
+    54	        sign = self._sign(ts, method, path, body)
+    55	        headers = {
+    56	            "OK-ACCESS-KEY": self.key,
+    57	            "OK-ACCESS-SIGN": sign,
+    58	            "OK-ACCESS-TIMESTAMP": ts,
+    59	            "OK-ACCESS-PASSPHRASE": self.passphrase,
+    60	            "Content-Type": "application/json",
+    61	            "User-Agent": UA,
+    62	        }
+    63	        if self.demo:
+    64	            headers["x-simulated-trading"] = "1"
+    65	        data = body.encode() if body else None
+    66	        req = urllib.request.Request(BASE + path, data=data, method=method,
+    67	                                     headers=headers)
+    68	        try:
+    69	            with urllib.request.urlopen(req, timeout=20) as r:
+    70	                return json.loads(r.read().decode())
+    71	        except urllib.error.HTTPError as e:
+    72	            raw = e.read().decode()[:300]
+    73	            raise RuntimeError(f"OKX HTTP {e.code}: {raw}")
+    74	
+    75	    def _get(self, path):
+    76	        return self._req("GET", path)
+    77	
+    78	    def _post(self, path, body):
+    79	        return self._req("POST", path, body)
+    80	
+    81	    def _check(self, resp, where):
+    82	        code = str(resp.get("code", ""))
+    83	        if code != "0":
+    84	            raise RuntimeError(f"{where}: code={code} msg={resp.get('msg')}")
+    85	        return resp
+    86	
+    87	    # -------------------------------------------------------- instrumentos
+    88	    def instrumentos_xperp(self, refrescar=False):
+    89	        """Devuelve {base: instId} de los X-Perps disponibles (FUTURES)."""
+    90	        if self._instr_cache["map"] and not refrescar \
+    91	                and time.time() - self._instr_cache["ts"] < 3600:
+    92	            return self._instr_cache["map"]
+    93	        r = self._get("/api/v5/public/instruments?instType=FUTURES")
+    94	        mapa = {}
+    95	        for x in (r.get("data") or []):
+    96	            iid = x.get("instId", "")
+    97	            if "XPERP" in iid.upper() and x.get("state") == "live":
+    98	                base = iid.split("-")[0]
+    99	                if base not in mapa:
+   100	                    mapa[base] = iid
+   101	        self._instr_cache = {"ts": time.time(), "map": mapa}
+   102	        return mapa
+   103	
+   104	    def inst_id(self, base):
+   105	        """instId del X-Perp de una moneda base (p.ej. 'BTC' -> 'BTC-USD_UM_XPERP-310404')."""
+   106	        base = base.upper().replace("USDT", "").replace("USDC", "").replace("-", "")
+   107	        return self.instrumentos_xperp().get(base)
+   108	
+   109	    def info_instr(self, inst_id):
+   110	        r = self._get(f"/api/v5/public/instruments?instType=FUTURES&instId={inst_id}")
+   111	        data = (r.get("data") or [])
+   112	        return data[0] if data else {}
+   113	
+   114	    # ------------------------------------------------------------- saldo
+   115	    def saldo(self):
+   116	        """Devuelve {'ccy', 'available', 'equity', 'unrealized'}.
+   117	
+   118	        - equity: totalEq de la cuenta (multi-divisa, en USD).
+   119	        - available: saldo disponible en USDC (la divisa de margen del bot).
+   120	        - unrealized: suma del upl de las posiciones abiertas.
+   121	        """
+   122	        r = self._check(self._get("/api/v5/account/balance"), "balance")
+   123	        d = (r.get("data") or [{}])[0]
+   124	        equity = float(d.get("totalEq", 0) or 0)
+   125	        usdc_avail = 0.0
+   126	        for det in (d.get("details") or []):
+   127	            if det.get("ccy") == "USDC":
+   128	                usdc_avail = float(det.get("availBal", 0) or 0)
+   129	                break
+   130	        unreal = 0.0
+   131	        try:
+   132	            for p in self.posiciones():
+   133	                unreal += float(p.get("upl", 0) or 0)
+   134	        except Exception:
+   135	            pass
+   136	        return {"ccy": "USD", "available": usdc_avail, "equity": equity,
+   137	                "unrealized": unreal}
+   138	
+   139	    def posiciones(self):
+   140	        """Posiciones abiertas (FUTURES) con pos != 0."""
+   141	        r = self._check(self._get("/api/v5/account/positions?instType=FUTURES"),
+   142	                        "positions")
+   143	        out = []
+   144	        for p in (r.get("data") or []):
+   145	            pos = float(p.get("pos", 0) or 0)
+   146	            if pos == 0:
+   147	                continue
+   148	            out.append(p)
+   149	        return out
+   150	
+   151	    def posiciones_cerradas(self, inst_id=None, limit=5):
+   152	        """Últimas posiciones CERRADAS (histórico) con su P&L realizado.
+   153	
+   154	        Devuelve lista (más reciente primero) con {instId, type, openAvgPx,
+   155	        closeAvgPx, closeTotalPos, pnl, realizedPnl, fee, uTime, posId}."""
+   156	        path = "/api/v5/account/positions-history?instType=FUTURES"
+   157	        if inst_id:
+   158	            path += "&instId=" + urllib.parse.quote(inst_id)
+   159	        path += "&limit=%d" % int(limit)
+   160	        r = self._check(self._get(path), "positions-history")
+   161	        return r.get("data") or []
+   162	
+   163	    # ------------------------------------------------------------- mercado
+   164	    def ticker(self, inst_id):
+   165	        r = self._check(self._get(f"/api/v5/market/ticker?instId={inst_id}"),
+   166	                        "ticker")
+   167	        return (r.get("data") or [{}])[0]
+   168	
+   169	    def velas(self, inst_id, bar="1H", limit=200):
+   170	        """Velas ascendentemente: [{time, open, high, low, close, vol}]."""
+   171	        r = self._get(f"/api/v5/market/candles?instId={inst_id}&bar={bar}&limit={limit}")
+   172	        data = r.get("data") or []
+   173	        out = []
+   174	        for row in data:   # [ts, o, h, l, c, vol, ...] (nuevas primero)
+   175	            try:
+   176	                out.append({"time": int(row[0]), "open": float(row[1]),
+   177	                            "high": float(row[2]), "low": float(row[3]),
+   178	                            "close": float(row[4]), "vol": float(row[5] or 0)})
+   179	            except Exception:
+   180	                continue
+   181	        out.sort(key=lambda k: k["time"])
+   182	        return out
+   183	
+   184	    # ----------------------------------------------------------- operativa
+   185	    def set_apalancamiento(self, inst_id, lever):
+   186	        self._check(self._post("/api/v5/account/set-leverage",
+   187	                               {"instId": inst_id, "lever": str(int(lever)),
+   188	                                "mgnMode": "cross", "posSide": "net"}),
+   189	                    "set-leverage")
+   190	
+   191	    def orden_mercado(self, inst_id, side, sz_contratos, tp_px=None, sl_px=None):
+   192	        """Orden a mercado (side: buy/sell). sz en CONTRATOS (entero).
+   193	
+   194	        tp_px/sl_px: precios de TP/SL adjuntos (market cuando se disparan)."""
+   195	        body = {"instId": inst_id, "tdMode": "cross", "side": side,
+   196	                "posSide": "net", "ordType": "market", "sz": str(int(sz_contratos))}
+   197	        if tp_px is not None:
+   198	            body["tpTriggerPx"] = str(tp_px)
+   199	            body["tpOrdPx"] = "-1"
+   200	            body["tpTriggerPxType"] = "last"
+   201	        if sl_px is not None:
+   202	            body["slTriggerPx"] = str(sl_px)
+   203	            body["slOrdPx"] = "-1"
+   204	            body["slTriggerPxType"] = "last"
+   205	        return self._check(self._post("/api/v5/trade/order", body), "order")
+   206	
+   207	    # ------------------------------------------------ órdenes algo (SL / TP)
+   208	    def orden_algo_sl(self, inst_id, side_cierre, sl_px, sz_contratos):
+   209	        """SL: orden condicional que cierra a mercado al tocar sl_px."""
+   210	        body = {"instId": inst_id, "tdMode": "cross", "posSide": "net",
+   211	                "side": side_cierre, "ordType": "conditional",
+   212	                "sz": str(int(sz_contratos)),
+   213	                "slTriggerPx": str(sl_px), "slTriggerPxType": "last",
+   214	                "slOrdPx": "-1", "reduceOnly": "true"}
+   215	        r = self._check(self._post("/api/v5/trade/order-algo", body), "order-algo-sl")
+   216	        return (r.get("data") or [{}])[0].get("algoId")
+   217	
+   218	    def orden_algo_tp(self, inst_id, side_cierre, tp_px, sz_contratos):
+   219	        """TP (parcial o total): orden condicional que cierra a mercado."""
+   220	        body = {"instId": inst_id, "tdMode": "cross", "posSide": "net",
+   221	                "side": side_cierre, "ordType": "conditional",
+   222	                "sz": str(int(sz_contratos)),
+   223	                "tpTriggerPx": str(tp_px), "tpTriggerPxType": "last",
+   224	                "tpOrdPx": "-1", "reduceOnly": "true"}
+   225	        r = self._check(self._post("/api/v5/trade/order-algo", body), "order-algo-tp")
+   226	        return (r.get("data") or [{}])[0].get("algoId")
+   227	
+   228	    def algo_pendientes(self, inst_id=None):
+   229	        """Órdenes algo (conditional) pendientes. [{algoId, side, sz, tpTriggerPx,
+   230	        slTriggerPx, state}]."""
+   231	        path = "/api/v5/trade/orders-algo-pending?ordType=conditional"
+   232	        if inst_id:
+   233	            path += f"&instId={inst_id}"
+   234	        r = self._check(self._get(path), "algo-pending")
+   235	        return r.get("data") or []
+   236	
+   237	    def cancelar_algo(self, inst_id, algo_id):
+   238	        # cancel-algos espera un ARRAY de objetos en el body
+   239	        body = [{"instId": inst_id, "algoId": str(algo_id)}]
+   240	        return self._check(self._post("/api/v5/trade/cancel-algos", body),
+   241	                           "cancel-algo")
+   242	
+   243	    def cancelar_todas_algo(self, inst_id):
+   244	        """Cancela todas las órdenes algo de un instrumento."""
+   245	        pend = self.algo_pendientes(inst_id)
+   246	        for o in pend:
+   247	            try:
+   248	                self.cancelar_algo(inst_id, o.get("algoId"))
+   249	            except Exception:
+   250	                pass
+   251	        return len(pend)
+   252	
+   253	    def mover_sl_algo(self, inst_id, algo_id, nuevo_sl_px):
+   254	        """Modifica el precio de disparo de una orden algo (SL a break-even)."""
+   255	        body = {"instId": inst_id, "algoId": str(algo_id),
+   256	                "newSlTriggerPx": str(nuevo_sl_px)}
+   257	        return self._check(self._post("/api/v5/trade/amend-algos", body),
+   258	                           "amend-algos")
+   259	
+   260	    def cerrar(self, inst_id, side, sz_contratos=None):
+   261	        """Cierra la posición a mercado (reduceOnly). side = lado de la POSICIÓN
+   262	        (long->sell, short->buy). Si sz None, cierra todo con la orden closePosition."""
+   263	        if sz_contratos is None:
+   264	            # cierra la posición completa
+   265	            body = {"instId": inst_id, "tdMode": "cross", "posSide": "net",
+   266	                    "mgnMode": "cross", "autoCxl": "false"}
+   267	            if side == "long":
+   268	                body["side"] = "sell"
+   269	            else:
+   270	                body["side"] = "buy"
+   271	            return self._post("/api/v5/trade/close-position", body)
+   272	        cierre = "sell" if side == "long" else "buy"
+   273	        body = {"instId": inst_id, "tdMode": "cross", "side": cierre,
+   274	                "posSide": "net", "ordType": "market",
+   275	                "sz": str(int(sz_contratos)), "reduceOnly": "true"}
+   276	        return self._check(self._post("/api/v5/trade/order", body), "close")
+   277	
+   278	    # === FIXTS_ARENA: trailing stop (move_order_stop) ===
+   279	    def orden_trailing(self, inst_id, side_cierre, callback, sz_contratos):
+   280	        """Trailing stop: persigue al precio (callback 0.03 = 3%).
+   281	        side_cierre = lado de CIERRE (long->sell, short->buy). reduceOnly SIEMPRE."""
+   282	        body = {"instId": inst_id, "tdMode": "cross", "posSide": "net",
+   283	                "side": side_cierre, "ordType": "move_order_stop",
+   284	                "sz": str(int(sz_contratos)),
+   285	                "callbackRatio": str(callback), "reduceOnly": "true"}
+   286	        r = self._check(self._post("/api/v5/trade/order-algo", body), "order-algo-trailing")
+   287	        return (r.get("data") or [{}])[0].get("algoId")
+   288	
+   289	    def trailing_pendientes(self, inst_id=None):
+   290	        """Trailing stops vivos (cajon move_order_stop), opcional por instId."""
+   291	        path = "/api/v5/trade/orders-algo-pending?ordType=move_order_stop"
+   292	        if inst_id:
+   293	            path += f"&instId={inst_id}"
+   294	        r = self._check(self._get(path), "algo-pending-move")
+   295	        return r.get("data") or []
+   296	
+   297	    def contratos(self, inst_id, notional_usd):
+   298	        """Nº de contratos (entero) para un nocional en USD dado."""
+   299	        info = self.info_instr(inst_id)
+   300	        ct_val = float(info.get("ctVal", 0) or 0)
+   301	        if ct_val <= 0:
+   302	            return 1
+   303	        precio = float(self.ticker(inst_id).get("last", 0) or 0)
+   304	        if precio <= 0:
+   305	            return 1
+   306	        n = notional_usd / (ct_val * precio)
+   307	        return max(1, int(round(n)))
+   308	# === FIX4_ARENA: historial de posiciones cerradas (P&L) ===
+   309	def _pos_hist_arena(self, limit=100):
+   310	    r = self._check(self._get("/api/v5/account/positions-history?instType=FUTURES&limit=" + str(int(limit))), "positions-history")
+   311	    return r.get("data") or []
+   312	Cliente.posiciones_historicas = _pos_hist_arena
+   313	
+   314	# === FIX1_ARENA: _check muestra el detalle real de OKX (sCode/sMsg) ===
+   315	def _arena_check(self, resp, where):
+   316	    code = str(resp.get("code", ""))
+   317	    if code != "0":
+   318	        _data = resp.get("data")
+   319	        _d = _data[0] if isinstance(_data, list) and _data else {}
+   320	        raise RuntimeError(where + ": code=" + code + " msg=" + str(resp.get("msg")) + " | detail=" + str(_d.get("sCode")) + ":" + str(_d.get("sMsg")))
+   321	    return resp
+   322	Cliente._check = _arena_check
+   323	
+   324	# === FIXR_ARENA: SL/TP con reduceOnly (una orden huerfana nunca podra abrir posicion) ===
+
+===== 7. CODIGO okx_real_bot.py (COMPLETO) =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""BOT REAL OKX (X-Perps) 24/7 — migración de real_bot.py (Bitget) a OKX Europa.
+     4	
+     5	Estrategia (igual que el real de Bitget):
+     6	  - Escanea la watchlist con velas 4H + 1H: EMA20/50 + ATR + alineación 4H/1H.
+     7	  - Solo abre cuando la tendencia 4H y 1H van alineadas (REQUIRE_ALIGNED) y el
+     8	    score supera MIN_TREND_SCORE.
+     9	  - Entrada a mercado con SL (order-algo) + 5 TP parciales (20% c/u).
+    10	  - Break-even al 1:1 (cancela SL y lo recrea en la entrada + buffer).
+    11	  - Riesgo 10 USDC por operación, máx 5 posiciones, apalancamiento máx 10x.
+    12	
+    13	Credenciales REALES via env: OKX_REAL_KEY / OKX_REAL_SECRET / OKX_REAL_PASSPHRASE
+    14	"""
+    15	import os
+    16	import sys
+    17	import json
+    18	import time
+    19	import threading
+    20	import unicodedata
+    21	import urllib.request
+    22	import urllib.parse
+    23	from datetime import datetime, timezone
+    24	
+    25	try:
+    26	    from zoneinfo import ZoneInfo
+    27	    MAD = ZoneInfo("Europe/Madrid")
+    28	except Exception:
+    29	    MAD = timezone.utc
+    30	
+    31	sys.path.insert(0, "/root")
+    32	import okx_client as OKX
+    33	
+    34	# ------------------------------------------------------------------ CONFIG
+    35	RISK_USD        = float(os.environ.get("RISK_USD", "10.0"))
+    36	MAX_OPS         = int(os.environ.get("MAX_OPS", "5"))
+    37	LEVERAGE        = int(os.environ.get("LEVERAGE", "10"))
+    38	SCAN_EVERY_SEC  = int(os.environ.get("SCAN_EVERY_SEC", "900"))
+    39	WATCH_EVERY_SEC = int(os.environ.get("WATCH_EVERY_SEC", "60"))
+    40	
+    41	EMA_FAST   = 20
+    42	EMA_SLOW   = 50
+    43	ATR_PERIOD = 14
+    44	ATR_MULT_SL = 1.5
+    45	MIN_TREND_SCORE  = float(os.environ.get("MIN_TREND_SCORE", "6.0"))
+    46	REQUIRE_ALIGNED  = os.environ.get("REQUIRE_ALIGNED", "1") != "0"
+    47	
+    48	MULTI_TP_ENABLED = True
+    49	TP_LEVELS = [
+    50	    {"atr_mult": 1.0, "exit_pct": 20},
+    51	    {"atr_mult": 1.5, "exit_pct": 20},
+    52	    {"atr_mult": 2.0, "exit_pct": 20},
+    53	    {"atr_mult": 2.5, "exit_pct": 20},
+    54	    {"atr_mult": 3.0, "exit_pct": 20},
+    55	]
+    56	BREAKEVEN_ENABLED = True
+    57	BREAKEVEN_BUFFER = 0.0015
+    58	
+    59	# Watchlist: monedas con X-Perp en OKX (toda la del Bitget real).
+    60	SYMBOLS = ["BTC", "ETH", "SOL", "XRP", "ADA", "DOGE", "LINK", "AVAX",
+    61	           "DOT", "LTC", "BNB", "TRX"]
+    62	
+    63	REAL_KEY = os.environ.get("OKX_REAL_KEY", "").strip()
+    64	REAL_SECRET = os.environ.get("OKX_REAL_SECRET", "").strip()
+    65	REAL_PASSPHRASE = os.environ.get("OKX_REAL_PASSPHRASE", "").strip()
+    66	
+    67	TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    68	TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    69	
+    70	MANAGE_FILE = "/root/okx_real_managed.json"
+    71	AUTO_FILE = "/root/okx_real_auto.json"
+    72	NOTIFIED_FILE = "/root/okx_real_notified.json"
+    73	
+    74	client = None
+    75	
+    76	
+    77	# ------------------------------------------------------------------ TELEGRAM
+    78	def _tg(method, **params):
+    79	    data = urllib.parse.urlencode(params).encode()
+    80	    req = urllib.request.Request(
+    81	        f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/{method}",
+    82	        data=data, method="POST")
+    83	    with urllib.request.urlopen(req, timeout=15) as r:
+    84	        return json.loads(r.read().decode())
+    85	
+    86	
+    87	def _tg_send(texto, keyboard=None):
+    88	    if not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
+    89	        return False
+    90	    try:
+    91	        p = {"chat_id": TELEGRAM_CHAT_ID, "text": texto,
+    92	             "disable_web_page_preview": "true"}
+    93	        if keyboard is not None:
+    94	            p["reply_markup"] = json.dumps(keyboard)
+    95	        _tg("sendMessage", **p)
+    96	        return True
+    97	    except Exception as e:
+    98	        print(f"  [telegram] {e}")
+    99	        return False
+   100	
+   101	
+   102	def teclado():
+   103	    auto = auto_activo()
+   104	    lbl_auto = "🤖 Auto: ON 🟢" if auto else "🤖 Auto: OFF 🔴"
+   105	    lbl_lec = ("🔛 Lectura auto: ON 🟢" if canales_auto_activo()
+   106	               else "🔛 Lectura auto: OFF 🔴")
+   107	    return {"keyboard": [
+   108	        ["📊 Estado", "💰 Saldo"],
+   109	        [lbl_auto, lbl_lec],
+   110	        ["➕ Añadir canal", "➖ Quitar canal"],
+   111	        ["📋 Canales", "🆘 Ayuda"],
+   112	    ], "resize_keyboard": True}
+   113	
+   114	
+   115	# ------------------------------------------------------------------ CANALES
+   116	CANALES_FILE = "/root/canales.json"
+   117	CANALES_AUTO_FILE = "/root/canales_auto.json"
+   118	
+   119	
+   120	def canales_list():
+   121	    try:
+   122	        d = json.load(open(CANALES_FILE, encoding="utf-8"))
+   123	        return d.get("canales", [])
+   124	    except Exception:
+   125	        return []
+   126	
+   127	
+   128	def canal_agregar(nombre):
+   129	    nombre = (nombre or "").strip()
+   130	    if not nombre:
+   131	        return False, "nombre vacío"
+   132	    ls = canales_list()
+   133	    if nombre in ls:
+   134	        return False, f"{nombre} ya estaba en la lista"
+   135	    ls.append(nombre)
+   136	    json.dump({"canales": ls}, open(CANALES_FILE, "w", encoding="utf-8"),
+   137	              ensure_ascii=False)
+   138	    return True, nombre
+   139	
+   140	
+   141	def canal_quitar(nombre):
+   142	    ls = canales_list()
+   143	    if nombre not in ls:
+   144	        return False, nombre
+   145	    ls = [c for c in ls if c != nombre]
+   146	    json.dump({"canales": ls}, open(CANALES_FILE, "w", encoding="utf-8"),
+   147	              ensure_ascii=False)
+   148	    return True, nombre
+   149	
+   150	
+   151	def canales_auto_activo():
+   152	    try:
+   153	        with open(CANALES_AUTO_FILE, encoding="utf-8") as f:
+   154	            return bool(json.load(f).get("activo", False))
+   155	    except Exception:
+   156	        return False
+   157	
+   158	
+   159	def set_canales_auto(on):
+   160	    try:
+   161	        with open(CANALES_AUTO_FILE, "w", encoding="utf-8") as f:
+   162	            json.dump({"activo": bool(on)}, f, ensure_ascii=False)
+   163	    except Exception:
+   164	        pass
+   165	
+   166	
+   167	def boton_canales_auto():
+   168	    nuevo = not canales_auto_activo()
+   169	    set_canales_auto(nuevo)
+   170	    estado = "🟢 ACTIVADA" if nuevo else "🔴 DESACTIVADA"
+   171	    _tg_send("🔛 *Lectura automática de canales: " + estado + "*\n\n"
+   172	             + ("El lector automático (userbot) vigilará tus canales de señales "
+   173	                "y me las reenviará. Tú también puedes seguir reenviando a mano."
+   174	                if nuevo else
+   175	                "La lectura automática queda pausada: las señales solo entran "
+   176	                "si las reenvías tú a mano."),
+   177	             teclado())
+   178	
+   179	
+   180	def boton_canal_quitar(nombre):
+   181	    ok, n = canal_quitar(nombre)
+   182	    _tg_send(f"🚫 Canal quitado: {n}" if ok else f"ℹ️ {n} no estaba en la lista.",
+   183	             teclado())
+   184	
+   185	
+   186	def enviar_panel():
+   187	    auto = "🟢 ACTIVADO" if auto_activo() else "🔴 DESACTIVADO"
+   188	    lec = "🟢 ACTIVADA" if canales_auto_activo() else "🔴 DESACTIVADA"
+   189	    _tg_send(
+   190	        "🎛 *Panel de control — bot real de OKX*\n\n"
+   191	        f"Modo automático: *{auto}*\n"
+   192	        f"Lectura de canales: *{lec}*\n\n"
+   193	        "• 📊 *Estado* → posiciones reales abiertas.\n"
+   194	        "• 💰 *Saldo* → balance de la cuenta real.\n"
+   195	        "• 🤖 *Automático* → ON/OFF: con ON, las señales con confianza ≥85/100 "
+   196	        "entran DIRECTAS, y el resto se descartan solas.\n"
+   197	        "• 🔛 *Lectura auto* → ON/OFF: activa o pausa la lectura automática "
+   198	        "de canales (el reenvío a mano siempre funciona).\n"
+   199	        "• ➕ *Añadir canal* / ➖ *Quitar canal* → canales de Telegram de donde "
+   200	        "el lector automático toma las señales.\n"
+   201	        "• 📋 *Canales* → ver la lista actual.\n"
+   202	        "• 🆘 *Ayuda* → vuelve a mostrar este panel.",
+   203	        teclado())
+   204	
+   205	
+   206	# ------------------------------------------------------------------ AUTO
+   207	def auto_activo():
+   208	    try:
+   209	        with open(AUTO_FILE) as f:
+   210	            return bool(json.load(f).get("activo", True))
+   211	    except Exception:
+   212	        return True
+   213	
+   214	
+   215	def set_auto(on):
+   216	    try:
+   217	        with open(AUTO_FILE, "w") as f:
+   218	            json.dump({"activo": on}, f)
+   219	    except Exception:
+   220	        pass
+   221	
+   222	
+   223	# ------------------------------------------------------------------ ESTADO
+   224	def load_managed():
+   225	    try:
+   226	        with open(MANAGE_FILE) as f:
+   227	            return json.load(f)
+   228	    except Exception:
+   229	        return {}
+   230	
+   231	
+   232	def save_managed(m):
+   233	    try:
+   234	        with open(MANAGE_FILE, "w") as f:
+   235	            json.dump(m, f, indent=2)
+   236	    except Exception:
+   237	        pass
+   238	
+   239	
+   240	def load_notified():
+   241	    try:
+   242	        with open(NOTIFIED_FILE) as f:
+   243	            d = json.load(f)
+   244	        return d if isinstance(d, dict) else {}
+   245	    except Exception:
+   246	        return {}
+   247	
+   248	
+   249	def save_notified(d):
+   250	    try:
+   251	        with open(NOTIFIED_FILE, "w") as f:
+   252	            json.dump(d, f)
+   253	    except Exception:
+   254	        pass
+   255	
+   256	
+   257	# ------------------------------------------------------------------ INDICADORES
+   258	def ema(v, p):
+   259	    if len(v) < p:
+   260	        return []
+   261	    k = 2.0 / (p + 1)
+   262	    c = sum(v[:p]) / p
+   263	    out = [c]
+   264	    for x in v[p:]:
+   265	        c = x * k + c * (1 - k)
+   266	        out.append(c)
+   267	    return out
+   268	
+   269	
+   270	def atr(h, l, c, p):
+   271	    if len(c) < p + 1:
+   272	        return None
+   273	    trs = [max(h[i] - l[i], abs(h[i] - c[i - 1]), abs(l[i] - c[i - 1]))
+   274	           for i in range(1, len(c))]
+   275	    cur = sum(trs[:p]) / p
+   276	    for tr in trs[p:]:
+   277	        cur = (cur * (p - 1) + tr) / p
+   278	    return cur
+   279	
+   280	
+   281	# ------------------------------------------------------------------ MERCADO
+   282	def get_klines_tf(base, tf="1H", limit=200):
+   283	    inst_id = client.inst_id(base)
+   284	    if not inst_id:
+   285	        return []
+   286	    return client.velas(inst_id, bar=tf, limit=limit)
+   287	
+   288	
+   289	def info_instr(base):
+   290	    inst_id = client.inst_id(base)
+   291	    if not inst_id:
+   292	        return None
+   293	    return client.info_instr(inst_id)
+   294	
+   295	
+   296	# ------------------------------------------------------------------ POSICIONES
+   297	def get_all_positions():
+   298	    out = []
+   299	    for p in client.posiciones():
+   300	        try:
+   301	            pos = float(p.get("pos", 0) or 0)
+   302	        except Exception:
+   303	            pos = 0.0
+   304	        if pos == 0:
+   305	            continue
+   306	        out.append({
+   307	            "symbol": p.get("instId", "?"),
+   308	            "base": p.get("instId", "?").split("-")[0],
+   309	            "direction": "LONG" if pos > 0 else "SHORT",
+   310	            "qty": abs(pos),
+   311	            "entry": float(p.get("avgPx", 0) or 0),
+   312	            "mark": float(p.get("markPx", 0) or p.get("last", 0) or 0),
+   313	            "pnl": float(p.get("upl", 0) or 0),
+   314	            "lever": p.get("lever", "?"),
+   315	        })
+   316	    return out
+   317	
+   318	
+   319	# ------------------------------------------------------------------ SCAN
+   320	def scan_coins(exclude_symbols=None):
+   321	    exclude_symbols = exclude_symbols or set()
+   322	    results = []
+   323	    for base in SYMBOLS:
+   324	        if base in exclude_symbols:
+   325	            continue
+   326	        try:
+   327	            kl4 = get_klines_tf(base, "4H", 200)
+   328	            kl1 = get_klines_tf(base, "1H", 200)
+   329	            if len(kl4) < EMA_SLOW + ATR_PERIOD + 5 or len(kl1) < 60:
+   330	                continue
+   331	            def tend(kl):
+   332	                highs = [k["high"] for k in kl]
+   333	                lows = [k["low"] for k in kl]
+   334	                closes = [k["close"] for k in kl]
+   335	                e20 = ema(closes, EMA_FAST); e50 = ema(closes, EMA_SLOW)
+   336	                a = atr(highs, lows, closes, ATR_PERIOD)
+   337	                slope = e50[-1] - e50[-6] if len(e50) >= 6 else 0.0
+   338	                lc = closes[-1]
+   339	                bull = e20[-1] > e50[-1] and lc > e20[-1] and slope > 0
+   340	                bear = e20[-1] < e50[-1] and lc < e20[-1] and slope < 0
+   341	                return closes, e20, e50, a, lc, slope, bull, bear
+   342	            c4, e204, e504, a4, lc4, sl4, bull4, bear4 = tend(kl4)
+   343	            c1, e201, e501, a1, lc1, sl1, bull1, bear1 = tend(kl1)
+   344	            if a4 is None or a4 <= 0:
+   345	                continue
+   346	            if not (bull4 or bear4):
+   347	                continue
+   348	            direction = "LONG" if bull4 else "SHORT"
+   349	            aligned = (bull4 and bull1) or (bear4 and bear1)
+   350	            if REQUIRE_ALIGNED and not aligned:
+   351	                continue
+   352	            sep = abs(e204[-1] - e504[-1]) / lc4 * 100
+   353	            pend = abs(sl4) / lc4 * 100
+   354	            score = sep + pend * 3
+   355	            if aligned:
+   356	                score *= 1.3
+   357	            if score < MIN_TREND_SCORE:
+   358	                continue
+   359	            info = info_instr(base)
+   360	            if not info:
+   361	                continue
+   362	            results.append({"symbol": base, "direction": direction,
+   363	                            "score": score, "aligned": aligned,
+   364	                            "entry": lc1, "atr": a1, "info": info})
+   365	        except Exception as e:
+   366	            print(f"  [scan] {base}: {e}")
+   367	            continue
+   368	        time.sleep(0.05)
+   369	    results.sort(key=lambda x: -x["score"])
+   370	    return results
+   371	
+   372	
+   373	def build_plan(best):
+   374	    base = best["symbol"]; direction = best["direction"]
+   375	    info = best["info"]; entry = best["entry"]; atr_val = best["atr"]
+   376	
+   377	    stop_dist = atr_val * ATR_MULT_SL
+   378	    if stop_dist <= 0:
+   379	        stop_dist = entry * 0.015
+   380	    if direction == "LONG":
+   381	        stop = entry - stop_dist
+   382	        side, side_cierre = "buy", "sell"
+   383	    else:
+   384	        stop = entry + stop_dist
+   385	        side, side_cierre = "sell", "buy"
+   386	
+   387	    ct_val = float(info.get("ctVal", 0) or 0)
+   388	    if ct_val <= 0:
+   389	        return None
+   390	    contratos = RISK_USD / (ct_val * stop_dist)
+   391	    contratos = max(1, int(round(contratos)))
+   392	
+   393	    # apalancamiento dinámico seguro: liquidación >= 5x distancia SL
+   394	    dist_frac = stop_dist / entry if entry else 0.02
+   395	    lev = max(1, min(LEVERAGE, int(1 / (5 * dist_frac)) if dist_frac > 0 else LEVERAGE))
+   396	
+   397	    # tope de margen: no usar más del ~25% del disponible
+   398	    try:
+   399	        bal = client.saldo()
+   400	        disp = bal.get("available", 0) if bal else 0
+   401	        nocional = contratos * ct_val * entry
+   402	        if disp > 0 and nocional > disp * lev * 0.25:
+   403	            contratos = max(1, int(disp * lev * 0.25 / (ct_val * entry)))
+   404	    except Exception:
+   405	        pass
+   406	
+   407	    tp_levels = []
+   408	    if MULTI_TP_ENABLED:
+   409	        parts = []
+   410	        remaining = contratos
+   411	        for i, lvl in enumerate(TP_LEVELS):
+   412	            if i == len(TP_LEVELS) - 1:
+   413	                parts.append(remaining)
+   414	            else:
+   415	                part = max(0, min(round(contratos * lvl["exit_pct"] / 100.0),
+   416	                                 remaining))
+   417	                parts.append(part)
+   418	                remaining -= part
+   419	        for i, lvl in enumerate(TP_LEVELS):
+   420	            dist = atr_val * lvl["atr_mult"]
+   421	            precio = entry + dist if direction == "LONG" else entry - dist
+   422	            tp_levels.append({"price": round(precio, 8), "sz": parts[i],
+   423	                              "atr_mult": lvl["atr_mult"]})
+   424	
+   425	    return {"symbol": base, "direction": direction, "side": side,
+   426	            "side_cierre": side_cierre, "entry": entry, "stop": round(stop, 8),
+   427	            "atr": atr_val, "contratos": contratos, "lev": lev,
+   428	            "ct_val": ct_val, "tp_levels": tp_levels}
+   429	
+   430	
+   431	# ------------------------------------------------------------------ ÓRDENES
+   432	def set_leverage(base, lev):
+   433	    try:
+   434	        client.set_apalancamiento(client.inst_id(base), lev)
+   435	    except Exception as e:
+   436	        print(f"  [aviso] palanca {base}: {e}")
+   437	
+   438	
+   439	def open_position(plan):
+   440	    base = plan["symbol"]
+   441	    inst_id = client.inst_id(base)
+   442	    if not inst_id:
+   443	        raise RuntimeError(f"{base}: sin X-Perp")
+   444	
+   445	    set_leverage(base, plan["lev"])
+   446	    r = client.orden_mercado(inst_id, plan["side"], plan["contratos"])
+   447	    oid = (r.get("data") or [{}])[0].get("ordId")
+   448	    print(f"  >>> ORDEN REAL {base} {plan['direction']} {plan['contratos']} ct (ordId={oid}) <<<")
+   449	    time.sleep(1.5)
+   450	
+   451	    sl_id = client.orden_algo_sl(inst_id, plan["side_cierre"], plan["stop"],
+   452	                                 plan["contratos"])
+   453	    print(f"  -> SL @ {plan['stop']} (algoId={sl_id})")
+   454	
+   455	    tps_colocados = []
+   456	    for lvl in plan["tp_levels"]:
+   457	        if lvl["sz"] <= 0:
+   458	            continue
+   459	        try:
+   460	            aid = client.orden_algo_tp(inst_id, plan["side_cierre"],
+   461	                                       lvl["price"], lvl["sz"])
+   462	            tps_colocados.append({"nivel": f"{lvl['atr_mult']:.1f}R",
+   463	                                  "precio": lvl["price"], "sz": lvl["sz"],
+   464	                                  "algoId": aid})
+   465	        except Exception as e:
+   466	            print(f"  [aviso] TP: {e}")
+   467	
+   468	    managed = load_managed()
+   469	    managed[f"{base}:{plan['direction']}"] = {
+   470	        "symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   471	        "contratos": plan["contratos"], "sl_algo_id": sl_id, "state": "opened",
+   472	        "risk_usd": RISK_USD, "opened_at": time.time(),
+   473	        "dist": round((plan["atr"] * ATR_MULT_SL) / plan["entry"], 8),
+   474	        "initial_sl": plan["stop"], "tp_levels": tps_colocados,
+   475	    }
+   476	    save_managed(managed)
+   477	    return {"symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   478	            "contratos": plan["contratos"], "sl": plan["stop"],
+   479	            "risk": plan["contratos"] * plan["ct_val"] * (plan["atr"] * ATR_MULT_SL)}
+   480	
+   481	
+   482	# ------------------------------------------------------------------ GESTIÓN
+   483	def manage_positions():
+   484	    positions = get_all_positions()
+   485	    pos_map = {}
+   486	    for p in positions:
+   487	        # FIXK_ARENA: clave CON espacio (igual que open_position y el panel)
+   488	        pos_map[f"{p['base']}: {p['direction']}"] = p
+   489	
+   490	    managed = load_managed()
+   491	    notified = load_notified()
+   492	    changed = False
+   493	
+   494	    for key, m in list(managed.items()):
+   495	        base = m["symbol"]; direction = m["direction"]
+   496	        inst_id = client.inst_id(base)
+   497	        if not inst_id:
+   498	            continue
+   499	        p = pos_map.get(key)
+   500	        if not p:
+   501	            # FIXW_ARENA: exigir 2 pasadas consecutivas sin verla (evita borrados por fallo de API)
+   502	            m["ausente"] = int(m.get("ausente", 0)) + 1
+   503	            if m["ausente"] < 2:
+   504	                changed = True
+   505	                continue
+   506	            # la posición se cerró del todo (TPs/SL): leer P&L realizado
+   507	            detalle = ""
+   508	            ya_avisado = False
+   509	            try:
+   510	                hist = client.posiciones_cerradas(inst_id, limit=3)
+   511	                if hist:
+   512	                    ult = hist[0]
+   513	                    pnl = float(ult.get("pnl", 0) or 0)
+   514	                    close_px = float(ult.get("closeAvgPx", 0) or 0)
+   515	                    utime = str(ult.get("uTime", ""))
+   516	                    ic = "🟢" if pnl >= 0 else "🔴"
+   517	                    detalle = f" · {ic} {pnl:+.2f} USDC"
+   518	                    if close_px:
+   519	                        detalle += f" (cierre {close_px:g})"
+   520	                    if utime and notified.get(base) == utime:
+   521	                        ya_avisado = True
+   522	                    elif utime:
+   523	                        notified[base] = utime
+   524	            except Exception as e:
+   525	                print(f"  [cierre] histórico: {e}")
+   526	            # FIXR_ARENA: cancelar algos huerfanos del cierre
+   527	            try:
+   528	                _nz = client.cancelar_todas_algo(inst_id)
+   529	                if _nz:
+   530	                    print("  [LIMPIEZA] " + base + ": " + str(_nz) + " orden(es) huerfana(s) cancelada(s)")
+   531	            except Exception as _ez:
+   532	                print("  [LIMPIEZA] " + base + ": " + str(_ez))
+   533	            del managed[key]
+   534	            changed = True
+   535	            if not ya_avisado:
+   536	                _tg_send(f"🔔 *Posición REAL cerrada*: {base} {direction}\n"
+   537	                         f"(entrada ~{m.get('entry'):g}{detalle})", teclado())
+   538	            continue
+   539	
+   540	        if m.get("ausente"):
+   541	            m["ausente"] = 0
+   542	            changed = True
+   543	        qty = p["qty"]; unreal = p["pnl"]
+   544	        entry = float(p.get("entry", 0) or 0)
+   545	        risk_actual = float(m.get("risk_usd", RISK_USD) or RISK_USD)
+   546	
+   547	        # Cierre PARCIAL (TPs): avisar cuando la cantidad baja respecto a la
+   548	        # última vista (se ha llenado un TP parcial).
+   549	        qty_ant = float(m.get("qty_vista", qty) or qty)
+   550	        if qty_ant - qty >= 1e-9:
+   551	            cerr = int(qty_ant - qty)
+   552	            _tg_send(f"✅ *TP parcial (REAL)*: {base} {direction}\n"
+   553	                     f"Cerrados ~{cerr} ct · quedan {qty:g} ct · "
+   554	                     f"P&L actual {unreal:+.2f} USDC", teclado())
+   555	        m["qty_vista"] = qty
+   556	
+   557	        # Break-even al 1:1
+   558	        if (BREAKEVEN_ENABLED and m.get("state") == "opened"
+   559	                and unreal >= risk_actual):
+   560	            be_price = (entry * (1 + BREAKEVEN_BUFFER) if direction == "LONG"
+   561	                        else entry * (1 - BREAKEVEN_BUFFER))
+   562	            try:
+   563	                client.cancelar_algo(inst_id, m.get("sl_algo_id"))
+   564	            except Exception as e:
+   565	                print(f"  [BE] cancelar SL: {e}")
+   566	            try:
+   567	                nuevo_sl = client.orden_algo_sl(
+   568	                    inst_id, "sell" if direction == "LONG" else "buy",
+   569	                    be_price, int(qty))
+   570	                m["sl_algo_id"] = nuevo_sl
+   571	                m["state"] = "breakeven"
+   572	                changed = True
+   573	                print(f"  [BE] {base} {direction} SL a BREAK-EVEN @ {be_price:.6g}")
+   574	                _tg_send(f"🛡️ *{base} {direction}* — SL a break-even @ {be_price:.6g}\n"
+   575	                         f"Ya no puedes perder en esta operación.")
+   576	            except Exception as e:
+   577	                print(f"  [BE] recrear SL: {e}")
+   578	
+   579	    if changed:
+   580	        save_managed(managed)
+   581	        save_notified(notified)
+   582	
+   583	
+   584	# ------------------------------------------------------------------ BOTONES
+   585	MARCADORES = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣",
+   586	              "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+   587	
+   588	
+   589	def boton_estado():
+   590	    pos = get_all_positions()
+   591	    if not pos:
+   592	        _tg_send("ℹ️ No hay posiciones reales abiertas ahora.", teclado())
+   593	        return
+   594	    managed = load_managed()
+   595	    lineas = []
+   596	    for i, p in enumerate(pos):
+   597	        marca = MARCADORES[i] if i < len(MARCADORES) else f"{i+1}."
+   598	        sym = p["symbol"]; d = p["direction"]
+   599	        pnl = p["pnl"]
+   600	        if pnl > 0.005:
+   601	            ic, pnl_txt = "🔵", f"{pnl:+.2f}"
+   602	        elif pnl < -0.005:
+   603	            ic, pnl_txt = "🔴", f"{pnl:+.2f}"
+   604	        else:
+   605	            ic, pnl_txt = "⚪️", "0.00"
+   606	        linea = (f"{marca} {sym} {d} · {p['qty']:g} ct · ent {p['entry']:g} · "
+   607	                 f"mark {p['mark']:g} · P&L {ic} {pnl_txt} USD")
+   608	        m = managed.get(f"{p['base']}:{d}")
+   609	        if m and m.get("state") == "breakeven":
+   610	            linea += " · 🔒 SL en BE"
+   611	        lineas.append(linea)
+   612	    _tg_send("📊 *Estado de posiciones (REAL OKX)*\n\n" + "\n".join(lineas),
+   613	             teclado())
+   614	
+   615	
+   616	def boton_saldo():
+   617	    bal = client.saldo()
+   618	    if not bal:
+   619	        _tg_send("❌ No pude leer el saldo real.", teclado())
+   620	        return
+   621	    _tg_send("💰 *Saldo de la cuenta (REAL OKX)*\n\n"
+   622	             f"• Equity total: *{bal['equity']:.2f} USD*\n"
+   623	             f"• Disponible (USDC): {bal['available']:.2f} USDC\n"
+   624	             f"• P&L no realizado: {bal['unrealized']:+.2f} USD", teclado())
+   625	
+   626	
+   627	def boton_auto():
+   628	    on = auto_activo()
+   629	    set_auto(not on)
+   630	    estado = "ON 🟢" if not on else "OFF 🔴"
+   631	    _tg_send(f"🤖 *Modo automático: {estado}*\n\n"
+   632	             f"{'El bot abre posiciones al detectar señales fuertes.'
+   633	                if not on else 'El bot NO abrirá nuevas posiciones (solo gestiona las abiertas).'}",
+   634	             teclado())
+   635	
+   636	
+   637	def enviar_ayuda():
+   638	    enviar_panel()
+   639	
+   640	
+   641	def telegram_listener():
+   642	    # NOTA: el panel y la lectura de Telegram los atiende okx_signal_bot.py
+   643	    # (único poller del token). Este bot solo ENVÍA notificaciones.
+   644	    pass
+   645	
+   646	
+   647	# ------------------------------------------------------------------ MAIN
+   648	def main():
+   649	    global client
+   650	    if not (REAL_KEY and REAL_SECRET and REAL_PASSPHRASE):
+   651	        print("ERROR: faltan OKX_REAL_* en el entorno")
+   652	        sys.exit(1)
+   653	
+   654	    client = OKX.Cliente(REAL_KEY, REAL_SECRET, REAL_PASSPHRASE, demo=False)
+   655	    bal = client.saldo()
+   656	    print(f"=== BOT REAL OKX | riesgo {RISK_USD} USDC | lev máx {LEVERAGE}x ===")
+   657	    print(f"[auth OK] cuenta REAL OKX — equity {bal['equity']:.2f} USD · "
+   658	          f"disponible {bal['available']:.2f} USDC")
+   659	
+   660	    if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
+   661	        # El panel de Telegram lo atiende okx_signal_bot.py (único poller).
+   662	        enviar_panel()
+   663	
+   664	    last_scan = 0
+   665	    last_manage = 0
+   666	    while True:
+   667	        try:
+   668	            if time.time() - last_manage >= WATCH_EVERY_SEC:
+   669	                last_manage = time.time()
+   670	                manage_positions()
+   671	
+   672	            open_positions = get_all_positions()
+   673	            open_bases = set(p["base"] for p in open_positions)
+   674	
+   675	            if time.time() - last_scan >= SCAN_EVERY_SEC:
+   676	                last_scan = time.time()
+   677	                if auto_activo() and len(open_positions) < MAX_OPS:
+   678	                    print(f"[scan] {len(open_positions)}/{MAX_OPS} posiciones, escaneando…")
+   679	                    candidates = scan_coins(exclude_symbols=open_bases)
+   680	                    for cand in candidates:
+   681	                        if len(get_all_positions()) >= MAX_OPS:
+   682	                            break
+   683	                        print(f"*** SEÑAL {cand['direction']} en {cand['symbol']} "
+   684	                              f"(score={cand['score']:.2f}) ***")
+   685	                        plan = build_plan(cand)
+   686	                        if not plan:
+   687	                            continue
+   688	                        try:
+   689	                            res = open_position(plan)
+   690	                            _tg_send(
+   691	                                f"🔔 *Posición abierta (REAL)*: {res['direction']} {res['symbol']}\n"
+   692	                                f"Entrada ~{res['entry']:.6g} · {res['contratos']} ct\n"
+   693	                                f"SL {res['sl']:.6g} · riesgo ~{res['risk']:.2f} USDC\n"
+   694	                                f"Gestión: multi-TP + break-even al 1:1.", teclado())
+   695	                        except Exception as e:
+   696	                            print(f"  [error] {cand['symbol']}: {e}")
+   697	                            _tg_send(f"⚠️ No pude abrir {cand['symbol']}: {e}", teclado())
+   698	
+   699	            if open_positions:
+   700	                for p in open_positions:
+   701	                    print(f"  [REAL] {p['symbol']} {p['direction']} P&L={p['pnl']:+.2f}")
+   702	        except KeyboardInterrupt:
+   703	            print("\nBot real OKX detenido.")
+   704	            break
+   705	        except Exception as e:
+   706	            print(f"  [error loop] {e}")
+   707	        time.sleep(10)
+   708	
+   709	
+   710	# === FIX3_ARENA: protecciones de gestion (tope diario, cooldown, anti-racimo, rango, SL seguro) ===
+   711	_PROT3_FILE = "/root/okx_real_protecciones.json"
+   712	MAX_TRADES_DIA = int(os.environ.get("MAX_TRADES_DIA", "3"))
+   713	REENTRY_HORAS = float(os.environ.get("REENTRY_HORAS", "4"))
+   714	MIN_SEG_ENTRE_APERTURAS = int(os.environ.get("MIN_SEG_ENTRE_APERTURAS", "600"))
+   715	RANGO_MIN_ATR = float(os.environ.get("RANGO_MIN_ATR", "3.5"))
+   716	
+   717	def _prot3_load():
+   718	    try:
+   719	        return json.load(open(_PROT3_FILE))
+   720	    except Exception:
+   721	        return {}
+   722	
+   723	def _prot3_save(d):
+   724	    try:
+   725	        json.dump(d, open(_PROT3_FILE, "w"))
+   726	    except Exception:
+   727	        pass
+   728	
+   729	def _prot3_hoy():
+   730	    return datetime.now(MAD).strftime("%Y-%m-%d")
+   731	
+   732	def _prot3_check(base):
+   733	    d = _prot3_load()
+   734	    hoy = _prot3_hoy()
+   735	    if d.get("dia") != hoy:
+   736	        d = {"dia": hoy}
+   737	        _prot3_save(d)
+   738	    if int(d.get("abiertas_hoy", 0)) >= MAX_TRADES_DIA:
+   739	        return "tope diario de " + str(MAX_TRADES_DIA) + " aperturas"
+   740	    ua = float(d.get("ultima_apertura_ts", 0) or 0)
+   741	    if ua and (time.time() - ua) < MIN_SEG_ENTRE_APERTURAS:
+   742	        return "anti-racimo, esperar " + str(int(MIN_SEG_ENTRE_APERTURAS - (time.time() - ua))) + "s"
+   743	    upm = d.get("ultimas_por_moneda", {}) or {}
+   744	    if base in upm:
+   745	        t = float(upm.get(base) or 0)
+   746	        if t and (time.time() - t) < REENTRY_HORAS * 3600:
+   747	            return "cooldown " + base + " " + str(round(REENTRY_HORAS - (time.time() - t) / 3600.0, 1)) + "h"
+   748	    return None
+   749	def _prot3_registrar(base):
+   750	    d = _prot3_load()
+   751	    hoy = _prot3_hoy()
+   752	    if d.get("dia") != hoy:
+   753	        d = {"dia": hoy}
+   754	    d["abiertas_hoy"] = int(d.get("abiertas_hoy", 0)) + 1
+   755	    d["ultima_apertura_ts"] = time.time()
+   756	    d.setdefault("ultimas_por_moneda", {})[base] = time.time()
+   757	    _prot3_save(d)
+   758	
+   759	def _rango3_ok(base, atr_val):
+   760	    try:
+   761	        if not atr_val or atr_val <= 0:
+   762	            return True
+   763	        kl = get_klines_tf(base, "1H", 30)
+   764	        if not kl or len(kl) < 24:
+   765	            return True
+   766	        rango = max(k["high"] for k in kl[-24:]) - min(k["low"] for k in kl[-24:])
+   767	        return rango >= RANGO_MIN_ATR * atr_val
+   768	    except Exception:
+   769	        return True
+   770	
+   771	_scan3_orig = scan_coins
+   772	def scan_coins(exclude_symbols=None):
+   773	    cands = _scan3_orig(exclude_symbols)
+   774	    out = []
+   775	    for c in cands:
+   776	        motivo = _prot3_check(c["symbol"])
+   777	        if motivo:
+   778	            print("[PROT] " + c["symbol"] + " bloqueada: " + motivo)
+   779	            continue
+   780	        if not _rango3_ok(c["symbol"], c.get("atr")):
+   781	            print("[PROT] " + c["symbol"] + " bloqueada: mercado comprimido (rango < " + str(RANGO_MIN_ATR) + "xATR)")
+   782	            continue
+   783	        out.append(c)
+   784	    return out
+   785	def open_position(plan):
+   786	    base = plan["symbol"]
+   787	    motivo = _prot3_check(base)
+   788	    if motivo:
+   789	        raise RuntimeError(base + ": BLOQUEADA (" + motivo + ")")
+   790	    if not _rango3_ok(base, plan.get("atr")):
+   791	        raise RuntimeError(base + ": BLOQUEADA (mercado comprimido)")
+   792	    inst_id = client.inst_id(base)
+   793	    if not inst_id:
+   794	        raise RuntimeError(base + ": sin X-Perp")
+   795	    set_leverage(base, plan["lev"])
+   796	    r = client.orden_mercado(inst_id, plan["side"], plan["contratos"])
+   797	    oid = (r.get("data") or [{}])[0].get("ordId")
+   798	    print(">>> ORDEN REAL " + base + " " + plan["direction"] + " " + str(plan["contratos"]) + " ct (ordId=" + str(oid) + ") <<<")
+   799	    _prot3_registrar(base)
+   800	    time.sleep(1.5)
+   801	    sl_id = None
+   802	    try:
+   803	        sl_id = client.orden_algo_sl(inst_id, plan["side_cierre"], plan["stop"], plan["contratos"])
+   804	        print("-> SL @ " + str(plan["stop"]) + " (algoId=" + str(sl_id) + ")")
+   805	    except Exception as e:
+   806	        print("[CRITICO] " + base + ": el SL fallo tras abrir -> CERRANDO por seguridad. " + str(e))
+   807	        try:
+   808	            client.orden_mercado(inst_id, plan["side_cierre"], plan["contratos"])
+   809	        except Exception as ce:
+   810	            print("[CRITICO] " + base + ": tampoco se pudo cerrar: " + str(ce))
+   811	        try:
+   812	            _tg_send("*[REAL] " + base + " " + plan["direction"] + ": SL fallo -> cerrada por seguridad*", teclado())
+   813	        except Exception:
+   814	            pass
+   815	        raise RuntimeError(base + ": SL fallo tras abrir; posicion cerrada por seguridad")
+   816	    tps_colocados = []
+   817	    for lvl in plan["tp_levels"]:
+   818	        if lvl["sz"] <= 0:
+   819	            continue
+   820	        try:
+   821	            aid = client.orden_algo_tp(inst_id, plan["side_cierre"], lvl["price"], lvl["sz"])
+   822	            tps_colocados.append({"nivel": str(lvl["atr_mult"]) + "R", "precio": lvl["price"], "sz": lvl["sz"], "algoId": aid})
+   823	        except Exception as e:
+   824	            print("[aviso] TP: " + str(e))
+   825	    managed = load_managed()
+   826	    managed[base + ": " + plan["direction"]] = {
+   827	        "symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   828	        "contratos": plan["contratos"], "sl_algo_id": sl_id, "state": "opened",
+   829	        "risk_usd": RISK_USD, "opened_at": time.time(),
+   830	        "dist": round((plan["atr"] * ATR_MULT_SL) / plan["entry"], 8),
+   831	        "initial_sl": plan["stop"], "tp_levels": tps_colocados}
+   832	    save_managed(managed)
+   833	    return {"symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   834	            "contratos": plan["contratos"], "sl": plan["stop"],
+   835	            "risk": plan["contratos"] * plan["ct_val"] * (plan["atr"] * ATR_MULT_SL)}
+   836	
+   837	
+   838	# === FIX4_ARENA: panel mejorado (P&L abierto, saldo hoy/total, cierres con P&L) ===
+   839	def _cli4():
+   840	    global client
+   841	    if client is None:
+   842	        if REAL_KEY and REAL_SECRET and REAL_PASSPHRASE:
+   843	            client = OKX.Cliente(REAL_KEY, REAL_SECRET, REAL_PASSPHRASE, demo=False)
+   844	        else:
+   845	            return None
+   846	    return client
+   847	
+   848	def _hist4(limit=100):
+   849	    c = _cli4()
+   850	    if c is None:
+   851	        return []
+   852	    try:
+   853	        return c.posiciones_historicas(limit) or []
+   854	    except Exception:
+   855	        return []
+   856	
+   857	def _pnl_hoy_total4():
+   858	    hoy0 = datetime.now(MAD).replace(hour=0, minute=0, second=0, microsecond=0)
+   859	    lim_ms = hoy0.timestamp() * 1000.0
+   860	    pnl_hoy = 0.0
+   861	    pnl_total = 0.0
+   862	    n = 0
+   863	    for h in _hist4(100):
+   864	        try:
+   865	            p = float(h.get("realizedPnl", 0) or 0)
+   866	            t = float(h.get("uTime", 0) or 0)
+   867	        except Exception:
+   868	            continue
+   869	        pnl_total += p
+   870	        n += 1
+   871	        if t >= lim_ms:
+   872	            pnl_hoy += p
+   873	    return pnl_hoy, pnl_total, n
+   874	
+   875	def boton_estado():
+   876	    pos = get_all_positions()
+   877	    if not pos:
+   878	        _tg_send("No hay posiciones reales abiertas ahora.", teclado())
+   879	        return
+   880	    managed = load_managed()
+   881	    lineas = []
+   882	    pnl_total_abierto = 0.0
+   883	    for i, p in enumerate(pos):
+   884	        marca = MARCADORES[i] if i < len(MARCADORES) else str(i + 1) + "."
+   885	        sym = p["symbol"]; d = p["direction"]
+   886	        pnl = p["pnl"]
+   887	        pnl_total_abierto += pnl
+   888	        if pnl > 0.005:
+   889	            ic, pnl_txt = "🔵", format(pnl, "+.2f")
+   890	        elif pnl < -0.005:
+   891	            ic, pnl_txt = "🔴", format(pnl, "+.2f")
+   892	        else:
+   893	            ic, pnl_txt = "⚪", "0.00"
+   894	        linea = marca + " " + sym + " " + d + " | " + format(p["qty"], "g") + " ct | ent " + format(p["entry"], "g") + " | mark " + format(p["mark"], "g") + " | P&L " + ic + " " + pnl_txt + " USD"
+   895	        m = managed.get(p["base"] + ": " + d)
+   896	        if m and m.get("state") == "breakeven":
+   897	            linea += " | SL en BE"
+   898	        # FIXBE_ARENA: BE real segun el SL vivo del exchange (vale tambien para fantasmas)
+   899	        try:
+   900	            _g = globals()
+   901	            if _g.get("_FIXBE_TS") is None or time.time() - _g["_FIXBE_TS"] > 60:
+   902	                _slm = {}
+   903	                for _a in client.algo_pendientes() or []:
+   904	                    if _a.get("slTriggerPx"):
+   905	                        _slm[_a.get("instId", "")] = float(_a["slTriggerPx"])
+   906	                _g["_FIXBE_SL"] = _slm
+   907	                _g["_FIXBE_TS"] = time.time()
+   908	            _slp = (_g.get("_FIXBE_SL") or {}).get(sym)
+   909	            if _slp and ((d == "LONG" and _slp >= p["entry"]) or (d == "SHORT" and _slp <= p["entry"])):
+   910	                if "BE" not in linea:
+   911	                    linea += " | 🔒 BE"
+   912	        except Exception:
+   913	            pass
+   914	        lineas.append(linea)
+   915	    ic_t = "🔵" if pnl_total_abierto >= 0 else "🔴"
+   916	    lineas.append("")
+   917	    lineas.append("P&L ABIERTO TOTAL: " + ic_t + " " + format(pnl_total_abierto, "+.2f") + " USD")
+   918	    _tg_send("*Estado de posiciones (REAL OKX)*\n\n" + "\n".join(lineas), teclado())
+   919	
+   920	def boton_saldo():
+   921	    c = _cli4()
+   922	    bal = c.saldo() if c else None
+   923	    if not bal:
+   924	        _tg_send("No pude leer el saldo real.", teclado())
+   925	        return
+   926	    pnl_hoy, pnl_total, n = _pnl_hoy_total4()
+   927	    ic_h = "🔵" if pnl_hoy >= 0 else "🔴"
+   928	    ic_t = "🔵" if pnl_total >= 0 else "🔴"
+   929	    _tg_send("*Saldo de la cuenta (REAL OKX)*\n\n"
+   930	             "Equity total: *" + format(bal["equity"], ".2f") + " USD*\n"
+   931	             "Disponible (USDC): " + format(bal["available"], ".2f") + " USDC\n"
+   932	             "P&L no realizado: " + format(bal["unrealized"], "+.2f") + " USD\n"
+   933	             "P&L cerrado HOY: " + ic_h + " " + format(pnl_hoy, "+.2f") + " USD\n"
+   934	             "P&L desde el inicio: " + ic_t + " " + format(pnl_total, "+.2f") + " USD (" + str(n) + " ops cerradas)", teclado())
+   935	
+   936	def _pnl_cierre4(texto):
+   937	    c = _cli4()
+   938	    if c is None:
+   939	        return None
+   940	    sym = None
+   941	    for s in SYMBOLS:
+   942	        if s in texto:
+   943	            sym = s
+   944	            break
+   945	    if not sym:
+   946	        return None
+   947	    try:
+   948	        iid = c.inst_id(sym)
+   949	    except Exception:
+   950	        return None
+   951	    mejor = None
+   952	    for h in _hist4(20):
+   953	        if h.get("instId") == iid:
+   954	            try:
+   955	                t = float(h.get("uTime", 0) or 0)
+   956	            except Exception:
+   957	                t = 0
+   958	            if mejor is None or t > mejor[1]:
+   959	                mejor = (h, t)
+   960	    if mejor is None:
+   961	        return None
+   962	    try:
+   963	        p = float(mejor[0].get("realizedPnl", 0) or 0)
+   964	    except Exception:
+   965	        return None
+   966	    ic = "🔵" if p >= 0 else "🔴"
+   967	    return "P&L de la operacion: " + ic + " " + format(p, "+.2f") + " USD"
+   968	
+   969	_tg_send_orig4 = _tg_send
+   970	def _tg_send(texto, keyboard=None):
+   971	    try:
+   972	        if texto and "cerrada" in str(texto).lower():
+   973	            extra = _pnl_cierre4(str(texto))
+   974	            if extra:
+   975	                texto = str(texto) + "\n" + extra
+   976	    except Exception:
+   977	        pass
+   978	    return _tg_send_orig4(texto, keyboard)
+   979	
+   980	
+   981	# === FIX4B_ARENA: boton de emergencia PARAR/ARRANCAR ===
+   982	_enviar_panel_orig4b = enviar_panel
+   983	def enviar_panel():
+   984	    try:
+   985	        _enviar_panel_orig4b()
+   986	    except Exception:
+   987	        pass
+   988	    try:
+   989	        _btn = chr(0x26D4) + " PARAR / " + chr(0x25B6) + chr(0xFE0F) + " ARRANCAR BOT"
+   990	        _tg_send(chr(0x1F6A8) + " *Control de emergencia de la del bot REAL*",
+   991	                 {"inline_keyboard": [[{"text": _btn, "callback_data": "real:power"}]]})
+   992	    except Exception:
+   993	        pass
+   994	
+   995	
+   996	# === JOURNAL_ARENA: diario de trades (fase 1 autoaprendizaje) ===
+   997	_JOURNAL_FILE = "/root/okx_real_journal.json"
+   998	_JOURNAL_BOT = "real"
+   999	_JOURNAL_ACTIVO = (__name__ == "__main__")
+  1000	
+  1001	def _journal_load():
+  1002	    try:
+  1003	        return json.load(open(_JOURNAL_FILE))
+  1004	    except Exception:
+  1005	        return []
+  1006	
+  1007	def _journal_save(regs):
+  1008	    try:
+  1009	        json.dump(regs, open(_JOURNAL_FILE, "w"), ensure_ascii=False, indent=1)
+  1010	    except Exception:
+  1011	        pass
+  1012	
+  1013	_ULTIMO_SCORE = {}
+  1014	_scan_j_orig = scan_coins
+  1015	def scan_coins(exclude_symbols=None):
+  1016	    cands = _scan_j_orig(exclude_symbols)
+  1017	    try:
+  1018	        for c in cands:
+  1019	            _ULTIMO_SCORE[c["symbol"]] = c.get("score")
+  1020	    except Exception:
+  1021	        pass
+  1022	    return cands
+  1023	
+  1024	def _journal_registrar_apertura(plan, res):
+  1025	    try:
+  1026	        base = plan["symbol"]
+  1027	        try:
+  1028	            sdp = round(abs(plan["entry"] - plan["stop"]) / plan["entry"] * 100, 3)
+  1029	        except Exception:
+  1030	            sdp = None
+  1031	        reg = {
+  1032	            "id": int(time.time() * 1000),
+  1033	            "ts_apertura": datetime.now(MAD).strftime("%Y-%m-%d %H:%M"),
+  1034	            "bot": _JOURNAL_BOT,
+  1035	            "moneda": base,
+  1036	            "direccion": plan["direction"],
+  1037	            "entrada": plan["entry"],
+  1038	            "contratos": plan["contratos"],
+  1039	            "riesgo_usd": RISK_USD,
+  1040	            "score": _ULTIMO_SCORE.get(base),
+  1041	            "atr": plan.get("atr"),
+  1042	            "stop_dist_pct": sdp,
+  1043	            "apalancamiento": plan.get("lev"),
+  1044	            "estado": "abierta",
+  1045	        }
+  1046	        regs = _journal_load()
+  1047	        regs.append(reg)
+  1048	        _journal_save(regs)
+  1049	        print("[JOURNAL] apertura: " + base + " " + plan["direction"] + " (score=" + str(reg["score"]) + ")")
+  1050	    except Exception as e:
+  1051	        print("[JOURNAL] aviso apertura: " + str(e)[:80])
+  1052	
+  1053	def _journal_resultado(base, desde_ms):
+  1054	    try:
+  1055	        if client is None:
+  1056	            return None
+  1057	        iid = client.inst_id(base)
+  1058	        try:
+  1059	            hist = client.posiciones_historicas(20) or []
+  1060	        except Exception:
+  1061	            return None
+  1062	        mejor = None
+  1063	        for h in hist:
+  1064	            if h.get("instId") != iid:
+  1065	                continue
+  1066	            try:
+  1067	                t = float(h.get("uTime", 0) or 0)
+  1068	            except Exception:
+  1069	                t = 0
+  1070	            if t < desde_ms - 120000:
+  1071	                continue
+  1072	            if mejor is None or t > mejor[1]:
+  1073	                mejor = (h, t)
+  1074	        if mejor is None:
+  1075	            return None
+  1076	        return float(mejor[0].get("realizedPnl", 0) or 0)
+  1077	    except Exception:
+  1078	        return None
+  1079	
+  1080	def _journal_check_cierres(pos_actuales):
+  1081	    try:
+  1082	        regs = _journal_load()
+  1083	        cambio = False
+  1084	        abiertas = set(p.get("base") for p in pos_actuales)
+  1085	        ahora_ms = time.time() * 1000
+  1086	        for r in regs:
+  1087	            if r.get("estado") != "abierta":
+  1088	                continue
+  1089	            if ahora_ms - float(r.get("id", 0) or 0) < 120000:
+  1090	                continue
+  1091	            if r.get("moneda") in abiertas:
+  1092	                continue
+  1093	            pnl = _journal_resultado(r.get("moneda"), float(r.get("id", 0) or 0))
+  1094	            r["estado"] = "cerrada"
+  1095	            r["ts_cierre"] = datetime.now(MAD).strftime("%Y-%m-%d %H:%M")
+  1096	            if pnl is not None:
+  1097	                r["pnl_usd"] = round(pnl, 2)
+  1098	                riesgo = float(r.get("riesgo_usd") or 10.0)
+  1099	                rr = pnl / riesgo if riesgo else None
+  1100	                r["r_resultado"] = round(rr, 2) if rr is not None else None
+  1101	                if rr is None:
+  1102	                    r["motivo"] = "?"
+  1103	                elif rr <= -0.85:
+  1104	                    r["motivo"] = "SL"
+  1105	                elif rr >= 0.1:
+  1106	                    r["motivo"] = "TP"
+  1107	                else:
+  1108	                    r["motivo"] = "BE"
+  1109	            else:
+  1110	                r["pnl_usd"] = None
+  1111	                r["motivo"] = "?"
+  1112	            cambio = True
+  1113	            print("[JOURNAL] cierre: " + str(r.get("moneda")) + " pnl=" + str(r.get("pnl_usd")) + " (" + str(r.get("motivo")) + ")")
+  1114	        if cambio:
+  1115	            _journal_save(regs)
+  1116	    except Exception as e:
+  1117	        print("[JOURNAL] aviso cierres: " + str(e)[:80])
+  1118	
+  1119	_gap_j_orig = get_all_positions
+  1120	def get_all_positions():
+  1121	    pos = _gap_j_orig()
+  1122	    try:
+  1123	        if _JOURNAL_ACTIVO:
+  1124	            _journal_check_cierres(pos)
+  1125	    except Exception:
+  1126	        pass
+  1127	    return pos
+  1128	
+  1129	_op_j_orig = open_position
+  1130	def open_position(plan):
+  1131	    res = _op_j_orig(plan)
+  1132	    try:
+  1133	        _journal_registrar_apertura(plan, res)
+  1134	    except Exception:
+  1135	        pass
+  1136	    return res
+  1137	
+  1138	# === FIX5_ARENA: filtros de calidad de senal ===
+  1139	# F1: LONG solo si precio > EMA20(4H); SHORT solo si precio < EMA20(4H)
+  1140	#     (corta antes que esperar al cruce de EMAs)
+  1141	# F2: bloquear si separacion |EMA20-EMA50| en 4H > EMA_SEP_MAX_PCT
+  1142	#     (movimiento maduro / sobre-extendido: comprar tarde = comprar el techo)
+  1143	# F3: la ultima vela 1H completada debe cerrar a favor de la senal
+  1144	# Ajustes por entorno (opcionales): FILTROS_ON, EMA_SEP_MAX_PCT, CONF_VELA_ON
+  1145	try:
+  1146	    _filt_es_demo = "demo" in str(__file__)
+  1147	except Exception:
+  1148	    _filt_es_demo = False
+  1149	_FILTROS_FILE = "/root/okx_" + ("demo" if _filt_es_demo else "real") + "_filtro_stats.json"
+  1150	_FILT_CACHE = {}
+  1151	_FILT_TTL = 300
+  1152	
+  1153	
+  1154	def _filt_env_int(nombre, defecto):
+  1155	    try:
+  1156	        return int(float(os.environ.get(nombre, str(defecto))))
+  1157	    except Exception:
+  1158	        return defecto
+  1159	
+  1160	
+  1161	def _filt_env_float(nombre, defecto):
+  1162	    try:
+  1163	        return float(os.environ.get(nombre, str(defecto)))
+  1164	    except Exception:
+  1165	        return defecto
+  1166	
+  1167	
+  1168	FILTROS_ON = _filt_env_int("FILTROS_ON", 1)
+  1169	EMA_SEP_MAX_PCT = _filt_env_float("EMA_SEP_MAX_PCT", 5.0)
+  1170	CONF_VELA_ON = _filt_env_int("CONF_VELA_ON", 1)
+  1171	
+  1172	
+  1173	def _filt_kl(base, tf, limit):
+  1174	    clave = (base, tf)
+  1175	    g = _FILT_CACHE.get(clave)
+  1176	    if g and time.time() - g[0] < _FILT_TTL:
+  1177	        return g[1]
+  1178	    d = get_klines_tf(base, tf, limit)
+  1179	    _FILT_CACHE[clave] = (time.time(), d)
+  1180	    return d
+  1181	
+  1182	
+  1183	def _filt_ema(v, n):
+  1184	    if not v or len(v) < n:
+  1185	        return None
+  1186	    m = 2.0 / (n + 1)
+  1187	    e = sum(v[:n]) / float(n)
+  1188	    for x in v[n:]:
+  1189	        e = x * m + e * (1 - m)
+  1190	    return e
+  1191	
+  1192	
+  1193	def _filt_stats(t):
+  1194	    hoy = datetime.now(MAD).strftime("%Y-%m-%d")
+  1195	    try:
+  1196	        d = json.load(open(_FILTROS_FILE))
+  1197	        if d.get("dia") != hoy:
+  1198	            d = {"dia": hoy}
+  1199	    except Exception:
+  1200	        d = {"dia": hoy}
+  1201	    d[t] = int(d.get(t, 0)) + 1
+  1202	    try:
+  1203	        json.dump(d, open(_FILTROS_FILE, "w"))
+  1204	    except Exception:
+  1205	        pass
+  1206	
+  1207	def _filt_veredicto(base, direccion, precio=None, contar=True):
+  1208	    # Devuelve (True, None) si pasa los filtros o (False, motivo) si se bloquea.
+  1209	    # Ante error o falta de datos NO bloquea (failsafe).
+  1210	    if not FILTROS_ON:
+  1211	        return True, None
+  1212	    try:
+  1213	        kl4 = [x for x in (_filt_kl(base, "4H", 120) or []) if str(x.get("confirm", "1")) != "0"]
+  1214	        kl1 = [x for x in (_filt_kl(base, "1H", 30) or []) if str(x.get("confirm", "1")) != "0"]
+  1215	        if len(kl4) < 55 or not kl1:
+  1216	            return True, None
+  1217	        c4 = [x["close"] for x in kl4]
+  1218	        e20 = _filt_ema(c4, 20)
+  1219	        e50 = _filt_ema(c4, 50)
+  1220	        if not e20 or not e50 or e50 <= 0:
+  1221	            return True, None
+  1222	        px = float(precio) if precio else float(kl1[-1]["close"])
+  1223	        sep = abs(e20 - e50) / e50 * 100.0
+  1224	        if direccion == "LONG" and px <= e20:
+  1225	            if contar:
+  1226	                _filt_stats("bloq_ema20")
+  1227	            return False, "precio %.6g <= EMA20-4H %.6g (4H rota para LONG)" % (px, e20)
+  1228	        if direccion == "SHORT" and px >= e20:
+  1229	            if contar:
+  1230	                _filt_stats("bloq_ema20")
+  1231	            return False, "precio %.6g >= EMA20-4H %.6g (4H rota para SHORT)" % (px, e20)
+  1232	        if sep > EMA_SEP_MAX_PCT:
+  1233	            if contar:
+  1234	                _filt_stats("bloq_sobreext")
+  1235	            return False, "sep EMA20/50-4H %.2f%% > %.1f%% (movimiento maduro)" % (sep, EMA_SEP_MAX_PCT)
+  1236	        if CONF_VELA_ON:
+  1237	            v = kl1[-1]
+  1238	            o = v.get("open")
+  1239	            if o is None and len(kl1) > 1:
+  1240	                o = kl1[-2]["close"]
+  1241	            if o is not None:
+  1242	                verde = float(v["close"]) > float(o)
+  1243	                if direccion == "LONG" and not verde:
+  1244	                    if contar:
+  1245	                        _filt_stats("bloq_vela")
+  1246	                    return False, "ultima vela 1H roja (sin confirmacion)"
+  1247	                if direccion == "SHORT" and verde:
+  1248	                    if contar:
+  1249	                        _filt_stats("bloq_vela")
+  1250	                    return False, "ultima vela 1H verde (sin confirmacion)"
+  1251	        if contar:
+  1252	            _filt_stats("pasan")
+  1253	        return True, None
+  1254	    except Exception as e:
+  1255	        try:
+  1256	            print("[FILTRO] " + str(base) + ": error " + str(e) + " -> no bloqueo")
+  1257	        except Exception:
+  1258	            pass
+  1259	        return True, None
+  1260	
+  1261	
+  1262	_filt_scan5 = scan_coins
+  1263	
+  1264	
+  1265	def scan_coins(exclude_symbols=None):
+  1266	    cands = _filt_scan5(exclude_symbols)
+  1267	    out = []
+  1268	    for c in (cands or []):
+  1269	        ok, motivo = _filt_veredicto(c["symbol"], c.get("direction", "LONG"), c.get("entry"))
+  1270	        if ok:
+  1271	            out.append(c)
+  1272	        else:
+  1273	            print("[FILTRO] " + c["symbol"] + " " + str(c.get("direction")) + " BLOQUEADA: " + motivo)
+  1274	    return out
+  1275	
+  1276	
+  1277	_filt_open5 = open_position
+  1278	
+  1279	
+  1280	def open_position(plan):
+  1281	    ok, motivo = _filt_veredicto(plan["symbol"], plan.get("direction", "LONG"), plan.get("entry"))
+  1282	    if not ok:
+  1283	        raise RuntimeError(plan["symbol"] + ": BLOQUEADA por filtro (" + motivo + ")")
+  1284	    return _filt_open5(plan)
+  1285	
+  1286	
+  1287	def filtros_diagnostico():
+  1288	    # Ver los filtros en vivo sin operar. Requiere cliente inicializado:
+  1289	    #   RB.client = okx_client.Cliente(...)
+  1290	    print("=== DIAGNOSTICO FILTROS (sep_max=%.1f%%, vela=%s) ==="
+  1291	          % (EMA_SEP_MAX_PCT, "ON" if CONF_VELA_ON else "OFF"))
+  1292	    for base in SYMBOLS:
+  1293	        try:
+  1294	            kl4 = [x for x in (_filt_kl(base, "4H", 120) or []) if str(x.get("confirm", "1")) != "0"]
+  1295	            kl1 = [x for x in (_filt_kl(base, "1H", 30) or []) if str(x.get("confirm", "1")) != "0"]
+  1296	            if len(kl4) < 55 or not kl1:
+  1297	                print("%-6s sin datos suficientes" % base)
+  1298	                continue
+  1299	            c4 = [x["close"] for x in kl4]
+  1300	            e20 = _filt_ema(c4, 20)
+  1301	            e50 = _filt_ema(c4, 50)
+  1302	            px = float(kl1[-1]["close"])
+  1303	            sep = abs(e20 - e50) / e50 * 100.0
+  1304	            okl, ml = _filt_veredicto(base, "LONG", px, contar=False)
+  1305	            oks, ms = _filt_veredicto(base, "SHORT", px, contar=False)
+  1306	            print("%-6s px=%-11.6g EMA20-4H=%-11.6g sep=%5.2f%%  LONG:%s SHORT:%s"
+  1307	                  % (base, px, e20, sep, "SI " if okl else "NO", "SI " if oks else "NO"))
+  1308	        except Exception as e:
+  1309	            print("%-6s ERROR %s" % (base, str(e)[:60]))
+  1310	    print("(LONG: precio>EMA20-4H, vela verde y sep<=max | SHORT: al reves)")
+  1311	
+  1312	
+  1313	if __name__ == "__main__":
+  1314	    try:
+  1315	        sys.stdout.reconfigure(line_buffering=True)
+  1316	    except Exception:
+  1317	        pass
+  1318	    main()
+
+===== 8. MAPA okx_demo_bot.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""BOT DEMO OKX (X-Perps) 24/7 — migración de demo_bot.py (Bitget) a OKX Europa.
+     4	
+     5	Usa la cuenta DEMO de OKX (cabecera x-simulated-trading: 1, dinero virtual).
+     6	Misma estrategia que el demo de Bitget:
+     7	  - Escanea la watchlist (velas 1H), EMA20/50 + ATR + alineación 1H.
+     8	  - Abre posición a mercado con SL (order-algo) + 5 TP parciales (20% c/u).
+     9	  - Break-even al 1:1 (cancela el SL y lo recrea en la entrada).
+    10	  - Avisa por Telegram (Estado / Saldo / cierres).
+    11	
+    12	Credenciales DEMO via env: OKX_DEMO_KEY / OKX_DEMO_SECRET / OKX_DEMO_PASSPHRASE
+    13	"""
+    14	import os
+    15	import sys
+    16	import json
+    17	import time
+    18	import threading
+    19	import urllib.request
+    20	import urllib.parse
+    21	from datetime import datetime, timezone
+    22	
+    23	try:
+    24	    from zoneinfo import ZoneInfo
+    25	    MAD = ZoneInfo("Europe/Madrid")
+    26	except Exception:
+    27	    MAD = timezone.utc
+    28	
+    29	sys.path.insert(0, "/root")
+    30	import okx_client as OKX
+    31	
+    32	# ------------------------------------------------------------------ CONFIG
+    33	RISK_USD       = float(os.environ.get("RISK_USD", "10.0"))
+    34	MAX_OPS        = int(os.environ.get("MAX_OPS", "5"))
+    35	LEVERAGE       = int(os.environ.get("LEVERAGE", "10"))
+    36	SCAN_EVERY_SEC = int(os.environ.get("SCAN_EVERY_SEC", "900"))
+    37	WATCH_EVERY_SEC = int(os.environ.get("WATCH_EVERY_SEC", "60"))
+    38	
+    39	EMA_FAST = 20
+    40	EMA_SLOW = 50
+    41	ATR_PERIOD = 14
+    42	ATR_MULT_SL = 1.5
+    43	ATR_MULT_TP = 3.0
+    44	MIN_TREND_SCORE = float(os.environ.get("MIN_TREND_SCORE", "3.0"))
+    45	
+    46	MULTI_TP_ENABLED = True
+    47	TP_LEVELS = [
+    48	    {"atr_mult": 1.0, "exit_pct": 20},
+    49	    {"atr_mult": 1.5, "exit_pct": 20},
+    50	    {"atr_mult": 2.0, "exit_pct": 20},
+    51	    {"atr_mult": 2.5, "exit_pct": 20},
+    52	    {"atr_mult": 3.0, "exit_pct": 20},
+    53	]
+    54	BREAKEVEN_ENABLED = True
+    55	BREAKEVEN_BUFFER = 0.0015
+    56	
+    57	# Monedas base con X-Perp en DEMO (ctVal razonable). Se resuelven a su instId.
+    58	SYMBOLS = ["DOGE", "ETH", "XRP", "FIL", "ID", "ZEC", "UNI", "AVAX", "NEAR",
+    59	           "BCH", "ETC", "ONDO", "IOST", "ORBS", "HYPE", "GRASS", "IP", "KAITO"]
+    60	
+    61	DEMO_KEY = os.environ.get("OKX_DEMO_KEY", "").strip()
+    62	DEMO_SECRET = os.environ.get("OKX_DEMO_SECRET", "").strip()
+    63	DEMO_PASSPHRASE = os.environ.get("OKX_DEMO_PASSPHRASE", "").strip()
+    64	
+    65	TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    66	TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    67	
+    68	MANAGE_FILE = "/root/okx_demo_managed.json"
+    69	NOTIFIED_FILE = "/root/okx_demo_notified.json"
+    70	
+    71	client = None
+    72	
+    73	
+    74	# ------------------------------------------------------------------ TELEGRAM
+    75	def _tg_send_kb(texto, keyboard):
+    76	    if not (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID):
+    77	        return False
+    78	    try:
+    79	        payload = {"chat_id": TELEGRAM_CHAT_ID, "text": texto,
+    80	                   "reply_markup": json.dumps(keyboard)}
+    81	        data = urllib.parse.urlencode(payload).encode()
+    82	        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    83	        req = urllib.request.Request(url, data=data, method="POST")
+    84	        with urllib.request.urlopen(req, timeout=15) as r:
+    85	            return r.status == 200
+    86	    except Exception as e:
+    87	        print(f"  [telegram] {e}")
+    88	        return False
+    89	
+    90	
+    91	def teclado_demo():
+    92	    return {"keyboard": [["📊 Estado"], ["💰 Saldo"]], "resize_keyboard": True}
+    93	
+    94	
+    95	def enviar(texto):
+    96	    return _tg_send_kb(texto, teclado_demo())
+    97	
+    98	
+    99	# ------------------------------------------------------------------ ESTADO
+   100	def load_managed():
+   101	    try:
+   102	        with open(MANAGE_FILE) as f:
+   103	            return json.load(f)
+   104	    except Exception:
+   105	        return {}
+   106	
+   107	
+   108	def save_managed(m):
+   109	    try:
+   110	        with open(MANAGE_FILE, "w") as f:
+   111	            json.dump(m, f, indent=2)
+   112	    except Exception:
+   113	        pass
+   114	
+   115	
+   116	def load_notified():
+   117	    try:
+   118	        with open(NOTIFIED_FILE) as f:
+   119	            d = json.load(f)
+   120	        return d if isinstance(d, dict) else {}
+   121	    except Exception:
+   122	        return {}
+   123	
+   124	
+   125	def save_notified(d):
+   126	    try:
+   127	        with open(NOTIFIED_FILE, "w") as f:
+   128	            json.dump(d, f)
+   129	    except Exception:
+   130	        pass
+   131	
+   132	
+   133	# ------------------------------------------------------------------ INDICADORES
+   134	def ema(v, p):
+   135	    if len(v) < p:
+   136	        return []
+   137	    k = 2.0 / (p + 1)
+   138	    c = sum(v[:p]) / p
+   139	    out = [c]
+   140	    for x in v[p:]:
+   141	        c = x * k + c * (1 - k)
+   142	        out.append(c)
+   143	    return out
+   144	
+   145	
+   146	def atr(h, l, c, p):
+   147	    if len(c) < p + 1:
+   148	        return None
+   149	    trs = [max(h[i] - l[i], abs(h[i] - c[i - 1]), abs(l[i] - c[i - 1]))
+   150	           for i in range(1, len(c))]
+   151	    cur = sum(trs[:p]) / p
+   152	    for tr in trs[p:]:
+   153	        cur = (cur * (p - 1) + tr) / p
+   154	    return cur
+   155	
+   156	
+   157	# ------------------------------------------------------------------ MERCADO
+   158	def get_klines(base, tf="1H", limit=200):
+   159	    inst_id = client.inst_id(base)
+   160	    if not inst_id:
+   161	        return []
+   162	    return client.velas(inst_id, bar=tf, limit=limit)
+   163	
+   164	
+   165	def get_klines_tf(base, tf):
+   166	    return get_klines(base, tf=tf)
+   167	
+   168	
+   169	def info_instr(base):
+   170	    inst_id = client.inst_id(base)
+   171	    if not inst_id:
+   172	        return None
+   173	    return client.info_instr(inst_id)
+   174	
+   175	
+   176	def ticker_precio(base):
+   177	    inst_id = client.inst_id(base)
+   178	    if not inst_id:
+   179	        return 0.0
+   180	    return float(client.ticker(inst_id).get("last", 0) or 0)
+   181	
+   182	
+   183	# ------------------------------------------------------------------ POSICIONES
+   184	def get_all_positions():
+   185	    out = []
+   186	    for p in client.posiciones():
+   187	        try:
+   188	            pos = float(p.get("pos", 0) or 0)
+   189	        except Exception:
+   190	            pos = 0.0
+   191	        if pos == 0:
+   192	            continue
+   193	        out.append({
+   194	            "symbol": p.get("instId", "?"),
+   195	            "base": p.get("instId", "?").split("-")[0],
+   196	            "direction": "LONG" if pos > 0 else "SHORT",
+   197	            "qty": abs(pos),
+   198	            "entry": float(p.get("avgPx", 0) or 0),
+   199	            "mark": float(p.get("markPx", 0) or p.get("last", 0) or 0),
+   200	            "pnl": float(p.get("upl", 0) or 0),
+   201	            "uplRatio": float(p.get("uplRatio", 0) or 0),
+   202	            "lever": p.get("lever", "?"),
+   203	        })
+   204	    return out
+   205	
+   206	
+   207	# ------------------------------------------------------------------ SCAN
+   208	def scan_coins(exclude_symbols=None):
+   209	    exclude_symbols = exclude_symbols or set()
+   210	    results = []
+   211	    for base in SYMBOLS:
+   212	        if base in exclude_symbols:
+   213	            continue
+   214	        try:
+   215	            kl = get_klines(base, "1H")
+   216	            if len(kl) < EMA_SLOW + ATR_PERIOD + 5:
+   217	                continue
+   218	            highs = [k["high"] for k in kl]
+   219	            lows = [k["low"] for k in kl]
+   220	            closes = [k["close"] for k in kl]
+   221	            e20 = ema(closes, EMA_FAST); e50 = ema(closes, EMA_SLOW)
+   222	            a = atr(highs, lows, closes, ATR_PERIOD)
+   223	            if not a or a <= 0:
+   224	                continue
+   225	            slope = e50[-1] - e50[-6] if len(e50) >= 6 else 0.0
+   226	            lc = closes[-1]
+   227	            bull = e20[-1] > e50[-1] and lc > e20[-1] and slope > 0
+   228	            bear = e20[-1] < e50[-1] and lc < e20[-1] and slope < 0
+   229	            if not (bull or bear):
+   230	                continue
+   231	            direction = "LONG" if bull else "SHORT"
+   232	            sep = abs(e20[-1] - e50[-1]) / lc * 100
+   233	            pend = abs(slope) / lc * 100
+   234	            score = sep + pend * 3
+   235	            if score < MIN_TREND_SCORE:
+   236	                continue
+   237	            info = info_instr(base)
+   238	            if not info:
+   239	                continue
+   240	            results.append({"symbol": base, "direction": direction,
+   241	                            "score": score, "entry": lc, "atr": a, "info": info})
+   242	        except Exception as e:
+   243	            print(f"  [scan] {base}: {e}")
+   244	            continue
+   245	        time.sleep(0.05)
+   246	    results.sort(key=lambda x: -x["score"])
+   247	    return results
+   248	
+   249	
+   250	def build_plan(best):
+   251	    base = best["symbol"]; direction = best["direction"]
+   252	    info = best["info"]; entry = best["entry"]; atr_val = best["atr"]
+   253	
+   254	    stop_dist = atr_val * ATR_MULT_SL
+   255	    if stop_dist <= 0:
+   256	        stop_dist = entry * 0.015
+   257	    if direction == "LONG":
+   258	        stop = entry - stop_dist
+   259	        side = "buy"
+   260	        side_cierre = "sell"
+   261	    else:
+   262	        stop = entry + stop_dist
+   263	        side = "sell"
+   264	        side_cierre = "buy"
+   265	
+   266	    ct_val = float(info.get("ctVal", 0) or 0)
+   267	    if ct_val <= 0:
+   268	        return None
+   269	    # contratos = riesgo / (valor de 1 contrato * distancia al SL)
+   270	    contratos = RISK_USD / (ct_val * stop_dist)
+   271	    contratos = max(1, int(round(contratos)))
+   272	    # tope de margen: no usar más del ~25% del disponible con el lev elegido
+   273	    try:
+   274	        bal = client.saldo()
+   275	        disp = bal.get("available", 0) if bal else 0
+   276	        dist_frac = stop_dist / entry if entry else 0.02
+   277	        lev = max(1, min(LEVERAGE, int(1 / (5 * dist_frac)) if dist_frac > 0 else LEVERAGE))
+   278	        nocional = contratos * ct_val * entry
+   279	        if disp > 0 and nocional > disp * lev * 0.25:
+   280	            contratos = max(1, int(disp * lev * 0.25 / (ct_val * entry)))
+   281	    except Exception:
+   282	        lev = LEVERAGE
+   283	
+   284	    tp_levels = []
+   285	    if MULTI_TP_ENABLED:
+   286	        parts = []
+   287	        remaining = contratos
+   288	        for i, lvl in enumerate(TP_LEVELS):
+   289	            if i == len(TP_LEVELS) - 1:
+   290	                parts.append(remaining)
+   291	            else:
+   292	                part = max(0, min(round(contratos * lvl["exit_pct"] / 100.0),
+   293	                                 remaining))
+   294	                parts.append(part)
+   295	                remaining -= part
+   296	        for i, lvl in enumerate(TP_LEVELS):
+   297	            dist = atr_val * lvl["atr_mult"]
+   298	            precio = entry + dist if direction == "LONG" else entry - dist
+   299	            tp_levels.append({"price": round(precio, 8),
+   300	                              "sz": parts[i],
+   301	                              "atr_mult": lvl["atr_mult"]})
+   302	
+   303	    return {"symbol": base, "direction": direction, "side": side,
+   304	            "side_cierre": side_cierre, "entry": entry, "stop": round(stop, 8),
+   305	            "atr": atr_val, "contratos": contratos, "lev": lev,
+   306	            "ct_val": ct_val, "tp_levels": tp_levels}
+   307	
+   308	
+   309	# ------------------------------------------------------------------ ÓRDENES
+   310	def set_leverage(base, lev):
+   311	    inst_id = client.inst_id(base)
+   312	    try:
+   313	        client.set_apalancamiento(inst_id, lev)
+   314	    except Exception as e:
+   315	        print(f"  [aviso] palanca {base}: {e}")
+   316	
+   317	
+   318	def open_position(plan):
+   319	    base = plan["symbol"]
+   320	    inst_id = client.inst_id(base)
+   321	    if not inst_id:
+   322	        raise RuntimeError(f"{base}: sin X-Perp en demo")
+   323	
+   324	    set_leverage(base, plan["lev"])
+   325	
+   326	    # 1) orden a mercado
+   327	    r = client.orden_mercado(inst_id, plan["side"], plan["contratos"])
+   328	    oid = (r.get("data") or [{}])[0].get("ordId")
+   329	    print(f"  >>> ORDEN DEMO {base} {plan['direction']} {plan['contratos']} ct (ordId={oid}) <<<")
+   330	    time.sleep(1.5)
+   331	
+   332	    # 2) SL total
+   333	    sl_id = client.orden_algo_sl(inst_id, plan["side_cierre"], plan["stop"],
+   334	                                 plan["contratos"])
+   335	    print(f"  -> SL @ {plan['stop']} (algoId={sl_id})")
+   336	
+   337	    # 3) TPs parciales
+   338	    tps_colocados = []
+   339	    for i, lvl in enumerate(plan["tp_levels"], 1):
+   340	        if lvl["sz"] <= 0:
+   341	            continue
+   342	        try:
+   343	            aid = client.orden_algo_tp(inst_id, plan["side_cierre"],
+   344	                                       lvl["price"], lvl["sz"])
+   345	            tps_colocados.append({"nivel": f"{lvl['atr_mult']:.1f}R",
+   346	                                  "precio": lvl["price"], "sz": lvl["sz"],
+   347	                                  "algoId": aid})
+   348	            print(f"  -> TP parcial {lvl['atr_mult']:.1f}R @ {lvl['price']} ({lvl['sz']} ct)")
+   349	        except Exception as e:
+   350	            print(f"  [aviso] TP{i}: {e}")
+   351	
+   352	    managed = load_managed()
+   353	    managed[f"{base}:{plan['direction']}"] = {
+   354	        "symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   355	        "contratos": plan["contratos"], "sl_algo_id": sl_id, "state": "opened",
+   356	        "risk_usd": RISK_USD, "opened_at": time.time(),
+   357	        "dist": round((plan["atr"] * ATR_MULT_SL) / plan["entry"], 8),
+   358	        "initial_sl": plan["stop"],
+   359	        "tp_levels": tps_colocados,
+   360	    }
+   361	    save_managed(managed)
+   362	    return {"symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   363	            "contratos": plan["contratos"], "sl": plan["stop"],
+   364	            "risk": plan["contratos"] * plan["ct_val"] * (plan["atr"] * ATR_MULT_SL)}
+   365	
+   366	
+   367	def close_position(base, direction):
+   368	    inst_id = client.inst_id(base)
+   369	    client.cerrar(inst_id, direction.lower())
+   370	
+   371	
+   372	# ------------------------------------------------------------------ GESTIÓN
+   373	# === FIXTS_ARENA: trailing stop automatico ===
+   374	TRAILING_ACTIVAR = True      # False = comportamiento clasico (BE fijo)
+   375	TRAILING_CALLBACK = 0.03     # porcentaje de persecucion (3%)
+   376	TRAILING_DESDE_R = 1.5       # activacion con +1.5R de ganancia flotante
+   377	TRAILING_CANCELAR_TPS = True # al activarse: SL y TPs fuera, manda el trailing
+   378	
+   379	def manage_positions():
+   380	    positions = get_all_positions()
+   381	    pos_map = {}
+   382	    for p in positions:
+   383	        # FIXK_ARENA: clave CON espacio (igual que open_position y el panel)
+   384	        pos_map[f"{p['base']}: {p['direction']}"] = p
+   385	
+   386	    managed = load_managed()
+   387	    changed = False
+   388	    notified = load_notified()
+   389	
+   390	    for key, m in list(managed.items()):
+   391	        base = m["symbol"]; direction = m["direction"]
+   392	        inst_id = client.inst_id(base)
+   393	        if not inst_id:
+   394	            continue
+   395	        p = pos_map.get(key)
+   396	        if not p:
+   397	            # FIXW_ARENA: exigir 2 pasadas consecutivas sin verla (evita borrados por fallo de API)
+   398	            m["ausente"] = int(m.get("ausente", 0)) + 1
+   399	            if m["ausente"] < 2:
+   400	                changed = True
+   401	                continue
+   402	            # la posición se cerró del todo (TPs/SL): leer P&L realizado
+   403	            detalle = ""
+   404	            ya_avisado = False
+   405	            try:
+   406	                hist = client.posiciones_cerradas(inst_id, limit=3)
+   407	                if hist:
+   408	                    ult = hist[0]
+   409	                    pnl = float(ult.get("pnl", 0) or 0)
+   410	                    close_px = float(ult.get("closeAvgPx", 0) or 0)
+   411	                    utime = str(ult.get("uTime", ""))
+   412	                    ic = "🟢" if pnl >= 0 else "🔴"
+   413	                    detalle = f" · {ic} {pnl:+.2f} USDC"
+   414	                    if close_px:
+   415	                        detalle += f" (cierre {close_px:g})"
+   416	                    # no repetir el mismo cierre (dedupe por uTime)
+   417	                    if utime and notified.get(base) == utime:
+   418	                        ya_avisado = True
+   419	                    elif utime:
+   420	                        notified[base] = utime
+   421	            except Exception as e:
+   422	                print(f"  [cierre] histórico: {e}")
+   423	            if not ya_avisado:
+   424	                enviar(f"🔔 *Posición DEMO cerrada*: {base} {direction}\n"
+   425	                       f"(entrada ~{m.get('entry'):g}{detalle})")
+   426	            # FIXR_ARENA: cancelar algos huerfanos del cierre
+   427	            try:
+   428	                _nz = client.cancelar_todas_algo(inst_id)
+   429	                if _nz:
+   430	                    print("  [LIMPIEZA] " + base + ": " + str(_nz) + " orden(es) huerfana(s) cancelada(s)")
+   431	            except Exception as _ez:
+   432	                print("  [LIMPIEZA] " + base + ": " + str(_ez))
+   433	            del managed[key]
+   434	            changed = True
+   435	            continue
+   436	
+   437	        if m.get("ausente"):
+   438	            m["ausente"] = 0
+   439	            changed = True
+   440	        qty = p["qty"]; unreal = p["pnl"]
+   441	        # === FIXTS_ARENA: a +TRAILING_DESDE_R el BE fijo se convierte en TRAILING ===
+   442	        try:
+   443	            if (TRAILING_ACTIVAR and m and not m.get("trail_algo_id")
+   444	                    and m.get("state") != "trailing"):
+   445	                _riesgo = float(m.get("risk_usd", 0) or 0)
+   446	                _rr = (float(unreal or 0) / _riesgo) if _riesgo > 0 else 0.0
+   447	                if _rr >= TRAILING_DESDE_R:
+   448	                    _iid = client.inst_id(p.get("base", ""))
+   449	                    if _iid:
+   450	                        _ya = client.trailing_pendientes(_iid)
+   451	                        if _ya:
+   452	                            m["trail_algo_id"] = _ya[0].get("algoId")
+   453	                            m["state"] = "trailing"
+   454	                            try:
+   455	                                client.cancelar_algo(_iid, m.get("sl_algo_id"))
+   456	                            except Exception:
+   457	                                pass
+   458	                            if TRAILING_CANCELAR_TPS:
+   459	                                for _tp in (m.get("tp_levels") or []):
+   460	                                    try:
+   461	                                        client.cancelar_algo(_iid, _tp.get("algoId"))
+   462	                                    except Exception:
+   463	                                        pass
+   464	                            changed = True
+   465	                            print("  [TRAILING] " + p.get("base", "?") + ": trailing ya existente -> registrado")
+   466	                        else:
+   467	                            _pz = next((abs(int(float(_pp.get("pos", 0) or 0)))
+   468	                                        for _pp in (client.posiciones() or [])
+   469	                                        if _pp.get("instId") == _iid), 0)
+   470	                            if _pz > 0:
+   471	                                _lado = "sell" if p.get("direction") == "LONG" else "buy"
+   472	                                _aid = client.orden_trailing(_iid, _lado,
+   473	                                                             TRAILING_CALLBACK, _pz)
+   474	                                if _aid:
+   475	                                    m["trail_algo_id"] = _aid
+   476	                                    m["state"] = "trailing"
+   477	                                    try:
+   478	                                        client.cancelar_algo(_iid, m.get("sl_algo_id"))
+   479	                                    except Exception:
+   480	                                        pass
+   481	                                    if TRAILING_CANCELAR_TPS:
+   482	                                        for _tp in (m.get("tp_levels") or []):
+   483	                                            try:
+   484	                                                client.cancelar_algo(_iid, _tp.get("algoId"))
+   485	                                            except Exception:
+   486	                                                pass
+   487	                                    changed = True
+   488	                                    print("  [TRAILING] " + p.get("base", "?") + ": colocado #" + str(_aid)
+   489	                                          + " (cb " + str(int(TRAILING_CALLBACK * 100)) + "%, "
+   490	                                          + str(_pz) + " ct) | SL y TPs retirados")
+   491	                                else:
+   492	                                    print("  [TRAILING] " + p.get("base", "?") + ": fallo al colocar (reintenta)")
+   493	        except Exception as _et:
+   494	            print("  [TRAILING] error: " + str(_et)[:80])
+   495	
+   496	        entry = float(p.get("entry", 0) or 0)
+   497	        dist = float(m.get("dist", 0) or 0)
+   498	        risk_actual = float(m.get("risk_usd", RISK_USD) or RISK_USD)
+   499	
+   500	        # Cierre PARCIAL (TPs): avisar cuando la cantidad baja
+   501	        qty_ant = float(m.get("qty_vista", qty) or qty)
+   502	        if qty_ant - qty >= 1e-9:
+   503	            cerr = int(qty_ant - qty)
+   504	            enviar(f"✅ *TP parcial (DEMO)*: {base} {direction}\n"
+   505	                   f"Cerrados ~{cerr} ct · quedan {qty:g} ct · "
+   506	                   f"P&L actual {unreal:+.2f} USDC")
+   507	        m["qty_vista"] = qty
+   508	
+   509	        # Break-even al 1:1: cancelar SL y recrearlo en la entrada (+buffer)
+   510	        if (BREAKEVEN_ENABLED and m.get("state") == "opened"
+   511	                and unreal >= risk_actual):
+   512	            be_price = (entry * (1 + BREAKEVEN_BUFFER) if direction == "LONG"
+   513	                        else entry * (1 - BREAKEVEN_BUFFER))
+   514	            try:
+   515	                client.cancelar_algo(inst_id, m.get("sl_algo_id"))
+   516	            except Exception as e:
+   517	                print(f"  [BE] cancelar SL: {e}")
+   518	            try:
+   519	                nuevo_sl = client.orden_algo_sl(inst_id,
+   520	                                                "sell" if direction == "LONG" else "buy",
+   521	                                                be_price, int(qty))
+   522	                m["sl_algo_id"] = nuevo_sl
+   523	                m["state"] = "breakeven"
+   524	                changed = True
+   525	                print(f"  [BE] {base} {direction} SL a BREAK-EVEN @ {be_price}")
+   526	                enviar(f"🛡️ *{base} {direction} (DEMO)* — SL a break-even @ {be_price:.6g}")
+   527	            except Exception as e:
+   528	                print(f"  [BE] recrear SL: {e}")
+   529	
+   530	    if changed:
+   531	        save_managed(managed)
+   532	    if notified != load_notified():
+   533	        save_notified(notified)
+   534	
+   535	
+   536	# ------------------------------------------------------------------ BOTONES
+   537	MARCADORES = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣",
+   538	              "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+   539	
+   540	
+   541	def boton_estado():
+   542	    pos = get_all_positions()
+   543	    if not pos:
+   544	        enviar("ℹ️ No hay posiciones demo abiertas ahora.")
+   545	        return
+   546	    managed = load_managed()
+   547	    lineas = []
+   548	    for i, p in enumerate(pos):
+   549	        marca = MARCADORES[i] if i < len(MARCADORES) else f"{i+1}."
+   550	        sym = p["symbol"]; d = p["direction"]
+   551	        # Color del P&L: azul positivo, rojo negativo, gris en 0
+   552	        pnl = p["pnl"]
+   553	        if pnl > 0.005:
+   554	            ic, pnl_txt = "🔵", f"{pnl:+.2f}"
+   555	        elif pnl < -0.005:
+   556	            ic, pnl_txt = "🔴", f"{pnl:+.2f}"
+   557	        else:
+   558	            ic, pnl_txt = "⚪️", "0.00"
+   559	        linea = (f"{marca} {sym} {d} · {p['qty']:g} ct · ent {p['entry']:g} · "
+   560	                 f"mark {p['mark']:g} · P&L {ic} {pnl_txt} USD")
+   561	        m = managed.get(f"{p['base']}:{d}")
+   562	        if m and m.get("state") == "breakeven":
+   563	            linea += " · 🔒 SL en BE"
+   564	        # FIXBE_ARENA: BE real segun el SL vivo del exchange (vale tambien para fantasmas)
+   565	        try:
+   566	            _g = globals()
+   567	            if _g.get("_FIXBE_TS") is None or time.time() - _g["_FIXBE_TS"] > 60:
+   568	                _slm = {}
+   569	                for _a in client.algo_pendientes() or []:
+   570	                    if _a.get("slTriggerPx"):
+   571	                        _slm[_a.get("instId", "")] = float(_a["slTriggerPx"])
+   572	                _g["_FIXBE_SL"] = _slm
+   573	                _g["_FIXBE_TS"] = time.time()
+   574	            _slp = (_g.get("_FIXBE_SL") or {}).get(sym)
+   575	            if _slp and ((d == "LONG" and _slp >= p["entry"]) or (d == "SHORT" and _slp <= p["entry"])):
+   576	                if "BE" not in linea:
+   577	                    linea += " | 🔒 BE"
+   578	        except Exception:
+   579	            pass
+   580	        # FIXBET_ARENA: indicador de TRAILING (cajon move_order_stop, invisible para FIXBE)
+   581	        try:
+   582	            _g = globals()
+   583	            if _g.get("_FIXT_TS") is None or time.time() - _g["_FIXT_TS"] > 60:
+   584	                _trm = {}
+   585	                for _a in client.trailing_pendientes() or []:
+   586	                    _mp = _a.get("moveTriggerPx")
+   587	                    if _mp:
+   588	                        _trm[_a.get("instId", "")] = _mp
+   589	                _g["_FIXT_M"] = _trm
+   590	                _g["_FIXT_TS"] = time.time()
+   591	            _trp = (_g.get("_FIXT_M") or {}).get(sym)
+   592	            if _trp:
+   593	                _stop = float(_trp or 0)
+   594	                _pxv = 0.0
+   595	                try:
+   596	                    _pxv = float((client.ticker(sym) or {}).get("last", 0) or 0)
+   597	                except Exception:
+   598	                    pass
+   599	                _ent = float(p.get("entry", 0) or 0)
+   600	                _upl = float(p.get("pnl") or p.get("upl") or 0)
+   601	                _lock = None
+   602	                if _stop > 0 and _ent > 0 and _pxv > 0 and _pxv != _ent:
+   603	                    _lock = _upl * (_stop - _ent) / (_pxv - _ent)
+   604	                if _lock is not None and _lock > 0:
+   605	                    linea += " | \U0001F397 asegura +$%.2f" % _lock
+   606	                else:
+   607	                    linea += " | \U0001F397 Trail@%s" % _trp
+   608	        except Exception:
+   609	            pass
+   610	        lineas.append(linea)
+   611	    enviar("📊 *Estado de posiciones (DEMO OKX)*\n\n" + "\n".join(lineas))
+   612	
+   613	
+   614	def boton_saldo():
+   615	    bal = client.saldo()
+   616	    if not bal:
+   617	        enviar("❌ No pude leer el saldo demo.")
+   618	        return
+   619	    enviar("💰 *Saldo de la cuenta (DEMO OKX)*\n\n"
+   620	           f"• Equity total: *{bal['equity']:.2f} USD*\n"
+   621	           f"• Disponible (USDC): {bal['available']:.2f} USDC\n"
+   622	           f"• P&L no realizado: {bal['unrealized']:+.2f} USD")
+   623	
+   624	
+   625	def telegram_listener():
+   626	    offset = 0
+   627	    try:
+   628	        url = (f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
+   629	               f"?offset=-1&timeout=1")
+   630	        with urllib.request.urlopen(url, timeout=10) as r:
+   631	            d = json.loads(r.read().decode())
+   632	            ups = d.get("result") or []
+   633	            if ups:
+   634	                offset = ups[-1]["update_id"] + 1
+   635	    except Exception:
+   636	        pass
+   637	    print("[telegram] hilo del menú DEMO OKX activo")
+   638	    while True:
+   639	        try:
+   640	            url = (f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
+   641	                   f"?offset={offset}&timeout=25"
+   642	                   f"&allowed_updates=%5B%22message%22%5D")
+   643	            with urllib.request.urlopen(url, timeout=35) as r:
+   644	                d = json.loads(r.read().decode())
+   645	            for upd in d.get("result") or []:
+   646	                offset = max(offset, upd["update_id"] + 1)
+   647	                msg = upd.get("message") or {}
+   648	                chat = (msg.get("chat") or {}).get("id")
+   649	                if str(chat) != str(TELEGRAM_CHAT_ID):
+   650	                    continue
+   651	                texto = msg.get("text") or ""
+   652	                import unicodedata as _ud
+   653	                norm = "".join(c for c in _ud.normalize("NFKD", texto.lower())
+   654	                               if not _ud.combining(c))
+   655	                norm = "".join(c for c in norm if c.isalpha())
+   656	                if texto.strip().startswith("/start") or norm == "estado":
+   657	                    boton_estado()
+   658	                elif norm == "saldo":
+   659	                    boton_saldo()
+   660	        except Exception:
+   661	            time.sleep(5)
+   662	
+   663	
+   664	# ------------------------------------------------------------------ MAIN
+   665	def main():
+   666	    global client
+   667	    if not (DEMO_KEY and DEMO_SECRET and DEMO_PASSPHRASE):
+   668	        print("ERROR: faltan OKX_DEMO_* en el entorno")
+   669	        sys.exit(1)
+   670	
+   671	    client = OKX.Cliente(DEMO_KEY, DEMO_SECRET, DEMO_PASSPHRASE, demo=True)
+   672	    bal = client.saldo()
+   673	    print(f"=== BOT DEMO OKX | riesgo {RISK_USD} USD | lev máx {LEVERAGE}x ===")
+   674	    print(f"[auth OK] cuenta DEMO OKX — equity {bal['equity']:.2f} {bal['ccy']}")
+   675	
+   676	    if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
+   677	        threading.Thread(target=telegram_listener, daemon=True).start()
+   678	        enviar("🎛 *Bot DEMO OKX arrancado.*\n\n📊 Estado · 💰 Saldo")
+   679	
+   680	    last_scan = 0
+   681	    last_manage = 0
+   682	    while True:
+   683	        try:
+   684	            if time.time() - last_manage >= WATCH_EVERY_SEC:
+   685	                last_manage = time.time()
+   686	                manage_positions()
+   687	
+   688	            open_positions = get_all_positions()
+   689	            open_bases = set(p["base"] for p in open_positions)
+   690	
+   691	            if time.time() - last_scan >= SCAN_EVERY_SEC:
+   692	                last_scan = time.time()
+   693	                if len(open_positions) < MAX_OPS:
+   694	                    print(f"[scan] {len(open_positions)}/{MAX_OPS} posiciones demo, escaneando…")
+   695	                    candidates = scan_coins(exclude_symbols=open_bases)
+   696	                    for cand in candidates:
+   697	                        if len(get_all_positions()) >= MAX_OPS:
+   698	                            break
+   699	                        print(f"*** SEÑAL {cand['direction']} en {cand['symbol']} "
+   700	                              f"(score={cand['score']:.2f}) ***")
+   701	                        plan = build_plan(cand)
+   702	                        if not plan:
+   703	                            continue
+   704	                        try:
+   705	                            res = open_position(plan)
+   706	                            enviar(f"🔔 *Posición abierta (DEMO)*: {res['direction']} {res['symbol']}\n"
+   707	                                   f"Entrada ~{res['entry']:.6g} · {res['contratos']} ct\n"
+   708	                                   f"SL {res['sl']:.6g} · riesgo ~{res['risk']:.2f} USD")
+   709	                        except Exception as e:
+   710	                            print(f"  [error] {cand['symbol']}: {e}")
+   711	
+   712	            if open_positions:
+   713	                for p in open_positions:
+   714	                    print(f"  [DEMO] {p['symbol']} {p['direction']} P&L={p['pnl']:+.2f}")
+   715	        except KeyboardInterrupt:
+   716	            print("\nBot demo OKX detenido.")
+   717	            break
+   718	        except Exception as e:
+   719	            print(f"  [error loop] {e}")
+   720	        time.sleep(10)
+   721	
+   722	
+   723	# === FIXD_ARENA: blacklist + protecciones de gestion + SL seguro ===
+   724	import okx_client as _OKX_BL
+   725	_BL_FILE = "/root/okx_demo_blacklist.json"
+   726	def _bl_load():
+   727	    try:
+   728	        return set(json.load(open(_BL_FILE)))
+   729	    except Exception:
+   730	        return set()
+   731	def _bl_add(b):
+   732	    s = _bl_load()
+   733	    s.add(b)
+   734	    try:
+   735	        json.dump(sorted(s), open(_BL_FILE, "w"))
+   736	    except Exception:
+   737	        pass
+   738	_orig_om = _OKX_BL.Cliente.orden_mercado
+   739	def _om_bl(self, inst_id, side, sz, tp_px=None, sl_px=None):
+   740	    try:
+   741	        return _orig_om(self, inst_id, side, sz, tp_px=tp_px, sl_px=sl_px)
+   742	    except Exception as e:
+   743	        m = str(e).lower()
+   744	        if "51155" in m or "compliance" in m or "restrict" in m or "can't trade" in m or "cant trade" in m:
+   745	            b = inst_id.split("-")[0]
+   746	            _bl_add(b)
+   747	            global SYMBOLS
+   748	            if b in SYMBOLS:
+   749	                SYMBOLS = [s for s in SYMBOLS if s != b]
+   750	            print("[BLACKLIST] " + b + " restringido en OKX Europa -> excluido de la lista")
+   751	        raise
+   752	_OKX_BL.Cliente.orden_mercado = _om_bl
+   753	SYMBOLS = [s for s in SYMBOLS if s not in _bl_load()]
+   754	
+   755	_PROT_FILE = "/root/okx_demo_protecciones.json"
+   756	MAX_TRADES_DIA = int(os.environ.get("MAX_TRADES_DIA", "3"))
+   757	REENTRY_HORAS = float(os.environ.get("REENTRY_HORAS", "4"))
+   758	MIN_SEG_ENTRE_APERTURAS = int(os.environ.get("MIN_SEG_ENTRE_APERTURAS", "600"))
+   759	RANGO_MIN_ATR = float(os.environ.get("RANGO_MIN_ATR", "3.5"))
+   760	
+   761	def _prot_load():
+   762	    try:
+   763	        return json.load(open(_PROT_FILE))
+   764	    except Exception:
+   765	        return {}
+   766	def _prot_save(d):
+   767	    try:
+   768	        json.dump(d, open(_PROT_FILE, "w"))
+   769	    except Exception:
+   770	        pass
+   771	def _prot_hoy():
+   772	    return datetime.now(MAD).strftime("%Y-%m-%d")
+   773	def _prot_check(base):
+   774	    d = _prot_load()
+   775	    hoy = _prot_hoy()
+   776	    if d.get("dia") != hoy:
+   777	        d = {"dia": hoy}
+   778	        _prot_save(d)
+   779	    if int(d.get("abiertas_hoy", 0)) >= MAX_TRADES_DIA:
+   780	        return "tope diario de " + str(MAX_TRADES_DIA) + " aperturas"
+   781	    ua = float(d.get("ultima_apertura_ts", 0) or 0)
+   782	    if ua and (time.time() - ua) < MIN_SEG_ENTRE_APERTURAS:
+   783	        return "anti-racimo, esperar " + str(int(MIN_SEG_ENTRE_APERTURAS - (time.time() - ua))) + "s"
+   784	    upm = d.get("ultimas_por_moneda", {}) or {}
+   785	    if base in upm:
+   786	        t = float(upm.get(base) or 0)
+   787	        if t and (time.time() - t) < REENTRY_HORAS * 3600:
+   788	            return "cooldown " + base + " " + str(round(REENTRY_HORAS - (time.time() - t) / 3600.0, 1)) + "h"
+   789	    return None
+   790	def _prot_registrar(base):
+   791	    d = _prot_load()
+   792	    hoy = _prot_hoy()
+   793	    if d.get("dia") != hoy:
+   794	        d = {"dia": hoy}
+   795	    d["abiertas_hoy"] = int(d.get("abiertas_hoy", 0)) + 1
+   796	    d["ultima_apertura_ts"] = time.time()
+   797	    d.setdefault("ultimas_por_moneda", {})[base] = time.time()
+   798	    _prot_save(d)
+   799	def _rango_ok(base, atr_val):
+   800	    try:
+   801	        if not atr_val or atr_val <= 0:
+   802	            return True
+   803	        kl = get_klines_tf(base, "1H", 30)
+   804	        if not kl or len(kl) < 24:
+   805	            return True
+   806	        rango = max(k["high"] for k in kl[-24:]) - min(k["low"] for k in kl[-24:])
+   807	        return rango >= RANGO_MIN_ATR * atr_val
+   808	    except Exception:
+   809	        return True
+   810	
+   811	_scan_orig = scan_coins
+   812	def scan_coins(exclude_symbols=None):
+   813	    cands = _scan_orig(exclude_symbols)
+   814	    out = []
+   815	    for c in cands:
+   816	        motivo = _prot_check(c["symbol"])
+   817	        if motivo:
+   818	            print("[PROT] " + c["symbol"] + " bloqueada: " + motivo)
+   819	            continue
+   820	        if not _rango_ok(c["symbol"], c.get("atr")):
+   821	            print("[PROT] " + c["symbol"] + " bloqueada: mercado comprimido (rango < " + str(RANGO_MIN_ATR) + "xATR)")
+   822	            continue
+   823	        out.append(c)
+   824	    return out
+   825	
+   826	def open_position(plan):
+   827	    base = plan["symbol"]
+   828	    motivo = _prot_check(base)
+   829	    if motivo:
+   830	        raise RuntimeError(base + ": BLOQUEADA (" + motivo + ")")
+   831	    if not _rango_ok(base, plan.get("atr")):
+   832	        raise RuntimeError(base + ": BLOQUEADA (mercado comprimido)")
+   833	    inst_id = client.inst_id(base)
+   834	    if not inst_id:
+   835	        raise RuntimeError(base + ": sin X-Perp en demo")
+   836	    set_leverage(base, plan["lev"])
+   837	    r = client.orden_mercado(inst_id, plan["side"], plan["contratos"])
+   838	    oid = (r.get("data") or [{}])[0].get("ordId")
+   839	    print(">>> ORDEN DEMO " + base + " " + plan["direction"] + " " + str(plan["contratos"]) + " ct (ordId=" + str(oid) + ") <<<")
+   840	    _prot_registrar(base)
+   841	    time.sleep(1.5)
+   842	    sl_id = None
+   843	    try:
+   844	        sl_id = client.orden_algo_sl(inst_id, plan["side_cierre"], plan["stop"], plan["contratos"])
+   845	        print("-> SL @" + str(plan["stop"]) + " (algoId=" + str(sl_id) + ")")
+   846	    except Exception as e:
+   847	        print("[CRITICO] " + base + ": el SL fallo tras abrir -> CERRANDO por seguridad. " + str(e))
+   848	        try:
+   849	            client.orden_mercado(inst_id, plan["side_cierre"], plan["contratos"])
+   850	        except Exception as ce:
+   851	            print("[CRITICO] " + base + ": tampoco se pudo cerrar: " + str(ce))
+   852	        try:
+   853	            enviar("*[DEMO] " + base + " " + plan["direction"] + ": SL fallo -> cerrada por seguridad*")
+   854	        except Exception:
+   855	            pass
+   856	        raise RuntimeError(base + ": SL fallo tras abrir; posicion cerrada por seguridad")
+   857	    tps_colocados = []
+   858	    for lvl in plan["tp_levels"]:
+   859	        if lvl["sz"] <= 0:
+   860	            continue
+   861	        try:
+   862	            aid = client.orden_algo_tp(inst_id, plan["side_cierre"], lvl["price"], lvl["sz"])
+   863	            tps_colocados.append({"nivel": str(lvl["atr_mult"]) + "R", "precio": lvl["price"], "sz": lvl["sz"], "algoId": aid})
+   864	        except Exception as e:
+   865	            print("[aviso] TP: " + str(e))
+   866	    managed = load_managed()
+   867	    managed[base + ": " + plan["direction"]] = {
+   868	        "symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   869	        "contratos": plan["contratos"], "sl_algo_id": sl_id, "state": "opened",
+   870	        "risk_usd": RISK_USD, "opened_at": time.time(),
+   871	        "dist": round((plan["atr"] * ATR_MULT_SL) / plan["entry"], 8),
+   872	        "initial_sl": plan["stop"], "tp_levels": tps_colocados}
+   873	    save_managed(managed)
+   874	    return {"symbol": base, "direction": plan["direction"], "entry": plan["entry"],
+   875	            "contratos": plan["contratos"], "sl": plan["stop"],
+   876	            "risk": plan["contratos"] * plan["ct_val"] * (plan["atr"] * ATR_MULT_SL)}
+   877	
+   878	# === JOURNAL_ARENA: diario de trades (fase 1 autoaprendizaje) ===
+   879	_JOURNAL_FILE = "/root/okx_demo_journal.json"
+   880	_JOURNAL_BOT = "demo"
+   881	_JOURNAL_ACTIVO = (__name__ == "__main__")
+   882	
+   883	def _journal_load():
+   884	    try:
+   885	        return json.load(open(_JOURNAL_FILE))
+   886	    except Exception:
+   887	        return []
+   888	
+   889	def _journal_save(regs):
+   890	    try:
+   891	        json.dump(regs, open(_JOURNAL_FILE, "w"), ensure_ascii=False, indent=1)
+   892	    except Exception:
+   893	        pass
+   894	
+   895	_ULTIMO_SCORE = {}
+   896	_scan_j_orig = scan_coins
+   897	def scan_coins(exclude_symbols=None):
+   898	    cands = _scan_j_orig(exclude_symbols)
+   899	    try:
+   900	        for c in cands:
+   901	            _ULTIMO_SCORE[c["symbol"]] = c.get("score")
+   902	    except Exception:
+   903	        pass
+   904	    return cands
+   905	
+   906	def _journal_registrar_apertura(plan, res):
+   907	    try:
+   908	        base = plan["symbol"]
+   909	        try:
+   910	            sdp = round(abs(plan["entry"] - plan["stop"]) / plan["entry"] * 100, 3)
+   911	        except Exception:
+   912	            sdp = None
+   913	        reg = {
+   914	            "id": int(time.time() * 1000),
+   915	            "ts_apertura": datetime.now(MAD).strftime("%Y-%m-%d %H:%M"),
+   916	            "bot": _JOURNAL_BOT,
+   917	            "moneda": base,
+   918	            "direccion": plan["direction"],
+   919	            "entrada": plan["entry"],
+   920	            "contratos": plan["contratos"],
+   921	            "riesgo_usd": RISK_USD,
+   922	            "score": _ULTIMO_SCORE.get(base),
+   923	            "atr": plan.get("atr"),
+   924	            "stop_dist_pct": sdp,
+   925	            "apalancamiento": plan.get("lev"),
+   926	            "estado": "abierta",
+   927	        }
+   928	        regs = _journal_load()
+   929	        regs.append(reg)
+   930	        _journal_save(regs)
+   931	        print("[JOURNAL] apertura: " + base + " " + plan["direction"] + " (score=" + str(reg["score"]) + ")")
+   932	    except Exception as e:
+   933	        print("[JOURNAL] aviso apertura: " + str(e)[:80])
+   934	
+   935	def _journal_resultado(base, desde_ms):
+   936	    try:
+   937	        if client is None:
+   938	            return None
+   939	        iid = client.inst_id(base)
+   940	        try:
+   941	            hist = client.posiciones_historicas(20) or []
+   942	        except Exception:
+   943	            return None
+   944	        mejor = None
+   945	        for h in hist:
+   946	            if h.get("instId") != iid:
+   947	                continue
+   948	            try:
+   949	                t = float(h.get("uTime", 0) or 0)
+   950	            except Exception:
+   951	                t = 0
+   952	            if t < desde_ms - 120000:
+   953	                continue
+   954	            if mejor is None or t > mejor[1]:
+   955	                mejor = (h, t)
+   956	        if mejor is None:
+   957	            return None
+   958	        return float(mejor[0].get("realizedPnl", 0) or 0)
+   959	    except Exception:
+   960	        return None
+   961	
+   962	def _journal_check_cierres(pos_actuales):
+   963	    try:
+   964	        regs = _journal_load()
+   965	        cambio = False
+   966	        abiertas = set(p.get("base") for p in pos_actuales)
+   967	        ahora_ms = time.time() * 1000
+   968	        for r in regs:
+   969	            if r.get("estado") != "abierta":
+   970	                continue
+   971	            if ahora_ms - float(r.get("id", 0) or 0) < 120000:
+   972	                continue
+   973	            if r.get("moneda") in abiertas:
+   974	                continue
+   975	            pnl = _journal_resultado(r.get("moneda"), float(r.get("id", 0) or 0))
+   976	            r["estado"] = "cerrada"
+   977	            r["ts_cierre"] = datetime.now(MAD).strftime("%Y-%m-%d %H:%M")
+   978	            if pnl is not None:
+   979	                r["pnl_usd"] = round(pnl, 2)
+   980	                riesgo = float(r.get("riesgo_usd") or 10.0)
+   981	                rr = pnl / riesgo if riesgo else None
+   982	                r["r_resultado"] = round(rr, 2) if rr is not None else None
+   983	                if rr is None:
+   984	                    r["motivo"] = "?"
+   985	                elif rr <= -0.85:
+   986	                    r["motivo"] = "SL"
+   987	                elif rr >= 0.1:
+   988	                    r["motivo"] = "TP"
+   989	                else:
+   990	                    r["motivo"] = "BE"
+   991	            else:
+   992	                r["pnl_usd"] = None
+   993	                r["motivo"] = "?"
+   994	            cambio = True
+   995	            print("[JOURNAL] cierre: " + str(r.get("moneda")) + " pnl=" + str(r.get("pnl_usd")) + " (" + str(r.get("motivo")) + ")")
+   996	        if cambio:
+   997	            _journal_save(regs)
+   998	    except Exception as e:
+   999	        print("[JOURNAL] aviso cierres: " + str(e)[:80])
+  1000	
+  1001	_gap_j_orig = get_all_positions
+  1002	def get_all_positions():
+  1003	    pos = _gap_j_orig()
+  1004	    try:
+  1005	        if _JOURNAL_ACTIVO:
+  1006	            _journal_check_cierres(pos)
+  1007	    except Exception:
+  1008	        pass
+  1009	    return pos
+  1010	
+  1011	_op_j_orig = open_position
+  1012	def open_position(plan):
+  1013	    res = _op_j_orig(plan)
+  1014	    try:
+  1015	        _journal_registrar_apertura(plan, res)
+  1016	    except Exception:
+  1017	        pass
+  1018	    return res
+  1019	
+  1020	# === FIX5_ARENA: filtros de calidad de senal ===
+  1021	# F1: LONG solo si precio > EMA20(4H); SHORT solo si precio < EMA20(4H)
+  1022	#     (corta antes que esperar al cruce de EMAs)
+  1023	# F2: bloquear si separacion |EMA20-EMA50| en 4H > EMA_SEP_MAX_PCT
+  1024	#     (movimiento maduro / sobre-extendido: comprar tarde = comprar el techo)
+  1025	# F3: la ultima vela 1H completada debe cerrar a favor de la senal
+  1026	# Ajustes por entorno (opcionales): FILTROS_ON, EMA_SEP_MAX_PCT, CONF_VELA_ON
+  1027	try:
+  1028	    _filt_es_demo = "demo" in str(__file__)
+  1029	except Exception:
+  1030	    _filt_es_demo = False
+  1031	_FILTROS_FILE = "/root/okx_" + ("demo" if _filt_es_demo else "real") + "_filtro_stats.json"
+  1032	_FILT_CACHE = {}
+  1033	_FILT_TTL = 300
+  1034	
+  1035	
+  1036	def _filt_env_int(nombre, defecto):
+  1037	    try:
+  1038	        return int(float(os.environ.get(nombre, str(defecto))))
+  1039	    except Exception:
+  1040	        return defecto
+  1041	
+  1042	
+  1043	def _filt_env_float(nombre, defecto):
+  1044	    try:
+  1045	        return float(os.environ.get(nombre, str(defecto)))
+  1046	    except Exception:
+  1047	        return defecto
+  1048	
+  1049	
+  1050	FILTROS_ON = _filt_env_int("FILTROS_ON", 1)
+  1051	EMA_SEP_MAX_PCT = _filt_env_float("EMA_SEP_MAX_PCT", 5.0)
+  1052	CONF_VELA_ON = _filt_env_int("CONF_VELA_ON", 1)
+  1053	
+  1054	
+  1055	def _filt_kl(base, tf, limit):
+  1056	    clave = (base, tf)
+  1057	    g = _FILT_CACHE.get(clave)
+  1058	    if g and time.time() - g[0] < _FILT_TTL:
+  1059	        return g[1]
+  1060	    d = get_klines_tf(base, tf, limit)
+  1061	    _FILT_CACHE[clave] = (time.time(), d)
+  1062	    return d
+  1063	
+  1064	
+  1065	def _filt_ema(v, n):
+  1066	    if not v or len(v) < n:
+  1067	        return None
+  1068	    m = 2.0 / (n + 1)
+  1069	    e = sum(v[:n]) / float(n)
+  1070	    for x in v[n:]:
+  1071	        e = x * m + e * (1 - m)
+  1072	    return e
+  1073	
+  1074	
+  1075	def _filt_stats(t):
+  1076	    hoy = datetime.now(MAD).strftime("%Y-%m-%d")
+  1077	    try:
+  1078	        d = json.load(open(_FILTROS_FILE))
+  1079	        if d.get("dia") != hoy:
+  1080	            d = {"dia": hoy}
+  1081	    except Exception:
+  1082	        d = {"dia": hoy}
+  1083	    d[t] = int(d.get(t, 0)) + 1
+  1084	    try:
+  1085	        json.dump(d, open(_FILTROS_FILE, "w"))
+  1086	    except Exception:
+  1087	        pass
+  1088	
+  1089	def _filt_veredicto(base, direccion, precio=None, contar=True):
+  1090	    # Devuelve (True, None) si pasa los filtros o (False, motivo) si se bloquea.
+  1091	    # Ante error o falta de datos NO bloquea (failsafe).
+  1092	    if not FILTROS_ON:
+  1093	        return True, None
+  1094	    try:
+  1095	        kl4 = [x for x in (_filt_kl(base, "4H", 120) or []) if str(x.get("confirm", "1")) != "0"]
+  1096	        kl1 = [x for x in (_filt_kl(base, "1H", 30) or []) if str(x.get("confirm", "1")) != "0"]
+  1097	        if len(kl4) < 55 or not kl1:
+  1098	            return True, None
+  1099	        c4 = [x["close"] for x in kl4]
+  1100	        e20 = _filt_ema(c4, 20)
+  1101	        e50 = _filt_ema(c4, 50)
+  1102	        if not e20 or not e50 or e50 <= 0:
+  1103	            return True, None
+  1104	        px = float(precio) if precio else float(kl1[-1]["close"])
+  1105	        sep = abs(e20 - e50) / e50 * 100.0
+  1106	        if direccion == "LONG" and px <= e20:
+  1107	            if contar:
+  1108	                _filt_stats("bloq_ema20")
+  1109	            return False, "precio %.6g <= EMA20-4H %.6g (4H rota para LONG)" % (px, e20)
+  1110	        if direccion == "SHORT" and px >= e20:
+  1111	            if contar:
+  1112	                _filt_stats("bloq_ema20")
+  1113	            return False, "precio %.6g >= EMA20-4H %.6g (4H rota para SHORT)" % (px, e20)
+  1114	        if sep > EMA_SEP_MAX_PCT:
+  1115	            if contar:
+  1116	                _filt_stats("bloq_sobreext")
+  1117	            return False, "sep EMA20/50-4H %.2f%% > %.1f%% (movimiento maduro)" % (sep, EMA_SEP_MAX_PCT)
+  1118	        if CONF_VELA_ON:
+  1119	            v = kl1[-1]
+  1120	            o = v.get("open")
+  1121	            if o is None and len(kl1) > 1:
+  1122	                o = kl1[-2]["close"]
+  1123	            if o is not None:
+  1124	                verde = float(v["close"]) > float(o)
+  1125	                if direccion == "LONG" and not verde:
+  1126	                    if contar:
+  1127	                        _filt_stats("bloq_vela")
+  1128	                    return False, "ultima vela 1H roja (sin confirmacion)"
+  1129	                if direccion == "SHORT" and verde:
+  1130	                    if contar:
+  1131	                        _filt_stats("bloq_vela")
+  1132	                    return False, "ultima vela 1H verde (sin confirmacion)"
+  1133	        if contar:
+  1134	            _filt_stats("pasan")
+  1135	        return True, None
+  1136	    except Exception as e:
+  1137	        try:
+  1138	            print("[FILTRO] " + str(base) + ": error " + str(e) + " -> no bloqueo")
+  1139	        except Exception:
+  1140	            pass
+  1141	        return True, None
+  1142	
+  1143	
+  1144	_filt_scan5 = scan_coins
+  1145	
+  1146	
+  1147	def scan_coins(exclude_symbols=None):
+  1148	    cands = _filt_scan5(exclude_symbols)
+  1149	    out = []
+  1150	    for c in (cands or []):
+  1151	        ok, motivo = _filt_veredicto(c["symbol"], c.get("direction", "LONG"), c.get("entry"))
+  1152	        if ok:
+  1153	            out.append(c)
+  1154	        else:
+  1155	            print("[FILTRO] " + c["symbol"] + " " + str(c.get("direction")) + " BLOQUEADA: " + motivo)
+  1156	    return out
+  1157	
+  1158	
+  1159	_filt_open5 = open_position
+  1160	
+  1161	
+  1162	def open_position(plan):
+  1163	    ok, motivo = _filt_veredicto(plan["symbol"], plan.get("direction", "LONG"), plan.get("entry"))
+  1164	    if not ok:
+  1165	        raise RuntimeError(plan["symbol"] + ": BLOQUEADA por filtro (" + motivo + ")")
+  1166	    return _filt_open5(plan)
+  1167	
+  1168	
+  1169	def filtros_diagnostico():
+  1170	    # Ver los filtros en vivo sin operar. Requiere cliente inicializado:
+  1171	    #   RB.client = okx_client.Cliente(...)
+  1172	    print("=== DIAGNOSTICO FILTROS (sep_max=%.1f%%, vela=%s) ==="
+  1173	          % (EMA_SEP_MAX_PCT, "ON" if CONF_VELA_ON else "OFF"))
+  1174	    for base in SYMBOLS:
+  1175	        try:
+  1176	            kl4 = [x for x in (_filt_kl(base, "4H", 120) or []) if str(x.get("confirm", "1")) != "0"]
+  1177	            kl1 = [x for x in (_filt_kl(base, "1H", 30) or []) if str(x.get("confirm", "1")) != "0"]
+  1178	            if len(kl4) < 55 or not kl1:
+  1179	                print("%-6s sin datos suficientes" % base)
+  1180	                continue
+  1181	            c4 = [x["close"] for x in kl4]
+  1182	            e20 = _filt_ema(c4, 20)
+  1183	            e50 = _filt_ema(c4, 50)
+  1184	            px = float(kl1[-1]["close"])
+  1185	            sep = abs(e20 - e50) / e50 * 100.0
+  1186	            okl, ml = _filt_veredicto(base, "LONG", px, contar=False)
+  1187	            oks, ms = _filt_veredicto(base, "SHORT", px, contar=False)
+  1188	            print("%-6s px=%-11.6g EMA20-4H=%-11.6g sep=%5.2f%%  LONG:%s SHORT:%s"
+  1189	                  % (base, px, e20, sep, "SI " if okl else "NO", "SI " if oks else "NO"))
+  1190	        except Exception as e:
+  1191	            print("%-6s ERROR %s" % (base, str(e)[:60]))
+  1192	    print("(LONG: precio>EMA20-4H, vela verde y sep<=max | SHORT: al reves)")
+  1193	
+  1194	
+  1195	if __name__ == "__main__":
+  1196	    try:
+  1197	        sys.stdout.reconfigure(line_buffering=True)
+  1198	    except Exception:
+  1199	        pass
+  1200	    main()
+75:def _tg_send_kb(texto, keyboard):
+91:def teclado_demo():
+95:def enviar(texto):
+100:def load_managed():
+108:def save_managed(m):
+116:def load_notified():
+125:def save_notified(d):
+134:def ema(v, p):
+146:def atr(h, l, c, p):
+158:def get_klines(base, tf="1H", limit=200):
+165:def get_klines_tf(base, tf):
+169:def info_instr(base):
+176:def ticker_precio(base):
+184:def get_all_positions():
+208:def scan_coins(exclude_symbols=None):
+250:def build_plan(best):
+310:def set_leverage(base, lev):
+318:def open_position(plan):
+367:def close_position(base, direction):
+373:# === FIXTS_ARENA: trailing stop automatico ===
+379:def manage_positions():
+383:        # FIXK_ARENA: clave CON espacio (igual que open_position y el panel)
+397:            # FIXW_ARENA: exigir 2 pasadas consecutivas sin verla (evita borrados por fallo de API)
+426:            # FIXR_ARENA: cancelar algos huerfanos del cierre
+441:        # === FIXTS_ARENA: a +TRAILING_DESDE_R el BE fijo se convierte en TRAILING ===
+541:def boton_estado():
+564:        # FIXBE_ARENA: BE real segun el SL vivo del exchange (vale tambien para fantasmas)
+580:        # FIXBET_ARENA: indicador de TRAILING (cajon move_order_stop, invisible para FIXBE)
+614:def boton_saldo():
+625:def telegram_listener():
+665:def main():
+723:# === FIXD_ARENA: blacklist + protecciones de gestion + SL seguro ===
+726:def _bl_load():
+731:def _bl_add(b):
+739:def _om_bl(self, inst_id, side, sz, tp_px=None, sl_px=None):
+761:def _prot_load():
+766:def _prot_save(d):
+771:def _prot_hoy():
+773:def _prot_check(base):
+790:def _prot_registrar(base):
+799:def _rango_ok(base, atr_val):
+812:def scan_coins(exclude_symbols=None):
+826:def open_position(plan):
+878:# === JOURNAL_ARENA: diario de trades (fase 1 autoaprendizaje) ===
+883:def _journal_load():
+889:def _journal_save(regs):
+897:def scan_coins(exclude_symbols=None):
+906:def _journal_registrar_apertura(plan, res):
+935:def _journal_resultado(base, desde_ms):
+962:def _journal_check_cierres(pos_actuales):
+1002:def get_all_positions():
+1012:def open_position(plan):
+1020:# === FIX5_ARENA: filtros de calidad de senal ===
+1036:def _filt_env_int(nombre, defecto):
+1043:def _filt_env_float(nombre, defecto):
+1055:def _filt_kl(base, tf, limit):
+1065:def _filt_ema(v, n):
+1075:def _filt_stats(t):
+1089:def _filt_veredicto(base, direccion, precio=None, contar=True):
+1147:def scan_coins(exclude_symbols=None):
+
+===== 9. LOG REAL (ultimas 250 lineas) =====
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.23
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.12
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.13
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.64
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=+0.17
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.07
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.03
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.35
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.02
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.54
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.14
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.16
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.02
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.48
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.91
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.38
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.04
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.54
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.89
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.43
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.40
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.03
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.48
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.06
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.37
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.39
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.05
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.34
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.15
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.37
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.05
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.48
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.14
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.06
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.28
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.05
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.68
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.14
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.02
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.23
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.05
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.68
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.10
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.25
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.48
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.14
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.98
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.23
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.27
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.76
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.17
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.03
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.60
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.80
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.36
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.22
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.00
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.87
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.68
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.24
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.94
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.89
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.67
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.25
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.04
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.53
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.80
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.42
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.26
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.02
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.33
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.80
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.64
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.31
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.40
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.89
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.87
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.01
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.53
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.27
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.02
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.40
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.89
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.94
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.02
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.13
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.72
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.78
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.29
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.04
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.33
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.80
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.97
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.27
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.04
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.00
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.72
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.56
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.23
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=+0.04
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.20
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.64
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-0.68
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.27
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.07
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.00
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.19
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.37
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.10
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.61
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.14
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.71
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.40
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.18
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.01
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.39
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.72
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.43
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.21
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.28
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.48
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.76
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.40
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.19
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.01
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.31
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.37
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.38
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.20
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.88
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.31
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.44
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.36
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.18
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.00
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.15
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.19
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-3.94
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-1.80
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.31
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.28
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.61
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.31
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.46
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.32
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.29
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.01
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.39
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.56
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.38
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.33
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.42
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.48
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.43
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.38
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.34
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.48
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.48
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.33
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.42
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.49
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-6.09
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.56
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-4.21
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.45
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.47
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.82
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.56
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-4.27
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.45
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.48
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.62
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.56
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-4.32
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.36
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.39
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.15
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.31
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.56
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.34
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.40
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.95
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.06
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.40
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.26
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.32
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.88
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.05
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.29
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.36
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.15
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.25
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.37
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.30
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.95
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.01
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.34
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.29
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.81
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-2.97
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.36
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.30
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-5.08
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.32
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.33
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.27
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-4.95
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.10
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.34
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.31
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-6.16
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-1.97
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.38
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.40
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.39
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-6.69
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.98
+  [REAL] LINK-USD_UM_XPERP-310523 SHORT P&L=-0.40
+  [REAL] BTC-USD_UM_XPERP-310404 SHORT P&L=-0.41
+  [REAL] SOL-USD_UM_XPERP-310404 SHORT P&L=-7.03
+  [REAL] BNB-USD_UM_XPERP-310523 SHORT P&L=-2.22
+  [REAL] ETH-USD_UM_XPERP-310404 SHORT P&L=-3.65
+
+===== 10. ORDENES Y STOPS DEL LOG REAL =====
+  >>> ORDEN REAL XRP LONG 274 ct (ordId=3863306029344772096) <<<
+  -> SL @ 1.48109877 (algoId=3863306086263922688)
+  >>> ORDEN REAL SOL LONG 438 ct (ordId=3863306140309278720) <<<
+  -> SL @ 99.41841596 (algoId=3863306197127766016)
+  >>> ORDEN REAL DOGE LONG 511 ct (ordId=3863306248354549760) <<<
+  -> SL @ 0.09072242 (algoId=3863306304770383872)
+  >>> ORDEN REAL ETH LONG 282 ct (ordId=3863306357775552512) <<<
+  -> SL @ 2471.37183263 (algoId=3863306414224941056)
+  >>> ORDEN REAL BTC LONG 100 ct (ordId=3863306972962508800) <<<
+  -> SL @ 79691.51285651 (algoId=3863307029713887232)
+  >>> ORDEN REAL BTC LONG 91 ct (ordId=3863531126802370560) <<<
+  -> SL @ 78577.49969003 (algoId=3863531183352422400)
+  >>> ORDEN REAL DOGE LONG 466 ct (ordId=3863591925755432960) <<<
+  -> SL @ 0.08920406 (algoId=3863591982439702528)
+  >>> ORDEN REAL ETH LONG 252 ct (ordId=3863592037458137088) <<<
+  -> SL @ 2453.01826088 (algoId=3863592094041743360)
+  >>> ORDEN REAL LINK LONG 44 ct (ordId=3863713593588994048) <<<
+  -> SL @ 11.43259991 (algoId=3863713650407481344)
+  >>> ORDEN REAL SOL LONG 408 ct (ordId=3863774109309095936) <<<
+  -> SL @ 97.11799627 (algoId=3863774165993365504)
+  >>> ORDEN REAL BTC LONG 91 ct (ordId=3864474396512505856) <<<
+  -> SL @ 78265.42806868 (algoId=3864474453062557696)
+>>> ORDEN REAL ETH LONG 276 ct (ordId=3864513763377434624) <<<
+-> SL @ 2444.51403918 (algoId=3864513819927486464)
+>>> ORDEN REAL BTC LONG 108 ct (ordId=3865765903144079360) <<<
+-> SL @ 78202.90546587 (algoId=3865765959559913472)
+>>> ORDEN REAL BNB LONG 138 ct (ordId=3867168482730201088) <<<
+-> SL @ 694.34727711 (algoId=3867168539347361792)
+
+===== 11. LOG DEMO (ultimas 80 lineas) =====
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.50
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.19
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.25
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.73
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.50
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.17
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.21
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.73
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.50
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.20
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.21
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.76
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.44
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.18
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.21
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.76
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.44
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.18
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.17
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.76
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.44
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.20
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.17
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.76
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.44
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.49
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.14
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.76
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.32
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.56
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.19
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.70
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.38
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.52
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.19
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.70
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.38
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.52
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.17
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.66
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.38
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.52
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.14
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.63
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.62
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.07
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.08
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.79
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.74
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.07
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.08
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.82
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.74
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.08
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.06
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.82
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.68
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.11
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.08
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.86
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+  [DEMO] ETC-USD_UM_XPERP-310801 SHORT P&L=+4.80
+  [DEMO] HYPE-USD_UM_XPERP-310801 LONG P&L=+53.03
+  [DEMO] IOST-USD_UM_XPERP-310801 SHORT P&L=-0.08
+  [DEMO] AVAX-USD_UM_XPERP-310801 LONG P&L=-1.92
+  [DEMO] ORBS-USD_UM_XPERP-310822 LONG P&L=-22.95
+
+===== 12. SIGNAL BOT (sin ruido) =====
+2026-08-26T03:45:16.220234+02:00 AUTO-descartada Z4HF pts=0
+2026-08-26T04:15:29.379645+02:00 AUTO-descartada BMT pts=0
+2026-08-26T04:29:05.144624+02:00 AUTO-descartada ZIL pts=0
+2026-08-26T04:36:49.379920+02:00 AUTO-descartada BMT pts=0
+2026-08-26T04:40:54.230216+02:00 AUTO-descartada BMT pts=0
+2026-08-26T05:02:40.561669+02:00 AUTO-descartada BMT pts=0
+2026-08-26T05:49:23.196794+02:00 AUTO-descartada BMT pts=0
+2026-08-26T05:53:33.002884+02:00 AUTO-descartada BMT pts=0
+2026-08-26T05:54:33.847256+02:00 AUTO-descartada BMT pts=0
+2026-08-26T05:58:43.726187+02:00 AUTO-descartada BTR pts=0
+2026-08-26T06:03:14.440448+02:00 AUTO-descartada BMT pts=0
+2026-08-26T06:11:26.861150+02:00 AUTO-descartada BTR pts=0
+2026-08-26T06:43:25.985199+02:00 AUTO-descartada BTR pts=0
+2026-08-26T06:51:02.310147+02:00 AUTO-descartada BTR pts=0
+2026-08-26T07:15:13.298968+02:00 AUTO-descartada BTR pts=0
+2026-08-26T07:36:31.212655+02:00 AUTO-descartada BTR pts=0
+2026-08-26T07:39:25.100709+02:00 AUTO-descartada BTR pts=0
+2026-08-26T07:44:04.755099+02:00 AUTO-descartada BTR pts=0
+2026-08-26T07:50:33.789192+02:00 AUTO-descartada BTR pts=0
+2026-08-26T08:03:44.077967+02:00 AUTO-descartada BTR pts=0
+2026-08-26T08:28:09.659347+02:00 AUTO-descartada BTR pts=0
+2026-08-26T08:42:00.738359+02:00 AUTO-descartada BTR pts=0
+2026-08-26T09:01:58.425212+02:00 AUTO-descartada CTK pts=0
+2026-08-26T10:08:40.304476+02:00 AUTO-descartada BMT pts=0
+2026-08-26T10:15:56.327880+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:17:46.547629+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:19:08.682355+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:19:48.411184+02:00 AUTO-descartada TAC pts=0
+2026-08-26T10:38:09.141773+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:38:39.024321+02:00 AUTO-descartada ETH pts=45
+2026-08-26T10:48:06.619845+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:54:25.109955+02:00 AUTO-descartada BTR pts=0
+2026-08-26T10:55:20.132717+02:00 AUTO-descartada BTR pts=0
+2026-08-26T11:03:23.733246+02:00 AUTO-descartada PORTAL pts=0
+2026-08-26T11:03:26.785660+02:00 AUTO-descartada TAC pts=0
+2026-08-26T11:04:52.122892+02:00 AUTO-descartada BTR pts=0
+2026-08-26T11:10:59.381047+02:00 AUTO-descartada ZRX pts=0
+2026-08-26T11:20:14.221606+02:00 AUTO-descartada ZRX pts=0
+2026-08-26T11:31:02.499513+02:00 AUTO-descartada ZRX pts=0
+2026-08-26T12:44:59.818292+02:00 AUTO-descartada SOL pts=0
+2026-08-26T13:03:11.861197+02:00 AUTO-descartada BTC pts=0
+2026-08-26T13:10:22.751163+02:00 AUTO-descartada SOL pts=0
+2026-08-26T14:24:06.523300+02:00 AUTO-descartada TRX pts=69
+2026-08-26T15:09:15.621988+02:00 AUTO-descartada ONG pts=0
+2026-08-26T15:09:18.476830+02:00 AUTO-descartada ONG pts=0
+2026-08-26T16:30:56.696858+02:00 AUTO-descartada QTUM pts=0
+2026-08-26T16:42:00.219779+02:00 AUTO-descartada QTUM pts=0
+2026-08-26T16:50:01.241922+02:00 AUTO-descartada QTUM pts=0
+2026-08-26T19:19:15.997115+02:00 AUTO-descartada BCH pts=65
+2026-08-26T21:29:08.556402+02:00 AUTO-descartada BCH pts=45
+
+===== 13. NOCTURNO (log) =====
+[2026-08-26 19:20] === SALUD NOCTURNA: empieza ===
+[2026-08-26 19:20] Bot DEMO: 🟢 SANO
+[2026-08-26 19:20] Bot REAL: 🟢 SANO
+[2026-08-26 19:20] signal-bot: activo
+[2026-08-26 19:20] === SALUD NOCTURNA: termina ===
+[2026-08-26 19:24] === SALUD NOCTURNA: empieza ===
+[2026-08-26 19:24] Bot DEMO: 🟡 REPARADO (1 correcciones)
+[2026-08-26 19:24] Bot REAL: 🟢 SANO
+[2026-08-26 19:24] signal-bot: activo
+[2026-08-26 19:24] === SALUD NOCTURNA: termina ===
+[2026-08-26 23:30] === SALUD NOCTURNA: empieza ===
+[2026-08-26 23:30] Bot DEMO: 🟢 SANO
+[2026-08-26 23:30] Bot REAL: 🟡 REPARADO (2 correcciones)
+[2026-08-26 23:30] signal-bot: activo
+[2026-08-26 23:30] === SALUD NOCTURNA: termina ===
+[2026-08-27 23:30] === SALUD NOCTURNA: empieza ===
+[2026-08-27 23:30] Bot DEMO: 🟡 REPARADO (4 correcciones)
+[2026-08-27 23:30] Bot REAL: 🟢 SANO
+[2026-08-27 23:30] signal-bot: estaba parado -> ARRANCADO
+[2026-08-27 23:30] === SALUD NOCTURNA: termina ===
+[2026-08-28 23:30] === SALUD NOCTURNA: empieza ===
+[2026-08-28 23:30] Bot DEMO: 🟡 REPARADO (1 correcciones)
+[2026-08-28 23:30] Bot REAL: 🟢 SANO
+[2026-08-28 23:30] signal-bot: parado a proposito (pausa manual) -> no lo arranco
+[2026-08-28 23:30] === SALUD NOCTURNA: termina ===
+[2026-08-29 23:30] === SALUD NOCTURNA: empieza ===
+[2026-08-29 23:30] Bot DEMO: 🟡 REPARADO (1 correcciones)
+[2026-08-29 23:30] Bot REAL: 🟢 SANO
+[2026-08-29 23:30] signal-bot: parado a proposito (pausa manual) -> no lo arranco
+[2026-08-29 23:30] === SALUD NOCTURNA: termina ===
+
+===== 14. REGISTROS JSON =====
+--- okx_real_journal.json ---
+[
+ {
+  "id": 1787711204381,
+  "ts_apertura": "2026-08-26 04:26",
+  "bot": "real",
+  "moneda": "BTC",
+  "direccion": "LONG",
+  "entrada": 79127.0,
+  "contratos": 108,
+  "riesgo_usd": 10.0,
+  "score": 10.568550001716726,
+  "atr": 616.0630227531775,
+  "stop_dist_pct": 1.168,
+  "apalancamiento": 10,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-26 11:47",
+  "pnl_usd": -10.43,
+  "r_resultado": -1.04,
+  "motivo": "SL"
+ },
+ {
+  "id": 1787753004626,
+  "ts_apertura": "2026-08-26 16:03",
+  "bot": "real",
+  "moneda": "BNB",
+  "direccion": "LONG",
+  "entrada": 701.6,
+  "contratos": 138,
+  "riesgo_usd": 10.0,
+  "score": 6.641883449298607,
+  "atr": 4.835148594950508,
+  "stop_dist_pct": 1.034,
+  "apalancamiento": 10,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-26 16:54",
+  "pnl_usd": -11.18,
+  "r_resultado": -1.12,
+  "motivo": "SL"
+ }
+]
+--- okx_real_managed.json ---
+{}
+--- okx_real_protecciones.json ---
+{"dia": "2026-08-26", "abiertas_hoy": 2, "ultima_apertura_ts": 1787753001.9267497, "ultimas_por_moneda": {"BTC": 1787711201.7963138, "BNB": 1787753001.926751}}
+--- okx_demo_journal.json ---
+[
+ {
+  "id": 1787692054637,
+  "ts_apertura": "2026-08-25 23:07",
+  "bot": "demo",
+  "moneda": "DOGE",
+  "direccion": "SHORT",
+  "entrada": 0.08585,
+  "contratos": 485,
+  "riesgo_usd": 10.0,
+  "score": 3.1357856323522046,
+  "atr": 0.0013759812300206773,
+  "stop_dist_pct": 2.404,
+  "apalancamiento": 8,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-26 12:41",
+  "pnl_usd": -13.56,
+  "r_resultado": -1.36,
+  "motivo": "SL"
+ },
+ {
+  "id": 1787692957503,
+  "ts_apertura": "2026-08-25 23:22",
+  "bot": "demo",
+  "moneda": "AVAX",
+  "direccion": "SHORT",
+  "entrada": 7.299,
+  "contratos": 82,
+  "riesgo_usd": 10.0,
+  "score": 3.1700245520507524,
+  "atr": 0.08139662098573897,
+  "stop_dist_pct": 1.673,
+  "apalancamiento": 10,
+  "estado": "abierta"
+ },
+ {
+  "id": 1787739300721,
+  "ts_apertura": "2026-08-26 12:15",
+  "bot": "demo",
+  "moneda": "XRP",
+  "direccion": "SHORT",
+  "entrada": 1.404,
+  "contratos": 222,
+  "riesgo_usd": 10.0,
+  "score": 3.2867076940022466,
+  "atr": 0.03003819960415538,
+  "stop_dist_pct": 3.209,
+  "apalancamiento": 6,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-28 11:16",
+  "pnl_usd": -14.72,
+  "r_resultado": -1.47,
+  "motivo": "SL"
+ },
+ {
+  "id": 1787741113700,
+  "ts_apertura": "2026-08-26 12:45",
+  "bot": "demo",
+  "moneda": "DOGE",
+  "direccion": "SHORT",
+  "entrada": 0.08675,
+  "contratos": 585,
+  "riesgo_usd": 10.0,
+  "score": 3.234626814845375,
+  "atr": 0.001140143975033361,
+  "stop_dist_pct": 1.971,
+  "apalancamiento": 10,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-28 12:49",
+  "pnl_usd": -15.74,
+  "r_resultado": -1.57,
+  "motivo": "SL"
+ },
+ {
+  "id": 1787799897324,
+  "ts_apertura": "2026-08-27 05:04",
+  "bot": "demo",
+  "moneda": "IOST",
+  "direccion": "LONG",
+  "entrada": 0.0006101,
+  "contratos": 1036,
+  "riesgo_usd": 10.0,
+  "score": 3.059377399250553,
+  "atr": 6.432837969055321e-06,
+  "stop_dist_pct": 1.582,
+  "apalancamiento": 10,
+  "estado": "abierta"
+ },
+ {
+  "id": 1787909194448,
+  "ts_apertura": "2026-08-28 11:26",
+  "bot": "demo",
+  "moneda": "UNI",
+  "direccion": "LONG",
+  "entrada": 4.603,
+  "contratos": 109,
+  "riesgo_usd": 10.0,
+  "score": 3.725599742136094,
+  "atr": 0.06108327539875348,
+  "stop_dist_pct": 1.991,
+  "apalancamiento": 10,
+  "estado": "cerrada",
+  "ts_cierre": "2026-08-28 16:04",
+  "pnl_usd": -13.11,
+  "r_resultado": -1.31,
+  "motivo": "SL"
+ },
+ {
+  "id": 1787927209127,
+  "ts_apertura": "2026-08-28 16:26",
+  "bot": "demo",
+  "moneda": "HYPE",
+  "direccion": "LONG",
+  "entrada": 90.0,
+  "contratos": 41,
+  "riesgo_usd": 10.0,
+  "score": 3.2166089070222865,
+  "atr": 1.6439971192811027,
+  "stop_dist_pct": 2.74,
+  "apalancamiento": 7,
+  "estado": "abierta"
+ },
+ {
+  "id": 1787947224826,
+  "ts_apertura": "2026-08-28 22:00",
+  "bot": "demo",
+  "moneda": "ETC",
+  "direccion": "SHORT",
+  "entrada": 7.484,
+  "contratos": 8,
+  "riesgo_usd": 10.0,
+  "score": 3.0504656129927,
+  "atr": 0.07886009040122458,
+  "stop_dist_pct": 1.581,
+  "apalancamiento": 10,
+  "estado": "abierta"
+ }
+]
+--- okx_demo_managed.json ---
+{
+ "ETC: SHORT": {
+  "symbol": "ETC",
+  "direction": "SHORT",
+  "entry": 7.484,
+  "contratos": 8,
+  "sl_algo_id": "3873685495658098688",
+  "state": "opened",
+  "risk_usd": 10.0,
+  "opened_at": 1787947224.825466,
+  "dist": 0.01580574,
+  "initial_sl": 7.60229014,
+  "tp_levels": [
+   {
+    "nivel": "1.0R",
+    "precio": 7.40513991,
+    "sz": 2,
+    "algoId": "3873685502201212928"
+   },
+   {
+    "nivel": "1.5R",
+    "precio": 7.36570986,
+    "sz": 2,
+    "algoId": "3873685508576555008"
+   },
+   {
+    "nivel": "2.0R",
+    "precio": 7.32627982,
+    "sz": 2,
+    "algoId": "3873685515052560384"
+   },
+   {
+    "nivel": "2.5R",
+    "precio": 7.28684977,
+    "sz": 2,
+    "algoId": "3873685521629229056"
+   }
+  ],
+  "qty_vista": 8.0
+ },
+ "HYPE: LONG": {
+  "symbol": "HYPE",
+  "direction": "LONG",
+  "entry": 93.94255135135136,
+  "contratos": 37,
+  "sl_algo_id": "3876765074417299456",
+  "state": "trailing",
+  "risk_usd": 10.0,
+  "opened_at": 1787952602.119982,
+  "dist": 0.04,
+  "initial_sl": 104.5992324,
+  "tp_levels": [],
+  "trail_algo_id": "3873734564950556672",
+  "qty_vista": 37.0
+ }
+}
+--- okx_demo_protecciones.json ---
+{"dia": "2026-08-28", "abiertas_hoy": 3, "ultima_apertura_ts": 1787947222.354106, "ultimas_por_moneda": {"UNI": 1787909191.7762349, "HYPE": 1787927206.484906, "ETC": 1787947222.3541071}}
+--- okx_demo_blacklist.json ---
+["BCH", "FIL", "GRASS", "KAITO", "ORBS", "ZEC"]
+
+===== FIN =====
