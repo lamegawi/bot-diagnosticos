@@ -1,0 +1,156 @@
+== mercado_activo.json zelenskyy (bins) ==
+slug: zelenskyy-of-tweets-august-25-september-1-2026
+titulo: Zelenskyy # posts August 25 - September 1, 2026?
+cerrado: False
+fin: 2026-09-01T12:00:00-04:00
+  bin: <20 | precio_yes: 0.0 | cuota_yes: None
+  bin: 20-39 | precio_yes: 0.0 | cuota_yes: None
+  bin: 40-59 | precio_yes: 0.0 | cuota_yes: None
+  bin: 60-79 | precio_yes: 0.0 | cuota_yes: None
+  bin: 80-99 | precio_yes: 0.0 | cuota_yes: None
+  bin: 100-119 | precio_yes: 0.15 | cuota_yes: 6.666666666666667
+  bin: 120-139 | precio_yes: 0.6065 | cuota_yes: 1.6488046166529264
+  bin: 140-159 | precio_yes: 0.208 | cuota_yes: 4.8076923076923075
+  bin: 160-179 | precio_yes: 0.0255 | cuota_yes: 39.21568627450981
+  bin: 180-199 | precio_yes: 0.017 | cuota_yes: 58.8235294117647
+  bin: 200+ | precio_yes: 0.006 | cuota_yes: 166.66666666666666
+
+slug: zelenskyy-of-tweets-august-28-september-4-2026
+titulo: Zelenskyy # posts August 28 - September 4, 2026?
+cerrado: False
+fin: 2026-09-04T12:00:00-04:00
+  bin: <20 | precio_yes: 0.005 | cuota_yes: 200.0
+  bin: 20-39 | precio_yes: 0.0105 | cuota_yes: 95.23809523809523
+  bin: 40-59 | precio_yes: 0.0575 | cuota_yes: 17.391304347826086
+  bin: 60-79 | precio_yes: 0.33 | cuota_yes: 3.0303030303030303
+  bin: 80-99 | precio_yes: 0.495 | cuota_yes: 2.0202020202020203
+  bin: 100-119 | precio_yes: 0.085 | cuota_yes: 11.76470588235294
+  bin: 120-139 | precio_yes: 0.08 | cuota_yes: 12.5
+  bin: 140-159 | precio_yes: 0.0295 | cuota_yes: 33.898305084745765
+  bin: 160-179 | precio_yes: 0.038 | cuota_yes: 26.315789473684212
+  bin: 180-199 | precio_yes: 0.049 | cuota_yes: 20.408163265306122
+  bin: 200+ | precio_yes: 0.0025 | cuota_yes: 400.0
+
+slug: zelenskyy-of-tweets-september-1-september-8-2026
+titulo: Zelenskyy # posts September 1 - September 8, 2026?
+cerrado: False
+fin: 2026-09-08T12:00:00-04:00
+  bin: <20 | precio_yes: 0.003 | cuota_yes: 333.3333333333333
+  bin: 20-39 | precio_yes: 0.0125 | cuota_yes: 80.0
+  bin: 40-59 | precio_yes: 0.075 | cuota_yes: 13.333333333333334
+  bin: 60-79 | precio_yes: 0.315 | cuota_yes: 3.1746031746031744
+  bin: 80-99 | precio_yes: 0.32 | cuota_yes: 3.125
+  bin: 100-119 | precio_yes: 0.2 | cuota_yes: 5.0
+  bin: 120-139 | precio_yes: 0.12 | cuota_yes: 8.333333333333334
+  bin: 140-159 | precio_yes: 0.058 | cuota_yes: 17.241379310344826
+  bin: 160-179 | precio_yes: 0.0485 | cuota_yes: 20.618556701030926
+  bin: 180-199 | precio_yes: 0.044 | cuota_yes: 22.72727272727273
+  bin: 200+ | precio_yes: 0.015 | cuota_yes: 66.66666666666667
+
+
+== real_zelen.json actual ==
+{
+ "saldo": 759.96,
+ "paso": 3,
+ "activa": {
+  "slug": "zelenskyy-of-tweets-august-28-september-4-2026",
+  "fecha": "2026-08-28",
+  "bin_titulo": "140-159",
+  "lo": 140,
+  "hi": 159,
+  "lado": "YES",
+  "precio": 0.046,
+  "cuota": 21.74,
+  "p_modelo": 0.4788,
+  "paso": 3,
+  "stake": 0.78,
+  "motor": "motor_v2_ev_escalones_tope10",
+  "ev": 10.409,
+  "size": 17,
+  "parcial": true,
+  "pendiente": false,
+  "token_id": "36200638224973682994147204189011164268325230880529345999336333166319369378580",
+  "nota": "FIXZEL: restaurada tras limpieza - orden parcial 17 shares x 0.046 = 0.78 reales",
+  "ventana_fin": "2026-09-04T16:00:00+00:00"
+ },
+ "historial": [
+  {
+   "id": "reconc",
+   "fecha": "2026-08-21",
+   "mercado": "zelenskyy-of-tweets-august-21-august-28-2026",
+   "bin": "40-59",
+   "lado": "YES",
+   "precio": 0.249,
+   "cuota": 4.02,
+   "p_modelo": 0.6361,
+   "paso": 2,
+   "stake": 1.49,
+   "real": "vendido/desaparecido (sin registro del gestor)",
+   "resultado": "P",
+   "beneficio": -1.49,
+   "saldo": 498.51
+  },
+  {
+   "id": "reconc",
+   "fecha": "2026-08-25",
+   "mercado": "zelenskyy-of-tweets-august-25-september-1-2026",
+   "bin": "140-159",
+   "lado": "YES",
+   "precio": 0.036,
+   "cuota": 27.78,
+   "p_modelo": 0.4421,
+   "paso": 3,
+   "stake": 10.0,
+   "real": "vendido por el gestor en positivo (+3.62 a nivel cuenta)",
+   "resultado": "G",
+   "beneficio": 267.8,
+   "saldo": 766.31
+  },
+  {
+   "id": "reconc",
+   "fecha": "2026-08-26",
+   "mercado": "zelenskyy-of-tweets-august-25-september-1-2026",
+   "bin": "200+",
+   "lado": "YES",
+   "precio": 0.172,
+   "cuota": 5.81,
+   "p_modelo": 1.0,
+   "paso": 1,
+   "stake": 6.0,
+   "real": "vendido/desaparecido (sin registro del gestor)",
+   "resultado": "P",
+   "beneficio": -6.0,
+   "saldo": 760.31
+  },
+  {
+   "id": "reconc",
+   "fecha": "2026-08-28",
+   "mercado": "zelenskyy-of-tweets-august-28-september-4-2026",
+   "bin": "160-179",
+   "lado": "YES",
+   "precio": 0.04,
+   "cuota": 25.0,
+   "p_modelo": 0.5236,
+   "paso": 2,
+   "stake": 8.4,
+   "real": "vendido/desaparecido (sin registro del gestor)",
+   "resultado": "P",
+   "beneficio": -0.35,
+   "saldo": 759.96,
+   "nota": "FIXZEL: llenado parcial real 8.85 shares x $0.04 = $0.35 (antes -8.40 con stake completo)"
+  }
+ ]
+}
+== apuestas_compartidas.json actual ==
+{
+ "zelenskyy-of-tweets-august-21-august-28-2026|60-79": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-08-28T16:00:00+00:00",
+  "ts": 1787373606.9250767
+ },
+ "zelenskyy-of-tweets-august-28-september-4-2026|140-159": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-09-04T16:00:00+00:00",
+  "ts": 1788093662.5484512
+ }
+}
