@@ -1,0 +1,15 @@
+== ANTES del parche (lineas qty_vista en real bot) ==
+549:        qty_ant = float(m.get("qty_vista", qty) or qty)
+555:        m["qty_vista"] = qty
+
+== DESPUES del parche ==
+504:                changed = True
+534:            changed = True
+542:            changed = True
+549:        qty_ant = float(m.get("qty_vista", qty) or qty)
+555:        m["qty_vista"] = qty
+556:        changed = True
+573:                changed = True
+
+== Verificacion de sintaxis ==
+SINTAXIS OK
