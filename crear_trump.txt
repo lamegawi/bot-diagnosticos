@@ -1,0 +1,42 @@
+recoger_tweets.py: adaptado
+mercado_polymarket.py: adaptado
+senal.py: adaptado
+senal_vivo.py: adaptado
+bot_semanal.py: adaptado
+operar_real_semanal.py: adaptado
+papel_semanal.py: adaptado
+
+=== VERIFICACION DE SINTAXIS ===
+  recoger_tweets.py: OK
+  mercado_polymarket.py: OK
+  senal.py: OK
+  senal_vivo.py: OK
+  bot_semanal.py: OK
+  operar_real_semanal.py: OK
+  papel_semanal.py: OK
+
+=== ARCHIVOS EN bot-polymarket-trump ===
+total 268
+drwxr-xr-x  4 root root  4096 Aug 30 17:49 .
+drwxr-xr-x 12 1000 1000  4096 Aug 30 17:49 ..
+-rw-r--r--  1 root root 13847 Aug 30 17:49 bot_semanal.py
+-rw-r--r--  1 root root  6394 Aug 30 17:49 chequear_cuenta.py
+-rw-r--r--  1 root root   114 Aug 30 17:49 config.json
+-rw-r--r--  1 root root   942 Aug 30 17:49 config_real.json.example
+-rw-r--r--  1 root root    13 Aug 30 17:49 datos_trump.csv
+-rw-r--r--  1 root root  3021 Aug 30 17:49 diagnostico.py
+-rw-r--r--  1 root root 13000 Aug 30 17:49 excel_historial.py
+drwxr-xr-x  3 root root  4096 Aug 30 17:49 .github
+-rw-r--r--  1 root root   287 Aug 30 17:49 .gitignore
+-rw-r--r--  1 root root  4292 Aug 30 17:49 GUIA_SEMANAL.md
+-rw-r--r--  1 root root 12893 Aug 30 17:49 mercado_polymarket.py
+-rw-r--r--  1 root root 17536 Aug 30 17:49 notificar.py
+-rw-r--r--  1 root root 12244 Aug 30 17:49 notificar_semanal.py
+-rw-r--r--  1 root root 45304 Aug 30 17:49 operar_real_semanal.py
+-rw-r--r--  1 root root 10134 Aug 30 17:49 papel_semanal.py
+-rw-r--r--  1 root root  4869 Aug 30 17:49 probar_orden_semanal.py
+drwxr-xr-x  2 root root  4096 Aug 30 17:49 __pycache__
+-rw-r--r--  1 root root 23612 Aug 30 17:49 recoger_tweets.py
+-rw-r--r--  1 root root  4217 Aug 30 17:49 saldo_ntfy.py
+-rw-r--r--  1 root root 20301 Aug 30 17:49 senal.py
+-rw-r--r--  1 root root 14096 Aug 30 17:49 senal_vivo.py
