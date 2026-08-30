@@ -1,0 +1,84 @@
+=== TEST COMPLETO BOT TRUMP - 2026-08-30 18:24 UTC ===
+
+== 1. Servicio poly-trump ==
+active
+Aug 30 18:13:31 bot-poly python3[319807]: 2026-08-29       18
+Aug 30 18:13:31 bot-poly python3[319807]: AVG7 = 33.86  V2 = 72  R = 1.063  ajuste = 1.032  λ48 = 69.9
+Aug 30 18:13:31 bot-poly python3[319807]: Días completos en CSV: 211
+Aug 30 18:13:31 bot-poly python3[319807]: [2026-08-30 14:13:31 EDT] Pasada completada en 7.6 s
+Aug 30 18:13:31 bot-poly python3[319807]: [2026-08-30 14:13:31 EDT] Próxima pasada en 15 min…
+
+== 2. Ultima recogida de datos Trump ==
+2026-08-25,32
+2026-08-26,48
+2026-08-27,36
+2026-08-28,54
+2026-08-29,18
+212 datos_trump.csv
+
+== 3. Mercados activos Trump ==
+Mercados abiertos: 3
+  Donald Trump # Truth Social posts August 25 - September 1, 2026? | tipo:semanal | bins:11
+  Donald Trump # Truth Social posts August 28 - September 4, 2026? | tipo:semanal | bins:11
+  Donald Trump # Truth Social posts September 1 - September 8, 2026? | tipo:semanal | bins:11
+
+== 4. Senal en vivo Trump ==
+[2/4] Métricas de actividad…
+  AVG7 = 33.86 · V2 = 72 · R = 1.063 · ajuste = 1.032 · λ semana ≈ 244   [datos propios (211 días)]
+[3/4] Mercados Polymarket…
+[4/4] Evaluación por bin…
+
+■ Donald Trump # Truth Social posts August 25 - September 1, 2026?  [semanal]
+  ventana: 08-25 12:00 EDT → 09-01 12:00 EDT  ·  ahora: 08-30 14:25 EDT
+  λ restante=66.3 · horas restantes: 45.6 · tweets ya en ventana (T0): 156
+  bin         p_modelo   precio  cuotaY  cuotaN   veredicto
+  <20             0.0%    0.000       —    1.00   PASAR
+  20-39           0.0%    0.000       —    1.00   PASAR
+  40-59           0.0%    0.000       —    1.00   PASAR
+  60-79           0.0%    0.000       —    1.00   PASAR
+  80-99           0.0%    0.000       —    1.00   PASAR
+  100-119         0.0%    0.000       —    1.00   PASAR
+  120-139         0.0%    0.000       —    1.00   PASAR
+  140-159         0.0%    0.000       —    1.00   PASAR
+  160-179         2.6%    0.001 2000.00    1.00   PASAR
+  180-199        17.9%    0.050   20.00    1.05   APOSTAR YES
+  200+           79.1%    0.960    1.04   25.00   APOSTAR NO
+
+■ Donald Trump # Truth Social posts August 28 - September 4, 2026?  [semanal]
+  ventana: 08-28 12:00 EDT → 09-04 12:00 EDT  ·  ahora: 08-30 14:25 EDT
+  λ restante=171.1 · horas restantes: 117.6 · tweets ya en ventana (T0): 18
+  bin         p_modelo   precio  cuotaY  cuotaN   veredicto
+  <20             0.0%    0.000       —    1.00   PASAR
+  20-39           0.0%    0.000       —    1.00   PASAR
+  40-59           0.0%    0.000       —    1.00   PASAR
+  60-79           0.1%    0.006  166.67    1.01   PASAR
+  80-99           1.0%    0.003  333.33    1.00   PASAR
+  100-119         3.4%    0.003  333.33    1.00   PASAR
+  120-139         8.2%    0.003  333.33    1.00   PASAR
+  140-159        13.8%    0.047   21.28    1.05   PASAR
+  160-179        16.9%    0.120    8.33    1.14   PASAR
+  180-199        17.7%    0.135    7.41    1.16   PASAR
+  200+           35.2%    0.740    1.35    3.85   APOSTAR NO
+
+► VEREDICTO GLOBAL: hay apuesta candidata (ver tabla). Recuerda:
+  - una sola apuesta activa (espera a que la anterior se resuelva)
+  - paso 1 → stake $3.00 (pérdida acumulada si falla: $3.00)
+
+== 5. Test notificacion Telegram Trump ==
+Resultado: [('ntfy', True), ('telegram', False)]
+
+== 6. Check salud Trump ==
+✅ *SALUD TRUMP: TODO OK*
+
+• poly-trump: active
+• tailscale ferpc: OK
+• IP de salida: 85.85.41.76
+• proxy + IP casa: OK
+• clob via proxy: OK (HTTP 200)
+  [sin token telegram]
+check: OK
+   poly-trump: active
+   tailscale ferpc: OK
+   IP de salida: 85.85.41.76
+   proxy + IP casa: OK
+   clob via proxy: OK (HTTP 200)
