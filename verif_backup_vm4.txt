@@ -1,0 +1,259 @@
+== SCRIPTS DE BACKUP EN /root (candidatos) ==
+-rwx------  1 root root    674 Aug 21 07:18 backup_cruzado.sh
+-rwx------  1 root root   2261 Aug 21 18:03 backup_github.sh
+-rw-r--r--  1 root root     99 Aug 30 04:00 backup_okx.log
+-rwxr-xr-x  1 root root   3934 Aug 28 16:00 backup_okx.sh
+drwxr-xr-x  2 root root   4096 Aug 30 02:00 backups
+drwxr-xr-x  3 root root   4096 Aug 21 07:18 backups-remoto
+-rwx------  1 root root    967 Aug 20 20:12 backup_vm4.sh
+drwxr-xr-x 10 root root   4096 Aug 21 07:07 gh_backup
+-rw-------  1 root root     93 Aug 21 07:07 .gh_backup_token
+-rw-r--r--  1 root root     46 Aug 30 12:05 verif_backup_vm4.txt
+
+== CONTENIDO COMPLETO DE CADA backup*.sh ==
+--- /root/backup_cruzado.sh ---
+#!/bin/bash
+# Replica el último backup LOCAL de vm4 al otro VPS (bot-poly), como copia doble.
+set -e
+DEST_HOST=root@46.225.146.21
+DEST_DIR=/root/backups-remoto/vm4
+ULTIMO=$(ls -t /root/backups/vm4_*.tar.gz 2>/dev/null | head -1)
+[ -z "$ULTIMO" ] && { echo "no hay backup local aún"; exit 0; }
+ssh -i /root/.ssh/backup_cross -o StrictHostKeyChecking=no $DEST_HOST "mkdir -p $DEST_DIR"
+scp -i /root/.ssh/backup_cross -o StrictHostKeyChecking=no $ULTIMO $DEST_HOST:$DEST_DIR/
+ssh -i /root/.ssh/backup_cross -o StrictHostKeyChecking=no $DEST_HOST "ls -t $DEST_DIR/*.tar.gz 2>/dev/null | tail -n +5 | xargs -r rm -f"
+echo "copia doble vm4 -> bot-poly OK ($(basename $ULTIMO))"
+
+--- /root/backup_github.sh ---
+#!/bin/bash
+# Backup SEMANAL del CÓDIGO de los bots (vm4) a GitHub (repo privado).
+# Sube solo código y configs NO secretos. NUNCA: tokens, claves, sesiones,
+# bases de datos, Excel ni estado de trading.
+set -e
+TOKEN_FILE=/root/.gh_backup_token
+REPO_USER=lamegawi
+REPO_NAME=bot-trading-bitget-demo
+BRANCH=main
+WORK=/root/gh_backup
+STAMP=$(date +%Y%m%d_%H%M)
+
+[ -f "$TOKEN_FILE" ] || { echo "falta $TOKEN_FILE"; exit 1; }
+TOKEN=$(cat "$TOKEN_FILE")
+URL="https://x-access-token:${TOKEN}@github.com/${REPO_USER}/${REPO_NAME}.git"
+
+mkdir -p "$WORK"; cd "$WORK"
+if [ -d .git ]; then
+    git remote set-url origin "$URL"
+    git fetch --quiet origin "$BRANCH"
+    git reset --quiet --hard "origin/$BRANCH" 2>/dev/null || true
+else
+    git clone --quiet "$URL" .
+fi
+
+# ---- snapshot vm4 ----
+SNAP="$WORK/backup-bots/vm4"
+rm -rf "$SNAP"; mkdir -p "$SNAP"
+
+# scripts de /root
+for f in real_bot.py demo_bot.py signal_bot.py canales_bot.py login_userbot.py check_salud_vm4.py bolsa_bot.py; do
+    [ -f "/root/$f" ] && cp "/root/$f" "$SNAP/"
+done
+
+# empatebot (código, sin venv/db/cache/bak)
+mkdir -p "$SNAP/empatebot"
+tar -C /opt/empatebot \
+    --exclude='.venv' --exclude='__pycache__' --exclude='*.db' \
+    --exclude='debug_ocr' --exclude='*.bak' --exclude='*.bak2' --exclude='*.bak3' \
+    --exclude='test_estado.json' --exclude='*.log' \
+    -cf - . | tar -C "$SNAP/empatebot" -xf -
+
+# unidades systemd
+mkdir -p "$SNAP/systemd"
+for u in /etc/systemd/system/{real-bot,demo-bot,signal-bot,empatebot,canales-bot,bolsa-bot,vm4-salud,vm4-salud-diario,empatebot-test-diario,vm4-backup,vm4-backup-github,vm4-backup-cruzado}.{service,timer}; do
+    [ -f "$u" ] && cp "$u" "$SNAP/systemd/"
+done
+
+# resumen de tareas y horarios
+systemctl list-timers --all --no-pager > "$SNAP/tareas_horarios.txt" 2>/dev/null
+systemctl list-unit-files --no-pager 2>/dev/null | grep -E "vm4|empate|real|demo|signal|canales|backup|salud|test" > "$SNAP/servicios.txt" 2>/dev/null
+
+# ---- commit y push ----
+cd "$WORK"
+git add -A backup-bots/vm4
+if git diff --cached --quiet; then
+    echo "vm4: sin cambios"
+else
+    git -c user.name="backup-bot" -c user.email="backup@local" commit --quiet -m "backup vm4 $STAMP"
+    git push --quiet "$URL" "HEAD:$BRANCH"
+    echo "vm4: push OK ($STAMP)"
+fi
+
+--- /root/backup_okx.sh ---
+#!/bin/bash
+# BACKUP OKX - copia codigo+datos (SIN secretos), genera estado del dia y sube a GitHub.
+# Instalar en bot-vm4. Se ejecuta solo (cron 04:00 UTC) o a mano: bash /root/backup_okx.sh
+REPO=/root/bots-repo
+DEST="$REPO/okx"
+
+if [ ! -d "$REPO/.git" ]; then
+    echo "ERROR: no existe $REPO (clone del repo bots-backup). Crealo primero."
+    exit 1
+fi
+
+mkdir -p "$DEST"
+
+# --- 1) codigo (nunca .env) ---
+for f in okx_client.py okx_real_bot.py okx_demo_bot.py okx_signal_bot.py \
+         salud_bots.py check_salud_vm4.py recolector.sh enviar.sh \
+         filtros_test.py cirugia_demo.py fixg_apply.sh fixbe_apply.sh; do
+    [ -f "/root/$f" ] && cp "/root/$f" "$DEST/"
+done
+
+# --- 2) datos (jsons sin secretos) ---
+for f in /root/*.json; do
+    nombre=$(basename "$f")
+    case "$nombre" in
+        *.env) ;;  # por si acaso
+        *) cp "$f" "$DEST/" ;;
+    esac
+done
+# los .env NUNCA: no existen como .json, pero por seguridad se excluyen arriba
+
+# --- 3) estado del dia (legible) ---
+{
+    echo "# Estado OKX - $(date -u '+%Y-%m-%d %H:%M UTC')"
+    echo ""
+    echo "## Servicios"
+    for s in okx-demo-bot okx-real-bot okx-signal-bot vm4-salud empatebot bolsa-bot; do
+        echo "- $s: $(systemctl is-active $s.service 2>/dev/null)"
+    done
+    echo ""
+    echo "## Parches instalados (contadores de marcadores)"
+    for m in FIX5_ARENA FIXR_ARENA FIXW_ARENA FIXBE_ARENA FIXPAUSA_ARENA FIXADOPT_ARENA; do
+        echo "- $m: real=$(grep -c $m /root/okx_real_bot.py 2>/dev/null) demo=$(grep -c $m /root/okx_demo_bot.py 2>/dev/null)"
+    done
+    echo ""
+    echo "## Banderas de pausa"
+    echo "- real: $(ls /root/.okx_real_pausado 2>/dev/null || echo 'no (activo)')"
+    echo "- signal: $(ls /root/.okx_signal_pausado 2>/dev/null || echo 'no (activo)')"
+    echo ""
+    echo "## Cuenta demo (posiciones y P&L)"
+    python3 - <<'PYEOF'
+import sys, json
+sys.path.insert(0, "/root")
+e = {}
+for l in open("/root/.okx_demo_env"):
+    l = l.strip()
+    if "=" in l and not l.startswith("#"):
+        k, v = l.split("=", 1)
+        e[k.replace("export","").strip()] = v.strip().strip('"').strip("'")
+import okx_client as OKX
+c = OKX.Cliente(e.get("OKX_DEMO_KEY",""), e.get("OKX_DEMO_SECRET",""), e.get("OKX_DEMO_PASSPHRASE",""), demo=True)
+try:
+    bal = c.saldo()
+    print("- equity demo: $%.2f" % float(bal.get("equity", 0)))
+except Exception as ex:
+    print("- saldo demo ERROR:", str(ex)[:80])
+try:
+    for p in c.posiciones() or []:
+        print("- %s %s %s ct | P&L %+.2f" % (p.get("instId","?"), "LONG" if float(p.get("pos",0))>0 else "SHORT",
+              abs(float(p.get("pos",0))), float(p.get("upl",0))))
+except Exception as ex:
+    print("- posiciones ERROR:", str(ex)[:80])
+PYEOF
+    echo ""
+    echo "## Cuenta real (solo saldo, sin detalle)"
+    python3 - <<'PYEOF'
+import sys
+sys.path.insert(0, "/root")
+e = {}
+for l in open("/root/.okx_real_env"):
+    l = l.strip()
+    if "=" in l and not l.startswith("#"):
+        k, v = l.split("=", 1)
+        e[k.replace("export","").strip()] = v.strip().strip('"').strip("'")
+import okx_client as OKX
+c = OKX.Cliente(e.get("OKX_REAL_KEY",""), e.get("OKX_REAL_SECRET",""), e.get("OKX_REAL_PASSPHRASE",""), demo=False)
+try:
+    bal = c.saldo()
+    n = len(c.posiciones() or [])
+    print("- equity real: $%.2f | posiciones: %d" % (float(bal.get("equity", 0)), n))
+except Exception as ex:
+    print("- saldo real ERROR:", str(ex)[:80])
+PYEOF
+} > "$DEST/ESTADO.md"
+
+# --- 4) commit + push ---
+cd "$REPO"
+git add -A 2>/dev/null
+if git diff --cached --quiet 2>/dev/null; then
+    echo "Sin cambios que subir."
+else
+    git -c user.name="backup-bot" -c user.email="backup@local" commit -m "backup okx $(date -u '+%Y-%m-%d %H:%M')" >/dev/null 2>&1
+    git pull --rebase origin 2>/dev/null
+    if git push origin HEAD 2>/dev/null; then
+        echo "OK: backup OKX subido a GitHub."
+    else
+        echo "AVISO: commit hecho pero el push fallo (revisa red/token)."
+    fi
+fi
+
+--- /root/backup_vm4.sh ---
+#!/bin/bash
+# Backup diario de bot-vm4 (Bitget + canales + empates). Retención 7 días.
+DEST=/root/backups
+mkdir -p $DEST
+STAMP=$(date +%Y%m%d_%H%M)
+OUT=$DEST/vm4_$STAMP.tar.gz
+tar czf $OUT   --exclude=/root/backups   --exclude="__pycache__" --exclude="*.pyc" --exclude=".venv" --exclude="debug_ocr"   --exclude="*.session-journal"   /root /opt/empatebot /etc/empatebot.env   /etc/systemd/system/real-bot.service /etc/systemd/system/demo-bot.service   /etc/systemd/system/signal-bot.service /etc/systemd/system/empatebot.service   /etc/systemd/system/canales-bot.service   /etc/systemd/system/vm4-salud.service /etc/systemd/system/vm4-salud.timer   /etc/systemd/system/vm4-salud-diario.service /etc/systemd/system/vm4-salud-diario.timer   /etc/systemd/system/empatebot-test-diario.service /etc/systemd/system/empatebot-test-diario.timer   2>/dev/null
+chmod 600 $OUT
+find $DEST -name "vm4_*.tar.gz" -mtime +7 -delete
+echo "backup vm4: $OUT ($(du -h $OUT | cut -f1))"
+
+== TIMERS Y SERVICIOS systemd relacionados con backup ==
+vm4-backup-cruzado.service
+vm4-backup-cruzado.timer
+vm4-backup-github.service
+vm4-backup-github.timer
+vm4-backup.service
+vm4-backup.timer
+--- /etc/systemd/system/vm4-backup-cruzado.timer ---
+[Unit]
+Description=Copia doble vm4->bot-poly cada día (05:00)
+
+[Timer]
+OnCalendar=*-*-* 05:00:00 Europe/Madrid
+Persistent=true
+Unit=vm4-backup-cruzado.service
+
+[Install]
+WantedBy=timers.target
+--- /etc/systemd/system/vm4-backup-github.timer ---
+[Unit]
+Description=Backup semanal del código a GitHub (domingos)
+
+[Timer]
+OnCalendar=Sun 04:30:00 Europe/Madrid
+Persistent=true
+Unit=vm4-backup-github.service
+
+[Install]
+WantedBy=timers.target
+--- /etc/systemd/system/vm4-backup.timer ---
+[Unit]
+Description=Backup diario bot-vm4 (04:00 Madrid)
+
+[Timer]
+OnCalendar=*-*-* 04:00:00 Europe/Madrid
+Persistent=true
+Unit=vm4-backup.service
+
+[Install]
+WantedBy=timers.target
+
+== crontabs relacionados con backup ==
+0 4 * * * /bin/bash /root/backup_okx.sh >> /root/backup_okx.log 2>&1
+
+== tokens de backup existentes ==
+-rw------- 1 root root 93 Aug 21 07:07 /root/.gh_backup_token
+-rw------- 1 root root 93 Aug 21 07:07 /root/.gh_backup_token
