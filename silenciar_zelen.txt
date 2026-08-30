@@ -1,0 +1,47 @@
+== apuestas_compartidas.json ANTES ==
+{
+ "zelenskyy-of-tweets-august-21-august-28-2026|60-79": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-08-28T16:00:00+00:00",
+  "ts": 1787373606.9250767
+ },
+ "zelenskyy-of-tweets-august-28-september-4-2026|140-159": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-09-04T16:00:00+00:00",
+  "ts": 1788093986.9074795
+ },
+ "zelenskyy-of-tweets-august-28-september-4-2026|160-179": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-09-04T16:00:00+00:00",
+  "ts": 1788093912.8181448
+ }
+}
+== Añadiendo 160-179 al lock ==
+OK: clave añadida -> zelenskyy-of-tweets-august-28-september-4-2026|160-179
+
+== apuestas_compartidas.json DESPUES ==
+{
+ "zelenskyy-of-tweets-august-21-august-28-2026|60-79": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-08-28T16:00:00+00:00",
+  "ts": 1787373606.9250767
+ },
+ "zelenskyy-of-tweets-august-28-september-4-2026|140-159": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-09-04T16:00:00+00:00",
+  "ts": 1788093986.9074795
+ },
+ "zelenskyy-of-tweets-august-28-september-4-2026|160-179": {
+  "bot": "ZELENSKYY",
+  "hasta": "2026-09-04T16:00:00+00:00",
+  "ts": 1788094021.1540797
+ }
+}
+== Verificando que el check integral ya no la reporta como huerfana ==
+⚠️ *TEST DIARIO ZELENSKYY: 2 aviso(s)*
+30/08/2026 14:47
+
+• lock caducado: zelenskyy-of-tweets-august-21-august-28-2026|60-79
+• HUÉRFANA: posición abierta sin bot que la reclame: Will Zelenskyy post 160-179 posts from August 28 to Septembe
+telegram enviado: False
+resultado: AVISOS
