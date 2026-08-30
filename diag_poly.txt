@@ -1,0 +1,3829 @@
+###############################################
+# DIAGNOSTICO POLYMARKET - Sun Aug 30 11:33:40 AM UTC 2026
+###############################################
+
+===== 1. SISTEMA =====
+Sun Aug 30 11:33:40 AM UTC 2026
+ 11:33:40 up 3 days, 19:22,  4 users,  load average: 0.01, 0.05, 0.01
+bot-poly
+               Local time: Sun 2026-08-30 11:33:40 UTC
+           Universal time: Sun 2026-08-30 11:33:40 UTC
+                 RTC time: Sun 2026-08-30 11:33:40
+                Time zone: Etc/UTC (UTC, +0000)
+
+===== 2. SERVICIOS Y TIMERS =====
+poly-elon: active
+poly-gestor: active
+poly-mensual: active
+poly-semanal: active
+poly-telegram: active
+poly-telegram-zelen: active
+poly-zelenskyy: active
+Sun 2026-08-30 11:36:41 UTC  3min 0s Sun 2026-08-30 11:26:41 UTC     6min ago poly-salud-zelen.timer         poly-salud-zelen.service
+Sun 2026-08-30 11:36:41 UTC  3min 0s Sun 2026-08-30 11:26:41 UTC     6min ago poly-salud.timer               poly-salud.service
+Sun 2026-08-30 11:39:37 UTC     5min Sun 2026-08-30 11:09:37 UTC    24min ago poly-fantasmas.timer           poly-fantasmas.service
+Sun 2026-08-30 11:42:41 UTC     9min Sun 2026-08-30 11:12:41 UTC    20min ago poly-fantasmas-zelen.timer     poly-fantasmas-zelen.service
+Sun 2026-08-30 19:00:00 UTC       7h Sun 2026-08-30 07:00:11 UTC 4h 33min ago poly-test-diario.timer         poly-test-diario.service
+Sun 2026-08-30 19:05:00 UTC       7h Sun 2026-08-30 07:05:17 UTC 4h 28min ago poly-test-diario-zelen.timer   poly-test-diario-zelen.service
+Sun 2026-08-30 20:00:00 UTC       8h Sun 2026-08-30 06:00:11 UTC 5h 33min ago poly-salud-diario.timer        poly-salud-diario.service
+Mon 2026-08-31 02:15:00 UTC      14h Sun 2026-08-30 02:15:21 UTC       9h ago poly-backup.timer              poly-backup.service
+
+===== 3. PROCESOS PYTHON =====
+root         833  0.0  0.5 109696 23312 ?        Ssl  Aug26   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root      126168  0.0  1.5  72568 61700 ?        Ss   Aug28   0:38 /usr/bin/python3 /opt/polymarket/poly_telegram_bot.py
+root      126172  0.0  1.6  74088 63228 ?        Ss   Aug28   0:38 /usr/bin/python3 /opt/polymarket/poly_telegram_zelen.py
+root      126365  0.0  1.6 184236 64960 ?        Ssl  Aug28   1:37 /usr/bin/python3 bot.py --loop --intervalo 5 --excel --modo real
+root      126367  0.0  1.5  72540 61688 ?        Ss   Aug28   0:06 /usr/bin/python3 /opt/polymarket/gestionar_posiciones.py --loop 5
+root      209945  0.0  2.1 206316 84816 ?        Ssl  Aug29   0:46 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
+root      209959  0.0  2.1 206228 84920 ?        Ssl  Aug29   0:44 /usr/bin/python3 bot_mensual.py --loop --intervalo 5 --excel --modo real
+root      279158  0.0  2.2 212312 88284 ?        Ssl  06:35   0:14 /usr/bin/python3 bot_semanal.py --loop --intervalo 5 --excel --modo real
+
+===== 4. RECOGIDA DE TWEETS =====
+parche v3 (x-no-cache): 1
+parche v2 (x_hasta):    3
+estado_tweets actualizado: 2026-08-30T11:29:38.975702 | tweets unicos: 613
+--- datos_elon.csv (ultimos 40 dias) ---
+fecha,tweets
+2025-01-24,1
+2026-02-26,1
+2026-05-11,1
+2026-07-25,15
+2026-07-26,14
+2026-07-27,15
+2026-07-28,17
+2026-07-29,21
+2026-07-30,31
+2026-07-31,38
+2026-08-01,32
+2026-08-02,25
+2026-08-03,24
+2026-08-04,26
+2026-08-05,25
+2026-08-06,25
+2026-08-07,26
+2026-08-08,26
+2026-08-09,18
+2026-08-10,29
+2026-08-11,17
+2026-08-12,33
+2026-08-13,50
+2026-08-14,22
+2026-08-15,26
+2026-08-16,9
+2026-08-17,21
+2026-08-18,47
+2026-08-19,86
+2026-08-20,85
+2026-08-21,52
+2026-08-22,17
+2026-08-23,31
+2026-08-24,33
+2026-08-25,26
+2026-08-26,14
+2026-08-27,30
+2026-08-28,7
+2026-08-29,16
+--- otros CSV de datos (zelenskyy etc.) ---
+--- /opt/polymarket/bot-polymarket-elon/datos_ejemplo.csv ---
+2026-07-27,41
+2026-07-28,26
+2026-07-29,34
+2026-07-30,25
+2026-07-31,52
+2026-08-01,22
+2026-08-02,25
+2026-08-03,17
+2026-08-04,37
+2026-08-05,20
+2026-08-06,67
+2026-08-07,28
+--- /opt/polymarket/bot-polymarket-elon-mensual/datos_elon.csv ---
+2026-08-18,37
+2026-08-19,76
+2026-08-20,85
+2026-08-21,48
+2026-08-22,18
+2026-08-23,31
+2026-08-24,33
+2026-08-25,26
+2026-08-26,14
+2026-08-27,30
+2026-08-28,7
+2026-08-29,16
+--- /opt/polymarket/bot-polymarket-elon-mensual-v2/datos_elon.csv ---
+2026-08-07,26
+2026-08-08,26
+2026-08-09,18
+2026-08-10,18
+2026-08-11,15
+2026-08-12,33
+2026-08-13,41
+2026-08-14,16
+2026-08-15,31
+2026-08-16,5
+2026-08-17,21
+2026-08-18,37
+--- /opt/polymarket/bot-polymarket-elon-semanal/datos_elon.csv ---
+2026-08-18,37
+2026-08-19,76
+2026-08-20,85
+2026-08-21,52
+2026-08-22,14
+2026-08-23,31
+2026-08-24,33
+2026-08-25,26
+2026-08-26,14
+2026-08-27,30
+2026-08-28,7
+2026-08-29,16
+--- /opt/polymarket/bot-polymarket-elon-semanal-v2/datos_elon.csv ---
+2026-08-07,26
+2026-08-08,26
+2026-08-09,14
+2026-08-10,18
+2026-08-11,17
+2026-08-12,33
+2026-08-13,36
+2026-08-14,32
+2026-08-15,22
+2026-08-16,5
+2026-08-17,21
+2026-08-18,37
+--- /opt/polymarket/bot-polymarket-elon-v2/datos_elon.csv ---
+2026-08-07,26
+2026-08-08,26
+2026-08-09,14
+2026-08-10,18
+2026-08-11,21
+2026-08-12,33
+2026-08-13,50
+2026-08-14,22
+2026-08-15,22
+2026-08-16,5
+2026-08-17,21
+2026-08-18,37
+--- /opt/polymarket/bot-polymarket-zelenskyy/datos_zelen.csv ---
+2026-08-18,10
+2026-08-19,10
+2026-08-20,7
+2026-08-21,13
+2026-08-22,13
+2026-08-23,22
+2026-08-24,26
+2026-08-25,90
+2026-08-26,27
+2026-08-27,10
+2026-08-28,9
+2026-08-29,11
+--- ultimas recogidas (jina-tw en bot.log) ---
+[2026-08-30 06:24:58 EDT]       · jina-tw: 5 items
+[2026-08-30 06:31:59 EDT]       · jina-tw: 5 items
+[2026-08-30 06:38:56 EDT]       · jina-tw: 5 items
+[2026-08-30 06:46:22 EDT]       · jina-tw: 5 items
+[2026-08-30 06:53:24 EDT]       · jina-tw: 5 items
+[2026-08-30 07:00:19 EDT]       · jina-tw: 5 items
+[2026-08-30 07:07:15 EDT]       · jina-tw: 5 items
+[2026-08-30 07:14:15 EDT]       · jina-tw: 5 items
+[2026-08-30 07:21:11 EDT]       · jina-tw: 5 items
+[2026-08-30 07:28:08 EDT]       · jina-tw: 5 items
+
+===== 5. MOTOR EMPIRICO (senal en vivo) =====
+parche SENAL-EMP: 1
+[2/4] Métricas de actividad…
+  AVG7 = 22.43 · V2 = 23 · R = 0.513 · ajuste = 0.756 · λ48 = 33.9   [datos propios (39 días)]
+[3/4] Mercados Polymarket…
+  precios actualizados ✓
+[4/4] Evaluación por bin…
+
+► VEREDICTO GLOBAL: PASAR — ningún bin cumple (p_modelo ≥ 60% o ≤ 30%) con cuota ≥ 3.00.
+  La regla es no apostar: la paciencia es parte de la estrategia.
+
+===== 6. POSICIONES POLYMARKET (API publica) =====
+carteras detectadas en configs: ['0x8a22F798C20B0f542c38ABD697a29E4BE7C3bae6', '0xa1b936cd50c6a94de1c81cd0bf4c510378348a28', '0xb0E1197098E6d427c01720F1631cAD24CE740FA0', '0xb315477a366dbd7fee0661579e0b1217e8867032']
+--- cartera 0x8a22F798C2 ---
+   (sin posiciones con valor)
+--- cartera 0xa1b936cd50 ---
+   (sin posiciones con valor)
+--- cartera 0xb0E1197098 ---
+   (sin posiciones con valor)
+--- cartera 0xb315477a36 ---
+   (sin posiciones con valor)
+
+===== 7. REGISTROS =====
+--- /opt/polymarket/cierres_anticipados.json ---
+{
+ "cierres": [
+  {
+   "fecha": "2026-08-18",
+   "titulo": "Elon 140-159 (14-21 ago)",
+   "bin": "140-159",
+   "lado": "Yes",
+   "invertido": 6.38,
+   "valor": 10.0,
+   "pnl": 3.62
+  },
+  {
+   "fecha": "2026-08-18",
+   "titulo": "Elon <40 (17-19 ago)",
+   "bin": "0-39",
+   "lado": "Yes",
+   "invertido": 5.97,
+   "valor": 2.74,
+   "pnl": -3.23
+  },
+  {
+   "fecha": "2026-08-18",
+   "titulo": "Elon 100-119 (14-21 ago)",
+   "bin": "100-119",
+   "lado": "Yes",
+   "invertido": 6.26,
+   "valor": 0.85,
+   "pnl": -5.41
+  },
+  {
+   "fecha": "2026-08-18",
+   "titulo": "Elon 740-759 (agosto)",
+   "bin": "740-759",
+   "lado": "Yes",
+   "invertido": 2.0,
+   "valor": 1.05,
+   "pnl": -0.95
+  },
+  {
+   "fecha": "2026-08-18",
+   "titulo": "Elon 660-679 (agosto)",
+   "bin": "660-679",
+   "lado": "Yes",
+   "invertido": 2.47,
+   "valor": 1.86,
+   "pnl": -0.61
+  },
+  {
+   "fecha": "2026-08-21",
+   "titulo": "Will Elon Musk post 90-114 tweets from August 20 to August 22, 2026",
+   "bin": "90-114",
+   "lado": "Yes",
+   "invertido": 7.43,
+   "valor": 10.13,
+   "pnl": 2.7
+  },
+  {
+   "fecha": "2026-08-26",
+   "titulo": "Will Elon Musk post 220-239 tweets from August 25 to September 1, 2026",
+   "bin": "220-239",
+   "lado": "Yes",
+   "invertido": 8.0,
+   "valor": 8.25,
+   "pnl": 0.25
+  },
+  {
+   "fecha": "2026-08-26",
+   "titulo": "Will Elon Musk post 220-239 tweets from August 25 to September 1, 2026",
+   "bin": "220-239",
+   "lado": "Yes",
+   "invertido": 1.7,
+   "valor": 1.64,
+   "pnl": -0.05
+  },
+  {
+   "fecha": "2026-08-29",
+   "titulo": "Will Elon Musk post 160-179 tweets from August 28 to September 4, 2026",
+   "bin": "160-179",
+   "lado": "Yes",
+   "invertido": 1.08,
+   "valor": 1.05,
+   "pnl": -0.03
+  },
+  {
+   "fecha": "2026-08-29",
+   "titulo": "Will Elon Musk post 120-139 tweets from August 28 to September 4, 2026",
+   "bin": "120-139",
+   "lado": "Yes",
+   "invertido": 0.0,
+   "valor": 5.66,
+   "pnl": 5.66
+  },
+  {
+   "fecha": "2026-08-29",
+   "titulo": "Will Elon Musk post 120-139 tweets from August 28 to September 4, 2026",
+   "bin": "120-139",
+   "lado": "Yes",
+   "invertido": 0.0,
+   "valor": 1.41,
+   "pnl": 1.41
+  },
+  {
+   "fecha": "2026-08-29",
+   "titulo": "Will Elon Musk post 120-139 tweets from August 28 to September 4, 2026",
+   "bin": "120-139",
+   "lado": "Yes",
+   "invertido": 4.05,
+   "valor": 4.08,
+   "pnl": 0.03
+  },
+  {
+   "fecha": "2026-08-29",
+   "titulo": "Will Elon Musk post 120-139 tweets from August 28 to September 4, 2026",
+   "bin": "120-139",
+   "lado": "Yes",
+   "invertido": 1.95,
+   "valor": 1.83,
+   "pnl": -0.12
+  }
+ ]
+}
+--- /opt/polymarket/motores/motores.json ---
+{
+  "revisar_el": "2026-08-23 (por la tarde)",
+  "actual": "motor_v2_ev_escalones_tope10",
+  "motores": [
+    {
+      "nombre": "motor_v1_martingala_fijo",
+      "descripcion": "Motor original: martingala fijo (48h 3.30×1.5 · semanal 3.00×1.40 · mensual 2.00×1.35), entrada a cualquier hora de la ventana y conteo t0 incompleto en 48h (saltaba los reposts).",
+      "fecha_inicio": "2026-08-15",
+      "fecha_fin": "2026-08-19",
+      "stats": {
+        "nota": "realizado entre 15/08 y 19/08",
+        "cerradas": 6,
+        "ganadas": 1,
+        "perdidas": 5,
+        "pnl": 6.41,
+        "detalle": "+12.99 (Elon 15-17 ago) · cierres anticipados 18/08: +3.62 (140-159), -3.23 (<40), -5.41 (100-119), -0.95 (740-759), -0.61 (660-679)"
+      }
+    },
+    {
+      "nombre": "motor_v2_ev_escalones_tope10",
+      "descripcion": "Conteo t0 corregido (posts+reposts+quotes) · entrada solo al inicio (48h≤12h, semanal≤24h, mensual≤72h) · guarda de bin decidido · tamaño por EV (1.8-2.5 ×1 · 2.5-4.0 ×1.5 · >4.0 ×2 · tope 10€) sobre el martingala base.",
+      "fecha_inicio": "2026-08-19",
+      "fecha_fin": null,
+      "stats": null
+    }
+  ],
+  "v2_pausados": {
+    "fecha": "2026-08-19",
+    "motivo": "los 6 bots corrían el mismo motor (v2) y duplicaban riesgo (p.ej. -3,30 x2 en <40 el 18/08).",
+    "estado": "poly-elon-v2, poly-semanal-v2, poly-mensual-v2 parados y deshabilitados (no borrados).",
+    "uso_futuro": "laboratorio para probar el próximo motor en modo papel."
+  }
+}
+--- /opt/polymarket/bot-polymarket-elon/mercado_activo.json ---
+{
+ "actualizado": "2026-08-30T11:33:46.591413+00:00",
+ "mercados": [
+  {
+   "id": "921547",
+   "titulo": "Elon Musk # tweets August 29 - August 31, 2026?",
+   "slug": "elon-musk-of-tweets-august-29-august-31-2026",
+   "cerrado": false,
+   "volumen": 224311.719614,
+   "endDate": "2026-08-31T16:00:00Z",
+   "inicio_iso": "2026-08-29T12:00:00-04:00",
+   "fin_iso": "2026-08-31T12:00:00-04:00",
+   "duracion_h": 48.0,
+   "tipo": "48h",
+   "bins": [
+    {
+     "titulo": "<40",
+     "lo": 0,
+     "hi": 39,
+     "precio_yes": 0.1,
+     "precio_no": 0.9,
+     "cuota_yes": 10.0,
+     "cuota_no": 1.1111111111111112,
+     "volumen": 47926.16387800001
+    },
+    {
+     "titulo": "40-64",
+     "lo": 40,
+     "hi": 64,
+     "precio_yes": 0.675,
+     "precio_no": 0.325,
+     "cuota_yes": 1.4814814814814814,
+     "cuota_no": 3.0769230769230775,
+     "volumen": 29255.283101000008
+    },
+    {
+     "titulo": "65-89",
+     "lo": 65,
+     "hi": 89,
+     "precio_yes": 0.195,
+     "precio_no": 0.805,
+     "cuota_yes": 5.128205128205128,
+     "cuota_no": 1.2422360248447206,
+     "volumen": 34712.631711
+    },
+    {
+     "titulo": "90-114",
+     "lo": 90,
+     "hi": 114,
+     "precio_yes": 0.0275,
+     "precio_no": 0.9725,
+     "cuota_yes": 36.36363636363637,
+     "cuota_no": 1.0282776349614395,
+     "volumen": 39203.62689099999
+    },
+    {
+     "titulo": "115-139",
+     "lo": 115,
+     "hi": 139,
+     "precio_yes": 0.0055,
+     "precio_no": 0.9945,
+     "cuota_yes": 181.81818181818184,
+     "cuota_no": 1.0055304172951232,
+     "volumen": 40494.376426999996
+    },
+    {
+     "titulo": "140-164",
+     "lo": 140,
+     "hi": 164,
+     "precio_yes": 0.0015,
+     "precio_no": 0.9985,
+     "cuota_yes": 666.6666666666666,
+     "cuota_no": 1.0015022533800702,
+     "volumen": 12784.1715
+    },
+    {
+     "titulo": "165-189",
+     "lo": 165,
+     "hi": 189,
+     "precio_yes": 0.0005,
+     "precio_no": 0.9995,
+     "cuota_yes": 2000.0,
+     "cuota_no": 1.0005002501250624,
+     "volumen": 11912.062442
+    },
+    {
+     "titulo": "190-214",
+     "lo": 190,
+     "hi": 214,
+     "precio_yes": 0.0005,
+     "precio_no": 0.9995,
+     "cuota_yes": 2000.0,
+     "cuota_no": 1.0005002501250624,
+     "volumen": 4937.914000000001
+    },
+    {
+     "titulo": "215-239",
+     "lo": 215,
+     "hi": 239,
+     "precio_yes": 0.0005,
+     "precio_no": 0.9995,
+     "cuota_yes": 2000.0,
+     "cuota_no": 1.0005002501250624,
+     "volumen": 1810.995
+    },
+    {
+     "titulo": "240+",
+     "lo": 240,
+     "hi": Infinity,
+     "precio_yes": 0.0005,
+     "precio_no": 0.9995,
+     "cuota_yes": 2000.0,
+     "cuota_no": 1.0005002501250624,
+     "volumen": 1274.494664
+    }
+   ]
+  },
+  {
+   "id": "741766",
+   "titulo": "Elon Musk # tweets in August 2026?",
+   "slug": "elon-musk-of-tweets-august-2026",
+   "cerrado": false,
+   "volumen": 511854.85421200003,
+   "endDate": "2026-09-01T04:00:00Z",
+   "inicio_iso": "2026-08-01T00:00:00-04:00",
+   "fin_iso": "2026-09-01T00:00:00-04:00",
+   "duracion_h": 744.0,
+   "tipo": "mensual",
+   "bins": [
+    {
+     "titulo": "<20",
+     "lo": 0,
+     "hi": 19,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 1835.821915
+    },
+    {
+     "titulo": "20-39",
+     "lo": 20,
+     "hi": 39,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 803.0
+    },
+    {
+     "titulo": "40-59",
+     "lo": 40,
+     "hi": 59,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 994.08411
+    },
+    {
+     "titulo": "60-79",
+     "lo": 60,
+     "hi": 79,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 725.0
+    },
+    {
+     "titulo": "80-99",
+     "lo": 80,
+     "hi": 99,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 725.0
+    },
+    {
+     "titulo": "100-119",
+     "lo": 100,
+     "hi": 119,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 793.991
+    },
+    {
+     "titulo": "120-139",
+     "lo": 120,
+     "hi": 139,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 775.0
+    },
+    {
+     "titulo": "140-159",
+     "lo": 140,
+     "hi": 159,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 813.973
+    },
+    {
+     "titulo": "160-179",
+     "lo": 160,
+     "hi": 179,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 813.973
+    },
+    {
+     "titulo": "180-199",
+     "lo": 180,
+     "hi": 199,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cuota_yes": null,
+     "cuota_no": 1.0,
+     "volumen": 437.003
+    },
+    {
+     "titulo": "200-219",
+     "lo": 200,
+     "hi": 219,
+     "precio_yes": 0.0,
+     "precio_no": 1.0,
+     "cu
+--- estado de cada bot (estado*.json) ---
+--- /opt/polymarket/bot-polymarket-elon/estado_bot.json ---
+{
+ "ultimo_resumen": "2026-08-22"
+}
+--- /opt/polymarket/bot-polymarket-elon/estado_tweets.json ---
+{
+ "actualizado": "2026-08-30T11:29:38.975702",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Mon Aug 10 05:08:17 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-elon-mensual/estado_bot_mensual.json ---
+{
+ "ultimo_resumen": "2026-08-30"
+}
+--- /opt/polymarket/bot-polymarket-elon-mensual/estado_tweets.json ---
+{
+ "actualizado": "2026-08-30T11:29:22.562536",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-elon-mensual-v2/estado_bot_mensual_v2.json ---
+{
+ "ultimo_resumen": "2026-08-19"
+}
+--- /opt/polymarket/bot-polymarket-elon-mensual-v2/estado_tweets.json ---
+{
+ "actualizado": "2026-08-19T18:29:55.751076",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-elon-semanal/estado_bot_semanal.json ---
+{
+ "ultimo_resumen": "2026-08-30"
+}
+--- /opt/polymarket/bot-polymarket-elon-semanal/estado_tweets.json ---
+{
+ "actualizado": "2026-08-30T11:29:23.905633",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Mon Aug 10 15:48:19 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-elon-semanal-v2/estado_bot_semanal_v2.json ---
+{
+ "ultimo_resumen": "2026-08-19"
+}
+--- /opt/polymarket/bot-polymarket-elon-semanal-v2/estado_tweets.json ---
+{
+ "actualizado": "2026-08-19T18:29:54.732193",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-elon-v2/estado_bot_v2.json ---
+{
+ "ultimo_resumen": "2026-08-19"
+}
+--- /opt/polymarket/bot-polymarket-elon-v2/estado_tweets.json ---
+{
+ "actualizado": "2026-08-19T18:28:59.212442",
+ "tweets": {
+  "2085377974396752305": {
+   "id": "2085377974396752305",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Thu Aug 06 14:50:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085940169245356114": {
+   "id": "2085940169245356114",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 04:04:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085937755062685951": {
+   "id": "2085937755062685951",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:54:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085926590962164126": {
+   "id": "2085926590962164126",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 03:10:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085890347301843344": {
+   "id": "2085890347301843344",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Sat Aug 08 00:46:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085791747024572605": {
+   "id": "2085791747024572605",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:14:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085878569033715983": {
+   "id": "2085878569033715983",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 23:59:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085814657223209290": {
+   "id": "2085814657223209290",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 19:45:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085713988583592009": {
+   "id": "2085713988583592009",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 13:05:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085835677917221171": {
+   "id": "2085835677917221171",
+   "kind": "repost",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 21:09:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802906674930019": {
+   "id": "2085802906674930019",
+   "kind": "post",
+   "autor": "elonmusk",
+   "created_at": "Fri Aug 07 18:58:00 +0000 2026",
+   "primera_vista": "Sat Aug 08 07:21:53 +0000 2026"
+  },
+  "2085802506211197098": {
+   "id": "2085802506211197098",
+   "kind": "post",
+   "autor": "elonmusk",
+   "
+--- /opt/polymarket/bot-polymarket-zelenskyy/estado_bot_zelen.json ---
+{
+ "ultimo_resumen": "2026-08-22"
+}
+--- /opt/polymarket/bot-polymarket-zelenskyy/estado_tweets_zelen.json ---
+{
+ "actualizado": "2026-08-30T11:30:20.345145",
+ "tweets": {
+  "2090497391921135677": {
+   "id": "2090497391921135677",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 17:53:12 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090469705769255153": {
+   "id": "2090469705769255153",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 16:03:11 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090469701209972841": {
+   "id": "2090469701209972841",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 16:03:10 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090401917440532655": {
+   "id": "2090401917440532655",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 11:33:49 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090401912638124180": {
+   "id": "2090401912638124180",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 11:33:48 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090322391394033994": {
+   "id": "2090322391394033994",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 06:17:49 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090322386415423823": {
+   "id": "2090322386415423823",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Thu Aug 20 06:17:47 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090148044100518112": {
+   "id": "2090148044100518112",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Wed Aug 19 18:45:01 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090077366978519329": {
+   "id": "2090077366978519329",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Wed Aug 19 14:04:10 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090077362910105718": {
+   "id": "2090077362910105718",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "created_at": "Wed Aug 19 14:04:09 +0000 2026",
+   "primera_vista": "Fri Aug 21 00:04:45 +0000 2026",
+   "exacto": true
+  },
+  "2090035337552654564": {
+   "id": "2090035337552654564",
+   "kind": "post",
+   "autor": "ZelenskyyUa",
+   "
+
+===== 8. CODIGO senal.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""
+     4	MOTOR DE SEÑAL — Mercados Polymarket "Elon Musk # tweets" (ventanas de 48 h)
+     5	============================================================================
+     6	Estrategia objetiva y medible basada en:
+     7	
+     8	    AVG7  = media de tweets/día de los últimos 7 días COMPLETOS
+     9	    V2    = total de tweets de los últimos 2 días completos
+    10	    R     = V2 / (2 × AVG7)                     (ratio de actividad reciente)
+    11	    λ48   = 2 × AVG7 × ajuste(R)                (tweets esperados en 48 h)
+    12	            ajuste(R) = clamp(1 + 0.5×(R−1), 0.5, 1.5)   (momentum con regresión
+    13	                                                          parcial hacia la media)
+    14	    X48 ~ Poisson(λ48)                          (modelo de conteo)
+    15	
+    16	Reglas de entrada (TODAS obligatorias):
+    17	    R1  Mercado de ventana 48 h con reglas de resolución claras
+    18	        (conteo estándar de estos mercados: posts + quote posts + reposts)
+    19	    R2  Volumen ≥ $5.000 y liquidez ≥ $1.000 en el mercado
+    20	    R3  Cuota ≥ 3.00  →  precio del lado elegido ≤ 0.33
+    21	    R4  p_modelo ≥ 0.60  → candidato a YES
+    22	        p_modelo ≤ 0.30  → candidato a NO
+    23	    R5  AVG7 ≥ 5  (base mínima de datos para que el modelo sea estable)
+    24	    R6  UNA sola apuesta activa (secuencial). La siguiente apuesta solo
+    25	        se abre cuando la anterior se ha RESUELTO.
+    26	    R7  Progresión 3.30 × 1.5^(paso−1), reinicio a 3.30 tras ganar,
+    27	        stop-loss de ciclo a los 7 pasos.
+    28	
+    29	CSV de entrada: columnas  fecha (YYYY-MM-DD), tweets (entero, día completo,
+    30	hora ET, mismo criterio de conteo que el mercado).
+    31	
+    32	Uso:
+    33	    python3 senal.py --csv datos.csv                                  # señal HOY (bin genérico ≥1)
+    34	    python3 senal.py --csv datos.csv --bin 90 114 --precio 0.15      # evalúa un bin concreto
+    35	    python3 senal.py --csv datos.csv --bin 50 9999 --precio 0.33 --ya-publicados 12 --horas 6
+    36	    python3 senal.py --csv datos.csv --backtest --bin 50 9999 --precio 0.33
+    37	"""
+    38	
+    39	import argparse
+    40	import csv
+    41	import math
+    42	import sys
+    43	from datetime import date, datetime, timedelta
+    44	
+    45	# ----------------------------------------------------------------------------
+    46	# Parámetros fijos de la estrategia (no se cambian a mano: son las reglas)
+    47	# ----------------------------------------------------------------------------
+    48	STAKE_INICIAL   = 3.30          # $, primera apuesta de cada ciclo
+    49	FACTOR          = 1.50          # multiplicador tras cada fallo
+    50	CUOTA_MINIMA    = 3.00          # cuota mínima aceptada (precio ≤ 0.333)
+    51	P_MIN_YES       = 0.60          # p_modelo mínima para apostar YES
+    52	P_MAX_NO        = 0.30          # p_modelo máxima para apostar NO
+    53	PASOS_MAX       = 7             # stop-loss del ciclo (paso máximo)
+    54	AVG7_MIN        = 5.0           # AVG7 mínimo para operar
+    55	VOL_MIN         = 5_000         # $ volumen mínimo del mercado
+    56	LIQ_MIN         = 1_000         # $ liquidez mínima del mercado
+    57	BETA            = 0.5           # coeficiente de momentum del ajuste
+    58	AJUSTE_MIN, AJUSTE_MAX = 0.5, 1.5
+    59	# ----------------------------------------------------------------------------
+    60	
+    61	
+    62	def clamp(x, lo, hi):
+    63	    return max(lo, min(hi, x))
+    64	
+    65	
+    66	def poisson_cdf(k, lam):
+    67	    """P(X ≤ k) con X ~ Poisson(lam). Estable para lam hasta ~700;
+    68	    aproximación normal (corrección de continuidad) para lam mayor."""
+    69	    if lam <= 0:
+    70	        return 1.0 if k >= 0 else 0.0
+    71	    if lam > 700:
+    72	        z = (k + 0.5 - lam) / math.sqrt(lam)
+    73	        return 0.5 * (1.0 + math.erf(z / math.sqrt(2.0)))
+    74	    s, term = 0.0, math.exp(-lam)
+    75	    kmax = max(0, int(k))
+    76	    for i in range(0, kmax + 1):
+    77	        s += term
+    78	        term *= lam / (i + 1)
+    79	    return min(1.0, max(0.0, s))
+    80	
+    81	
+    82	def p_bin(lo, hi, lam):
+    83	    """P(lo ≤ X ≤ hi) con X ~ Poisson(lam). hi puede ser inf."""
+    84	    if hi == math.inf:
+    85	        return 1.0 - poisson_cdf(lo - 1, lam)
+    86	    return poisson_cdf(hi, lam) - poisson_cdf(lo - 1, lam)
+    87	
+    88	
+    89	def tabla_apuestas(stake_inicial=STAKE_INICIAL, factor=FACTOR, pasos=PASOS_MAX):
+    90	    """Genera la tabla de apuestas (stake, pérdida acumulada, beneficio neto)."""
+    91	    filas = []
+    92	    perdida_prev = 0.0
+    93	    for i in range(1, pasos + 1):
+    94	        stake = math.ceil(stake_inicial * factor ** (i - 1) * 100) / 100  # redondeo al alza
+    95	        perdida_acum = perdida_prev + stake
+    96	        # beneficio neto si acierta a cuota 3.00 (pago = stake × 2):
+    97	        benef = round(stake * (CUOTA_MINIMA - 1) - perdida_prev, 2)
+    98	        filas.append((i, stake, perdida_acum, benef))
+    99	        perdida_prev = perdida_acum
+   100	    return filas
+   101	
+   102	
+   103	def cargar_csv(path):
+   104	    """Devuelve lista ordenada de (fecha, tweets)."""
+   105	    datos = []
+   106	    with open(path, newline="", encoding="utf-8") as f:
+   107	        for fila in csv.DictReader(f):
+   108	            fecha = datetime.strptime(fila["fecha"].strip(), "%Y-%m-%d").date()
+   109	            tweets = int(float(fila["tweets"].strip()))
+   110	            datos.append((fecha, tweets))
+   111	    datos.sort(key=lambda x: x[0])
+   112	    if len(datos) < 9:
+   113	        sys.exit("ERROR: se necesitan al menos 9 días de datos completos (7 para AVG7 + 2 para V2).")
+   114	    return datos
+   115	
+   116	
+   117	def metricas(datos):
+   118	    """AVG7, V2, R, ajuste, λ48 a partir de los 7/2 últimos días COMPLETOS."""
+   119	    ult7 = [t for _, t in datos[-7:]]
+   120	    ult2 = [t for _, t in datos[-2:]]
+   121	    avg7 = sum(ult7) / 7.0
+   122	    v2 = sum(ult2)
+   123	    r = v2 / (2.0 * avg7) if avg7 > 0 else float("nan")
+   124	    ajuste = clamp(1.0 + BETA * (r - 1.0), AJUSTE_MIN, AJUSTE_MAX) if not math.isnan(r) else 1.0
+   125	    lam48 = 2.0 * avg7 * ajuste
+   126	    return dict(avg7=avg7, v2=v2, r=r, ajuste=ajuste, lam48=lam48,
+   127	                ult7=ult7, ult2=ult2, fecha_base=datos[-1][0])
+   128	
+   129	
+   130	def decision(m, lo, hi, precio_yes, ya_publicados=0, horas=0):
+   131	    """Aplica las reglas R1–R5 y devuelve (p_modelo, cuota_yes, cuota_no,
+   132	    veredicto, razon)."""
+   133	    if math.isnan(m["r"]):
+   134	        return None, None, None, "PASAR", "AVG7 = 0: sin actividad base"
+   135	    lam_rest = m["lam48"] * max(0.0, (48.0 - horas)) / 48.0
+   136	    p = p_bin(lo - ya_publicados, (hi - ya_publicados) if hi != math.inf else math.inf, lam_rest)
+   137	    cuota_yes = 1.0 / precio_yes if precio_yes > 0 else float("inf")
+   138	    precio_no = 1.0 - precio_yes
+   139	    cuota_no = 1.0 / precio_no if precio_no > 0 else float("inf")
+   140	
+   141	    razones = []
+   142	    if m["avg7"] < AVG7_MIN:
+   143	        return p, cuota_yes, cuota_no, "PASAR", f"AVG7 = {m['avg7']:.1f} < {AVG7_MIN} (base insuficiente)"
+   144	    if precio_yes > 1 / CUOTA_MINIMA and (1 - precio_yes) > 1 / CUOTA_MINIMA:
+   145	        return p, cuota_yes, cuota_no, "PASAR", "Ningún lado cumple cuota ≥ 3.00 (precio > 0.33 en ambos lados)"
+   146	    if p >= P_MIN_YES and precio_yes <= 1 / CUOTA_MINIMA:
+   147	        return p, cuota_yes, cuota_no, "APOSTAR YES", f"p_modelo {p:.1%} ≥ {P_MIN_YES:.0%} y cuota {cuota_yes:.2f} ≥ 3.00"
+   148	    if p <= P_MAX_NO and precio_no <= 1 / CUOTA_MINIMA:
+   149	        return p, cuota_yes, cuota_no, "APOSTAR NO", f"p_modelo {p:.1%} ≤ {P_MAX_NO:.0%} y cuota NO {cuota_no:.2f} ≥ 3.00"
+   150	    if p >= P_MIN_YES:
+   151	        return p, cuota_yes, cuota_no, "PASAR", f"p_modelo {p:.1%} alta pero precio YES {precio_yes:.3f} > 0.33 (cuota < 3)"
+   152	    if p <= P_MAX_NO:
+   153	        return p, cuota_yes, cuota_no, "PASAR", f"p_modelo {p:.1%} baja pero precio NO {precio_no:.3f} > 0.33 (cuota < 3)"
+   154	    return p, cuota_yes, cuota_no, "PASAR", f"p_modelo {p:.1%} sin ventaja (0.30 < p < 0.60)"
+   155	
+   156	
+   157	def formatear_senal(m, lo, hi, precio_yes, ya_publicados, horas, paso=None):
+   158	    p, c_yes, c_no, veredicto, razon = decision(m, lo, hi, precio_yes, ya_publicados, horas)
+   159	    print("=" * 72)
+   160	    print(f"SEÑAL  ·  fecha de datos: {m['fecha_base']}  ·  bin [{lo}, {hi if hi != math.inf else '∞'}]  ·  precio YES {precio_yes:.3f}")
+   161	    print("=" * 72)
+   162	    print(f"  Últimos 7 días        : {m['ult7']}")
+   163	    print(f"  Últimos 2 días        : {m['ult2']}")
+   164	    print(f"  AVG7 (media 7 días)   : {m['avg7']:.2f} tweets/día")
+   165	    print(f"  V2   (últimos 2 días) : {m['v2']} tweets")
+   166	    print(f"  R    = V2/(2·AVG7)    : {m['r']:.3f}   ({'bajo → posible recuperación' if m['r'] < 1 else 'alto → momentum'})")
+   167	    print(f"  ajuste(R)             : {m['ajuste']:.3f}")
+   168	    print(f"  λ48 (esperado 48 h)   : {m['lam48']:.1f} tweets")
+   169	    if horas > 0:
+   170	        print(f"  ya publicados         : {ya_publicados}  ·  horas transcurridas: {horas}")
+   171	    print(f"  p_modelo = P({lo} ≤ X ≤ {hi if hi != math.inf else '∞'}) : {p:.1%}" if p is not None else "  p_modelo = n/d")
+   172	    if c_yes is not None:
+   173	        print(f"  cuota YES = {c_yes:.2f}  ·  cuota NO = {c_no:.2f}")
+   174	    print(f"  ► VEREDICTO: {veredicto}")
+   175	    print(f"    Razón: {razon}")
+   176	    if veredicto.startswith("APOSTAR") and paso is not None:
+   177	        fila = tabla_apuestas()[paso - 1]
+   178	        print(f"    Paso {paso} del ciclo → stake ${fila[1]:.2f}  (pérdida acumulada si falla: ${fila[2]:.2f})")
+   179	    print()
+   180	
+   181	
+   182	def backtest(datos, lo, hi, precio_yes):
+   183	    """Simula la estrategia completa (reglas R1–R7) sobre el histórico.
+   184	    Supuestos documentados: entrada al inicio del día t (mercado de 48 h que
+   185	    cubre t+1 y t+2), precio de entrada FIJO = precio_yes (sin slippage),
+   186	    sin comisiones. El resultado real se calcula con los tweets observados."""
+   187	    apuestas = tabla_apuestas()
+   188	    ciclo = 0            # paso actual del ciclo (0 = sin ciclo abierto)
+   189	    pendiente_hasta = -1 # índice hasta el que hay una apuesta sin resolver
+   190	    saldo = 0.0
+   191	    max_exp = 0.0
+   192	    wins = losses = 0
+   193	    racha_p = racha_p_max = 0
+   194	    saldo_min = 0.0
+   195	    registro = []
+   196	
+   197	    for t in range(9, len(datos) - 2):
+   198	        if t < pendiente_hasta:
+   199	            continue
+   200	        hist = datos[:t]                      # solo días ya completos
+   201	        m = metricas(hist)
+   202	        p, c_yes, c_no, veredicto, razon = decision(m, lo, hi, precio_yes)
+   203	        if not veredicto.startswith("APOSTAR"):
+   204	            continue
+   205	        if ciclo == 0:
+   206	            ciclo = 1
+   207	        paso = ciclo
+   208	        _, stake, perd_acum, benef = apuestas[paso - 1]
+   209	        max_exp = max(max_exp, perd_acum)
+   210	        real = datos[t + 1][1] + datos[t + 2][1]
+   211	        ok = (lo <= real <= hi) if hi != math.inf else real >= lo
+   212	        if ok:
+   213	            saldo += stake * (1 / precio_yes - 1)
+   214	            wins += 1
+   215	            racha_p = 0
+   216	            registro.append((datos[t][0], paso, stake, real, "G", round(saldo, 2)))
+   217	            ciclo = 0                          # reinicio del ciclo
+   218	        else:
+   219	            saldo -= stake
+   220	            losses += 1
+   221	            racha_p += 1
+   222	            racha_p_max = max(racha_p_max, racha_p)
+   223	            registro.append((datos[t][0], paso, stake, real, "P", round(saldo, 2)))
+   224	            if paso >= PASOS_MAX:
+   225	                ciclo = 0                      # stop-loss del ciclo
+   226	            else:
+   227	                ciclo = paso + 1
+   228	        saldo_min = min(saldo_min, saldo)
+   229	        pendiente_hasta = t + 3                # resuelve al final de t+2
+   230	
+   231	    total = wins + losses
+   232	    print("=" * 72)
+   233	    print("BACKTEST (datos históricos)  ·  bin [%s, %s]  ·  precio YES fijo %.2f" %
+   234	          (lo, hi if hi != math.inf else "∞", precio_yes))
+   235	    print("=" * 72)
+   236	    print(f"  Apuestas totales      : {total}   (ganadas {wins}, perdidas {losses})")
+   237	    print(f"  Win rate              : {wins / total:.1%}" if total else "  Win rate: n/d")
+   238	    print(f"  Beneficio neto        : ${saldo:+.2f}")
+   239	    print(f"  Racha máx de pérdidas : {racha_p_max}")
+   240	    print(f"  Exposición máx. ciclo : ${max_exp:.2f}  (máx. teórica paso {PASOS_MAX}: ${apuestas[-1][2]:.2f})")
+   241	    print(f"  Peor saldo            : ${saldo_min:.2f}")
+   242	    print("\n  Paso a paso (fecha | paso | stake | tweets reales | resultado | saldo):")
+   243	    for fecha, paso, stake, real, res, sal in registro:
+   244	        print(f"    {fecha}  paso {paso}  ${stake:>7.2f}  real={real:>4}  {res}  saldo ${sal:>9.2f}")
+   245	    return registro
+   246	
+   247	
+   248	def main():
+   249	    ap = argparse.ArgumentParser(description="Motor de señal — mercados Polymarket de tweets de Elon Musk (48 h)")
+   250	    ap.add_argument("--csv", required=True, help="CSV con columnas fecha,tweets (días completos, hora ET)")
+   251	    ap.add_argument("--bin", nargs=2, type=int, metavar=("A", "B"), default=[1, 9999],
+   252	                    help="Bin del mercado [A, B]; B=9999 significa '≥ A'")
+   253	    ap.add_argument("--precio", type=float, default=0.33, help="Precio actual del YES (0-1)")
+   254	    ap.add_argument("--ya-publicados", type=int, default=0, help="Tweets ya publicados dentro de la ventana del mercado")
+   255	    ap.add_argument("--horas", type=float, default=0.0, help="Horas transcurridas de la ventana de 48 h")
+   256	    ap.add_argument("--paso", type=int, default=1, help="Paso actual del ciclo (1-7) para calcular el stake")
+   257	    ap.add_argument("--backtest", action="store_true", help="Simular la estrategia sobre el histórico")
+   258	    args = ap.parse_args()
+   259	
+   260	    datos = cargar_csv(args.csv)
+   261	    lo, hi = args.bin
+   262	    hi = math.inf if hi >= 9999 else hi
+   263	
+   264	    if args.backtest:
+   265	        backtest(datos, lo, hi, args.precio)
+   266	    else:
+   267	        m = metricas(datos)
+   268	        formatear_senal(m, lo, hi, args.precio, args.ya_publicados, args.horas, args.paso)
+   269	        # Tabla de apuestas de referencia
+   270	        print("Tabla de apuestas (ciclo):")
+   271	        print(f"  {'Paso':<5}{'Stake':>10}{'Pérdida acum.':>15}{'Neto si gana (cuota 3)':>24}")
+   272	        for paso, stake, perd, benef in tabla_apuestas():
+   273	            print(f"  {paso:<5}{stake:>10.2f}{perd:>15.2f}{benef:>24.2f}")
+   274	
+   275	
+   276	
+   277	# === SENAL_EMP_ARENA (27/08): probabilidad empirica (dispersion real) ===
+   278	# Sustituye la campana Poisson por la DISTRIBUCION REAL de los ultimos 14
+   279	# dias del CSV (convolucion exacta), manteniendo la media con el ajuste de
+   280	# momentum. La interfaz no cambia: metricas() y p_bin() reciben y devuelven
+   281	# lo mismo, asi que senal_vivo y operar_real funcionan sin tocarlos.
+   282	#
+   283	# Por que: el Poisson asume una dispersion de +-raiz(lam) (ej. +-9 tweets
+   284	# en 48h) cuando Musk se mueve realmente +-40. El modelo compraba
+   285	# "certezas" de 60-70% que valian 20-30%.
+   286	#
+   287	# Interruptor: variable de entorno SENAL_EMP=0 para volver al Poisson
+   288	# original al instante (o senal._EMP["on"] = False en codigo/pruebas).
+   289	from collections import Counter as _Counter_emp
+   290	
+   291	try:
+   292	    import os as _os_emp
+   293	    _EMP_ON_DEF = str(_os_emp.environ.get("SENAL_EMP", "1")).strip().lower() not in ("0", "false", "no", "off")
+   294	except Exception:
+   295	    _EMP_ON_DEF = True
+   296	
+   297	_EMP = {"on": _EMP_ON_DEF, "dias": [], "avg7": None, "ajuste": None}
+   298	_EMP_N_DIAS = 14
+   299	_EMP_CACHE = {}
+   300	
+   301	
+   302	def _emp_dist(k, frac, dias):
+   303	    """Distribucion EXACTA de la suma de k dias + frac*otro dia,
+   304	    muestreando con reposicion los dias reales (peso 1/n cada dia).
+   305	    Convolucion exacta (sin Montecarlo) con cache."""
+   306	    clave = (k, round(frac, 4), tuple(dias))
+   307	    d = _EMP_CACHE.get(clave)
+   308	    if d is not None:
+   309	        return d
+   310	    nd = float(len(dias))
+   311	    base = {}
+   312	    for v, c in _Counter_emp(dias).items():
+   313	        base[float(v)] = c / nd
+   314	    dist = {0.0: 1.0}
+   315	    for _ in range(k):
+   316	        ndist = {}
+   317	        for v1, w1 in dist.items():
+   318	            for v2, w2 in base.items():
+   319	                v = v1 + v2
+   320	                ndist[v] = ndist.get(v, 0.0) + w1 * w2
+   321	        dist = ndist
+   322	    if frac > 1e-9:
+   323	        ndist = {}
+   324	        for v1, w1 in dist.items():
+   325	            for v2, w2 in base.items():
+   326	                v = v1 + v2 * frac
+   327	                ndist[v] = ndist.get(v, 0.0) + w1 * w2
+   328	        dist = ndist
+   329	    if len(_EMP_CACHE) > 64:
+   330	        _EMP_CACHE.clear()
+   331	    _EMP_CACHE[clave] = dist
+   332	    return dist
+   333	
+   334	
+   335	_metricas_emp_orig = metricas
+   336	
+   337	
+   338	def metricas(datos):
+   339	    m = _metricas_emp_orig(datos)
+   340	    try:
+   341	        dias = [float(t) for _, t in datos[-_EMP_N_DIAS:]]
+   342	        if len(dias) >= 5:
+   343	            _EMP["dias"] = dias
+   344	            _EMP["avg7"] = m.get("avg7")
+   345	            _EMP["ajuste"] = m.get("ajuste")
+   346	    except Exception:
+   347	        pass
+   348	    return m
+   349	
+   350	
+   351	_p_bin_orig = p_bin
+   352	
+   353	
+   354	def p_bin(lo, hi, lam):
+   355	    """P(lo <= X <= hi). Empirica si hay estado; Poisson original si no."""
+   356	    if not _EMP["on"]:
+   357	        return _p_bin_orig(lo, hi, lam)
+   358	    try:
+   359	        dias = _EMP["dias"]
+   360	        avg7 = _EMP["avg7"]
+   361	        aj = _EMP["ajuste"]
+   362	        if (not dias) or (not avg7) or avg7 <= 0 or (not aj) or aj <= 0 \
+   363	                or lam is None or lam <= 0 or hi is None or lo is None:
+   364	            return _p_bin_orig(lo, hi, lam)
+   365	        base_diaria = avg7 * aj
+   366	        dias_eq = lam / base_diaria          # = horas restantes / 24
+   367	        k = int(dias_eq)
+   368	        frac = dias_eq - k
+   369	        dist = _emp_dist(k, frac, dias)
+   370	        lo2 = lo / aj
+   371	        hi2 = hi / aj                         # hi=inf -> inf/aj = inf (ok)
+   372	        p = 0.0
+   373	        for v, w in dist.items():
+   374	            if lo2 <= v <= hi2:
+   375	                p += w
+   376	        return p
+   377	    except Exception:
+   378	        return _p_bin_orig(lo, hi, lam)
+   379	
+   380	
+   381	def emp_info():
+   382	    """Diagnostico: estado del motor empirico (para comparar/pruebas)."""
+   383	    return {"on": _EMP["on"], "n_dias": len(_EMP["dias"]),
+   384	            "dias": _EMP["dias"], "avg7": _EMP["avg7"], "ajuste": _EMP["ajuste"]}
+   385	
+   386	if __name__ == "__main__":
+   387	    main()
+
+===== 9. CODIGO senal_vivo.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""
+     4	SEÑAL EN VIVO — integra los datos de tweets + los precios de Polymarket
+     5	=======================================================================
+     6	Flujo completo y automático:
+     7	  1) (opcional) refresca los datos de tweets (recoger_tweets.py --fuente jina)
+     8	  2) calcula AVG7 / V2 / R / λ48 desde datos_elon.csv (o usa overrides)
+     9	  3) descarga (o carga) los mercados activos de Polymarket y sus bins
+    10	  4) calcula p_modelo (Poisson) para cada bin, aplica las reglas R1-R7
+    11	     y da el veredicto: APOSTAR YES / APOSTAR NO / PASAR + stake del ciclo
+    12	
+    13	USO:
+    14	  python3 senal_vivo.py                     # señal con datos actuales
+    15	  python3 senal_vivo.py --actualizar        # + refrescar precios Polymarket
+    16	  python3 senal_vivo.py --recoger           # + refrescar tweets
+    17	  python3 senal_vivo.py --paso 2            # paso actual del ciclo (stake)
+    18	  python3 senal_vivo.py --avg7 27 --v2 50   # override (pruebas / datos de
+    19	                                            # referencia de la semana resuelta)
+    20	"""
+    21	import argparse
+    22	import json
+    23	import math
+    24	import subprocess
+    25	import sys
+    26	from datetime import datetime, timedelta, timezone
+    27	from zoneinfo import ZoneInfo
+    28	
+    29	import senal
+    30	import mercado_polymarket as mp
+    31	
+    32	
+    33	# ============================================================
+    34	# MOTOR DE TRADING (versión) — tamaño por ventaja (escalones + tope)
+    35	# ============================================================
+    36	MOTOR_ACTUAL = "motor_v2_ev_escalones_tope10"
+    37	EV_MIN_ENTRADA = 1.8   # EV mínimo para entrar (filtro extra en semanal/mensual)
+    38	EV_MAX_TOPE = 10.0     # tope duro de stake por apuesta (€)
+    39	
+    40	
+    41	def stake_motor_v2(stake_base, p_lado, cuota):
+    42	    """Tamaño según la ventaja. Devuelve None si no se debe entrar.
+    43	
+    44	    EV = p_lado × cuota (probabilidad del lado elegido × su cuota).
+    45	      EV < 1.8        -> no entrar
+    46	      1.8 ≤ EV < 2.5  -> stake base (×1)
+    47	      2.5 ≤ EV < 4.0  -> ×1.5
+    48	      EV ≥ 4.0        -> ×2.0
+    49	    Siempre limitado a EV_MAX_TOPE €."""
+    50	    if not cuota or cuota <= 0:
+    51	        return None
+    52	    ev = p_lado * cuota
+    53	    EPS = 1e-9  # tolerancia de coma flotante (0.6×3.0 = 1.7999…)
+    54	    if ev < EV_MIN_ENTRADA - EPS:
+    55	        return None
+    56	    if ev >= 4.0 - EPS:
+    57	        mult = 2.0
+    58	    elif ev >= 2.5 - EPS:
+    59	        mult = 1.5
+    60	    else:
+    61	        mult = 1.0
+    62	    return round(min(stake_base * mult, EV_MAX_TOPE), 2)
+    63	
+    64	try:
+    65	    ET = ZoneInfo("America/New_York")
+    66	except Exception:
+    67	    # Windows sin tzdata: fallback a hora fija de verano (UTC-4)
+    68	    from datetime import timedelta
+    69	    from datetime import timezone as _tz
+    70	    ET = _tz(timedelta(hours=-4), name="EDT")
+    71	T_FMT = "%a %b %d %H:%M:%S +0000 %Y"
+    72	
+    73	# Entrada solo al INICIO de cada ventana (evita bins ya casi decididos y
+    74	# minimiza el error de t0 cuando ya hay muchos tweets publicados).
+    75	ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+    76	
+    77	
+    78	def conteo_ventana(inicio_utc, ahora_utc):
+    79	    """T0 = tweets dentro de la ventana del mercado (posts + reposts + quotes).
+    80	
+    81	    Estrategia robusta:
+    82	      · días COMPLETOS estrictamente dentro de la ventana → datos_elon.csv
+    83	        (el CSV solo guarda días terminados)
+    84	      · día de inicio y día actual (parciales) → estado_tweets.json con
+    85	        timestamps exactos, SIN saltar reposts (la regla del mercado cuenta
+    86	        posts + quote posts + reposts).
+    87	    Devuelve (n, total_estado)."""
+    88	    try:
+    89	        estado = json.load(open("estado_tweets.json", encoding="utf-8")).get("tweets", {})
+    90	    except Exception:
+    91	        estado = {}
+    92	    total = len(estado)
+    93	    ahora_et = ahora_utc.astimezone(ET)
+    94	    inicio_et = inicio_utc.astimezone(ET)
+    95	    hoy = ahora_et.date()
+    96	    d_inicio = inicio_et.date()
+    97	    incluye_dia_inicio = (inicio_et.hour == 0 and inicio_et.minute == 0)
+    98	    n = 0
+    99	    # ---- días completos dentro de la ventana (datos_elon.csv) ----
+   100	    try:
+   101	        import csv as _csv
+   102	        with open("datos_elon.csv", newline="", encoding="utf-8") as f:
+   103	            for fila in _csv.DictReader(f):
+   104	                try:
+   105	                    d = datetime.strptime(fila["fecha"].strip(), "%Y-%m-%d").date()
+   106	                except Exception:
+   107	                    continue
+   108	                if d >= hoy:
+   109	                    continue
+   110	                if d > d_inicio or (incluye_dia_inicio and d == d_inicio):
+   111	                    try:
+   112	                        n += int(float(fila["tweets"]))
+   113	                    except Exception:
+   114	                        pass
+   115	    except Exception:
+   116	        pass
+   117	    # ---- día de inicio y día actual (parciales), contando TODOS los tipos ----
+   118	    for v in estado.values():
+   119	        try:
+   120	            ts = datetime.strptime(v["created_at"], T_FMT).replace(tzinfo=timezone.utc)
+   121	        except Exception:
+   122	            continue
+   123	        d_ts = ts.astimezone(ET).date()
+   124	        if d_ts not in (d_inicio, hoy):
+   125	            continue
+   126	        if d_ts == d_inicio and incluye_dia_inicio:
+   127	            continue  # ese día ya se contó completo vía CSV
+   128	        if inicio_utc <= ts <= ahora_utc:
+   129	            n += 1
+   130	    return n, total
+   131	
+   132	
+   133	def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+   134	    """Evalúa todos los mercados abiertos y devuelve (evaluados, candidatas).
+   135	    - evaluados: lista de dicts {titulo, tipo, inicio, fin, horas_rest,
+   136	      lam_rest, t0, bins:[{titulo, lo, hi, precio_yes, cuota_yes, cuota_no,
+   137	      p_modelo, veredicto}]}
+   138	    - candidatas: lista de dicts {mercado, bin, lado, precio, cuota, p_modelo}
+   139	      que cumplen las reglas R3+R4 (para abrir apuesta de papel)."""
+   140	    ahora = ahora or datetime.now(timezone.utc)
+   141	    tabla = senal.tabla_apuestas()
+   142	    _, stake_base, _, _ = tabla[paso - 1] if 1 <= paso <= len(tabla) else tabla[0]
+   143	    evaluados, candidatas = [], []
+   144	    for mk in mercados:
+   145	        if mk["cerrado"] or not mk.get("inicio_iso"):
+   146	            continue
+   147	        inicio = datetime.fromisoformat(mk["inicio_iso"]).astimezone(timezone.utc)
+   148	        fin = datetime.fromisoformat(mk["fin_iso"]).astimezone(timezone.utc)
+   149	        if ahora < inicio or ahora > fin:
+   150	            continue
+   151	        horas_rest = (fin - ahora).total_seconds() / 3600
+   152	        horas_elapsed = (ahora - inicio).total_seconds() / 3600
+   153	        if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+   154	            continue  # entrada solo al inicio de la ventana
+   155	        if mk["tipo"] == "48h":
+   156	            lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+   157	        elif mk["tipo"] == "semanal":
+   158	            lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+   159	        else:
+   160	            lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+   161	        t0_auto, total_estado = conteo_ventana(inicio, ahora)
+   162	        t0 = t0_override if t0_override >= 0 else t0_auto
+   163	        bins = []
+   164	        for b in mk["bins"]:
+   165	            hi = b["hi"] if b["hi"] != float("inf") else math.inf
+   166	            # Guarda: bin ya decidido por los tweets publicados (t0).
+   167	            #   hi finito y t0 > hi  -> [lo,hi] superado: YES imposible, NO ya decidido
+   168	            #   hi = inf  y t0 >= lo -> "≥ lo" ya cumplido: YES ya decidido
+   169	            decidido = (t0 > hi) if hi != math.inf else (t0 >= b["lo"])
+   170	            if decidido:
+   171	                p = 1.0 if hi == math.inf else 0.0
+   172	                bins.append({"titulo": b["titulo"], "lo": b["lo"], "hi": b["hi"],
+   173	                             "precio_yes": b["precio_yes"], "cuota_yes": b["cuota_yes"],
+   174	                             "cuota_no": b["cuota_no"], "p_modelo": p,
+   175	                             "veredicto": "PASAR"})
+   176	                continue
+   177	            p = senal.p_bin(b["lo"] - t0, (hi - t0) if hi != math.inf else math.inf, lam_rest)
+   178	            cy, cn = b["cuota_yes"], b["cuota_no"]
+   179	            veredicto, lado = "PASAR", None
+   180	            if p >= senal.P_MIN_YES and cy and cy >= senal.CUOTA_MINIMA:
+   181	                veredicto, lado = "APOSTAR YES", "YES"
+   182	            elif p <= senal.P_MAX_NO and cn and cn >= senal.CUOTA_MINIMA:
+   183	                veredicto, lado = "APOSTAR NO", "NO"
+   184	            bins.append({"titulo": b["titulo"], "lo": b["lo"], "hi": b["hi"],
+   185	                         "precio_yes": b["precio_yes"], "cuota_yes": cy,
+   186	                         "cuota_no": cn, "p_modelo": p, "veredicto": veredicto})
+   187	            if lado:
+   188	                cuota_lado = (cy if lado == "YES" else cn)
+   189	                p_lado = p if lado == "YES" else (1.0 - p)
+   190	                ev = round(p_lado * (cuota_lado or 0), 3)
+   191	                stake = stake_motor_v2(stake_base, p_lado, cuota_lado)
+   192	                if stake is None:
+   193	                    continue  # EV por debajo del mínimo: no entrar
+   194	                candidatas.append({"mercado": mk["titulo"], "slug": mk["slug"],
+   195	                                   "ventana": (inicio, fin), "tipo": mk["tipo"],
+   196	                                   "bin_titulo": b["titulo"], "lo": b["lo"], "hi": b["hi"],
+   197	                                   "lado": lado, "precio": (b["precio_yes"] if lado == "YES" else 1 - b["precio_yes"]),
+   198	                                   "cuota": cuota_lado, "p_modelo": p,
+   199	                                   "stake": stake, "ev": ev, "motor": MOTOR_ACTUAL})
+   200	        evaluados.append({"titulo": mk["titulo"], "slug": mk.get("slug", ""), "tipo": mk["tipo"],
+   201	                          "inicio": inicio, "fin": fin, "horas_rest": horas_rest,
+   202	                          "lam_rest": lam_rest, "t0": t0, "bins": bins})
+   203	    return evaluados, candidatas
+   204	
+   205	
+   206	def main():
+   207	    ap = argparse.ArgumentParser(description="Señal en vivo Polymarket · @elonmusk")
+   208	    ap.add_argument("--csv", default="datos_elon.csv", help="CSV de tweets (por defecto datos_elon.csv)")
+   209	    ap.add_argument("--actualizar", action="store_true", help="refrescar precios de Polymarket")
+   210	    ap.add_argument("--recoger", action="store_true", help="refrescar datos de tweets primero")
+   211	    ap.add_argument("--paso", type=int, default=1, help="paso actual del ciclo (1-7)")
+   212	    ap.add_argument("--avg7", type=float, default=None, help="override AVG7 (pruebas)")
+   213	    ap.add_argument("--v2", type=float, default=None, help="override V2 (pruebas)")
+   214	    ap.add_argument("--t0", type=int, default=-1, help="override tweets ya publicados en la ventana (-1 = automático)")
+   215	    ap.add_argument("--sin-reposts", action="store_true", help="excluir reposts")
+   216	    args = ap.parse_args()
+   217	
+   218	    # ---------------------------------------------------------- 1) tweets
+   219	    if args.recoger:
+   220	        print("[1/4] Refrescando datos de tweets…")
+   221	        subprocess.run([sys.executable, "recoger_tweets.py", "--fuente", "jina"], check=False)
+   222	
+   223	    # ---------------------------------------------------------- 2) métricas
+   224	    print("[2/4] Métricas de actividad…")
+   225	    if args.avg7 is not None and args.v2 is not None:
+   226	        avg7, v2 = args.avg7, args.v2
+   227	        r = v2 / (2 * avg7) if avg7 > 0 else float("nan")
+   228	        ajuste = senal.clamp(1 + 0.5 * (r - 1), 0.5, 1.5)
+   229	        lam48 = 2 * avg7 * ajuste
+   230	        origen = f"OVERRIDE (--avg7 {avg7} --v2 {v2})"
+   231	    else:
+   232	        try:
+   233	            datos = senal.cargar_csv(args.csv)
+   234	        except SystemExit as e:
+   235	            print(f"  ERROR: {e}")
+   236	            print("  Usa --avg7 X --v2 Y con datos de referencia (p. ej. del último")
+   237	            print("  mercado semanal resuelto) o espera a tener ≥ 9 días de datos.")
+   238	            return
+   239	        m = senal.metricas(datos)
+   240	        avg7, v2, r, ajuste, lam48 = m["avg7"], m["v2"], m["r"], m["ajuste"], m["lam48"]
+   241	        origen = f"datos propios ({len(datos)} días)"
+   242	    print(f"  AVG7 = {avg7:.2f} · V2 = {v2} · R = {r:.3f} · ajuste = {ajuste:.3f} · "
+   243	          f"λ48 = {lam48:.1f}   [{origen}]")
+   244	
+   245	    # ---------------------------------------------------------- 3) mercado
+   246	    print("[3/4] Mercados Polymarket…")
+   247	    if args.actualizar:
+   248	        try:
+   249	            mp.actualizar_mercado()
+   250	            print("  precios actualizados ✓")
+   251	        except Exception as e:
+   252	            print(f"  [ERROR] no se pudo actualizar: {e}")
+   253	    try:
+   254	        mercados = json.load(open(mp.SALIDA, encoding="utf-8"))["mercados"]
+   255	    except Exception:
+   256	        print("  No hay mercado_activo.json. Ejecuta: python3 mercado_polymarket.py")
+   257	        return
+   258	
+   259	    ahora = datetime.now(timezone.utc)
+   260	    tabla = senal.tabla_apuestas()
+   261	    _, stake, perd_acum, _ = tabla[args.paso - 1] if 1 <= args.paso <= len(tabla) else tabla[0]
+   262	
+   263	    # ---------------------------------------------------------- 4) señal
+   264	    print("[4/4] Evaluación por bin…\n")
+   265	    evaluados, candidatas = evaluar(avg7, v2, ajuste, lam48, mercados, args.paso,
+   266	                                    t0_override=args.t0)
+   267	    for ev in evaluados:
+   268	        print(f"■ {ev['titulo']}  [{ev['tipo']}]")
+   269	        print(f"  ventana: {ev['inicio'].astimezone(ET).strftime('%m-%d %H:%M %Z')} → "
+   270	              f"{ev['fin'].astimezone(ET).strftime('%m-%d %H:%M %Z')}  ·  "
+   271	              f"ahora: {ahora.astimezone(ET).strftime('%m-%d %H:%M %Z')}")
+   272	        etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+   273	        print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+   274	              f"· tweets ya en ventana (T0): {ev['t0']}")
+   275	        print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+   276	        for b in ev["bins"]:
+   277	            cy = ("{:.2f}".format(b['cuota_yes']) if b['cuota_yes'] else '—')
+   278	            cn = ("{:.2f}".format(b['cuota_no']) if b['cuota_no'] else '—')
+   279	            print("  {:<10}{:>10.1%}{:>9.3f}{:>8}{:>8}   {}".format(
+   280	                b['titulo'], b['p_modelo'], b['precio_yes'], cy, cn, b['veredicto']))
+   281	        print()
+   282	    if not candidatas:
+   283	        print("► VEREDICTO GLOBAL: PASAR — ningún bin cumple (p_modelo ≥ 60% o ≤ 30%) "
+   284	              "con cuota ≥ 3.00.")
+   285	        print("  La regla es no apostar: la paciencia es parte de la estrategia.")
+   286	    else:
+   287	        print("► VEREDICTO GLOBAL: hay apuesta candidata (ver tabla). Recuerda:")
+   288	        print("  - una sola apuesta activa (espera a que la anterior se resuelva)")
+   289	        print(f"  - paso {args.paso} → stake ${stake:.2f} (pérdida acumulada si falla: ${perd_acum:.2f})")
+   290	        print("  - registra la operación en el Excel (hoja Registro)")
+   291	
+   292	
+   293	if __name__ == "__main__":
+   294	    main()
+
+===== 10. CODIGO recoger_tweets.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""
+     4	RECOGIDA AUTOMÁTICA DE TWEETS DE @elonmusk — para mercados Polymarket
+     5	=====================================================================
+     6	Recoge la actividad de @elonmusk (posts + quote posts + reposts;
+     7	SIN replies, igual que las reglas de resolución de los mercados
+     8	«Elon Musk # tweets») y genera datos_elon.csv con el formato que
+     9	espera senal.py (fecha,tweets) en días COMPLETOS (hora ET).
+    10	
+    11	FUENTES (por orden de preferencia):
+    12	  1) x.com renderizado vía r.jina.ai (timestamps EXACTOS de posts Y
+    13	     reposts — la hora que se ve en el perfil es la del repost).
+    14	     Sin API key. ~15-20 tweets por pasada: en modo --loop se acumula.
+    15	  2) xcancel.com (espejo Nitter, página 1) — respaldo si jina falla.
+    16	     Ojo: los reposts muestran la fecha del tweet ORIGINAL.
+    17	  3) X API v2 oficial (exacta, con paginación completa):
+    18	     export X_BEARER_TOKEN=...   (plan Basic $100/mes para conteo
+    19	     completo ~60k posts/mes; free tier insuficiente para esto)
+    20	
+    21	USO:
+    22	  python3 recoger_tweets.py --dias 30              # pasada única
+    23	  python3 recoger_tweets.py --resumen              # conteos diarios + métricas
+    24	  python3 recoger_tweets.py --loop --intervalo 20  # continuo (recomendado)
+    25	  python3 recoger_tweets.py --manual 2026-08-08 35 # corregir un día a mano
+    26	  python3 recoger_tweets.py --limpiar              # borrar datos y empezar de cero
+    27	
+    28	CRON sugerido (1 vez al día basta para la señal del día):
+    29	  0 12 * * * cd /ruta/estrategia_elon_tweets && python3 recoger_tweets.py --dias 30 >> recoger.log 2>&1
+    30	"""
+    31	import argparse
+    32	import csv
+    33	import json
+    34	import os
+    35	import re
+    36	import subprocess
+    37	import sys
+    38	import time
+    39	from datetime import date, datetime, timedelta, timezone
+    40	from zoneinfo import ZoneInfo
+    41	
+    42	try:
+    43	    import mercado_polymarket as mp
+    44	except ImportError:
+    45	    mp = None
+    46	
+    47	# ----------------------------------------------------------------------------
+    48	SCREEN = "elonmusk"
+    49	try:
+    50	    ET = ZoneInfo("America/New_York")
+    51	except Exception:
+    52	    # Windows sin tzdata: fallback a hora fija de verano (UTC-4)
+    53	    from datetime import timedelta
+    54	    from datetime import timezone as _tz
+    55	    ET = _tz(timedelta(hours=-4), name="EDT")
+    56	CSV = "datos_elon.csv"
+    57	ESTADO = "estado_tweets.json"
+    58	RAW_DIR = "datos_raw"
+    59	JINA_X = f"https://r.jina.ai/https://x.com/{SCREEN}"
+    60	JINA_TW = f"https://r.jina.ai/https://twitter.com/{SCREEN}"
+    61	XCANCEL = f"https://xcancel.com/{SCREEN}"
+    62	# Espejos Nitter (markup antiguo tipo xcancel) como respaldo, por orden de
+    63	# preferencia. xcancel.com es el más fiable ahora mismo; el resto se prueba
+    64	# por si alguno vuelve a estar operativo.
+    65	NITTER_ESPEJOS = [
+    66	    "xcancel.com",
+    67	    "nitter.poast.org",
+    68	    "nitter.privacyredirect.com",
+    69	    "lightbrd.com",
+    70	    "nitter.space",
+    71	]
+    72	UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    73	      "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+    74	T_FMT = "%a %b %d %H:%M:%S +0000 %Y"
+    75	MESES = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6,
+    76	         "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
+    77	# ----------------------------------------------------------------------------
+    78	
+    79	
+    80	def hoy_et():
+    81	    return datetime.now(ET).date()
+    82	
+    83	
+    84	def ahora_utc():
+    85	    return datetime.now(timezone.utc)
+    86	
+    87	
+    88	def curl(url, headers=None, timeout=60):
+    89	    cmd = ["curl", "-s", "--max-time", str(timeout), "-L", url]
+    90	    for k, v in (headers or {}).items():
+    91	        cmd += ["-H", f"{k}: {v}"]
+    92	    r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    93	    if r.returncode != 0:
+    94	        raise RuntimeError(f"curl falló ({r.returncode}): {r.stderr[:200]}")
+    95	    return r.stdout
+    96	
+    97	
+    98	# ---------------------------------------------------------------- fuentes
+    99	
+   100	def _descargar_jina(url):
+   101	    """Render del perfil vía r.jina.ai. Devuelve {status_id: item}.
+   102	
+   103	    Acepta tanto el render de x.com como el de twitter.com (perfil en x.com,
+   104	    enlaces de estado en twitter.com o x.com). La hora relativa que muestra el
+   105	    perfil se convierte a UTC (exacta)."""
+   106	    # Cloudflare es intermitente: reintentar con distintos UA y pausas
+   107	    uas = [None, UA, "curl/8.0"]
+   108	    ultimo_error = None
+   109	    for intento in range(4):
+   110	        try:
+   111	            hdrs = {"Accept": "text/plain"}
+   112	            if uas[intento % len(uas)]:
+   113	                hdrs["User-Agent"] = uas[intento % len(uas)]
+   114	            md = curl(url, hdrs)
+   115	            if ("Just a moment" in md or "Verifying your browser" in md
+   116	                    or "Rate limit" in md or "[@elonmusk]" not in md):
+   117	                ultimo_error = "desafío o respuesta sin contenido"
+   118	                time.sleep(8 + intento * 5)
+   119	                continue
+   120	            ahora = ahora_utc()
+   121	            vistos = {}
+   122	            # Formato timeline (x.com y twitter.com):
+   123	            #   [@elonmusk](https://x.com/elonmusk)  [17h](https://twitter.com/elonmusk/status/ID)
+   124	            pat = re.compile(
+   125	                r"\[@elonmusk\]\(https://x\.com/elonmusk\)\s+\[([^\]]+)\]"
+   126	                r"\(https://(?:twitter\.com|x\.com)/elonmusk/status/(\d+)\)")
+   127	            posiciones = list(pat.finditer(md))
+   128	            for i, m in enumerate(posiciones):
+   129	                rel, sid = m.group(1).strip(), m.group(2)
+   130	                ts = rel_a_utc(rel, ahora)
+   131	                if not ts:
+   132	                    continue
+   133	                # trozo de la entrada hasta la siguiente entrada
+   134	                fin = posiciones[i + 1].start() if i + 1 < len(posiciones) else len(md)
+   135	                trozo = md[m.end():fin]
+   136	                # es repost si dentro hay un enlace de estado de OTRO usuario
+   137	                es_repost = bool(re.search(
+   138	                    r"\]\(https://(?:twitter\.com|x\.com)/(?!elonmusk/status/)"
+   139	                    r"[A-Za-z0-9_]+/status/\d+\)", trozo))
+   140	                vistos[sid] = {"id": sid,
+   141	                               "kind": "repost" if es_repost else "post",
+   142	                               "autor": SCREEN,
+   143	                               "created_at": ts.strftime(T_FMT),
+   144	                               "primera_vista": ahora.strftime(T_FMT),
+   145	                               "exacto": True}
+   146	            return vistos
+   147	        except RuntimeError as e:
+   148	            ultimo_error = str(e)
+   149	            time.sleep(8 + intento * 5)
+   150	    raise RuntimeError(f"jina no disponible tras reintentos: {ultimo_error}")
+   151	
+   152	
+   153	def descargar_jina_tw():
+   154	    """jina sobre twitter.com (suele esquivar el Cloudflare de x.com)."""
+   155	    return _descargar_jina(JINA_TW)
+   156	
+   157	
+   158	def descargar_jina_x():
+   159	    """jina sobre x.com (formato original)."""
+   160	    return _descargar_jina(JINA_X)
+   161	
+   162	
+   163	def _descargar_nitter_instancia(instancia):
+   164	    """Página 1 de un espejo Nitter (markup antiguo tipo xcancel).
+   165	    Reposts con fecha del original (aprox.)."""
+   166	    html = curl(f"https://{instancia}/{SCREEN}", {"User-Agent": UA})
+   167	    ahora = ahora_utc()
+   168	    vistos = {}
+   169	    for b in re.split(r'<div class="timeline-item', html)[1:]:
+   170	        es_repost = 'retweet-header' in b
+   171	        m_id = re.search(r'/(?:status)/(\d+)', b)
+   172	        m_fecha = re.search(r'class="tweet-date"><a[^>]*title="([^"]+)"', b)
+   173	        if not m_id or not m_fecha:
+   174	            continue
+   175	        ts = parse_fecha_nitter(m_fecha.group(1))
+   176	        if not ts:
+   177	            continue
+   178	        vistos[m_id.group(1)] = {"id": m_id.group(1),
+   179	                                 "kind": "repost" if es_repost else "post",
+   180	                                 "autor": SCREEN,
+   181	                                 "created_at": ts.strftime(T_FMT),
+   182	                                 "primera_vista": ahora.strftime(T_FMT)}
+   183	    return vistos
+   184	
+   185	
+   186	def descargar_nitter():
+   187	    """Prueba varios espejos Nitter (xcancel primero) hasta conseguir items."""
+   188	    for _intento in range(2):
+   189	        for instancia in NITTER_ESPEJOS:
+   190	            try:
+   191	                vistos = _descargar_nitter_instancia(instancia)
+   192	                if vistos:
+   193	                    return vistos
+   194	                print(f"  nitter {instancia}: sin items")
+   195	            except RuntimeError as e:
+   196	                print(f"  nitter {instancia}: {e}")
+   197	            time.sleep(3)
+   198	    return {}
+   199	
+   200	
+   201	
+   202	def descargar_api_v2(max_paginas=50):
+   203	    """X API v2 oficial (exacta). Requiere X_BEARER_TOKEN."""
+   204	    token = os.environ.get("X_BEARER_TOKEN")
+   205	    if not token:
+   206	        sys.exit("Modo api requiere: export X_BEARER_TOKEN=<tu token>")
+   207	    vistos, token_pag = {}, None
+   208	    for p in range(1, max_paginas + 1):
+   209	        url = ("https://api.x.com/2/users/44196397/tweets?exclude=replies"
+   210	               "&max_results=100&tweet.fields=created_at")
+   211	        if token_pag:
+   212	            url += f"&pagination_token={token_pag}"
+   213	        d = json.loads(curl(url, {"Authorization": f"Bearer {token}"}, timeout=30))
+   214	        if d.get("errors"):
+   215	            print("  error API:", d["errors"][0].get("detail", d["errors"]))
+   216	            break
+   217	        for t in d.get("data", []):
+   218	            ts = datetime.strptime(t["created_at"], "%Y-%m-%dT%H:%M:%S.000Z") \
+   219	                .replace(tzinfo=timezone.utc)
+   220	            vistos[t["id"]] = {"id": t["id"], "kind": "post", "autor": SCREEN,
+   221	                               "created_at": ts.strftime(T_FMT),
+   222	                               "primera_vista": ts.strftime(T_FMT)}
+   223	        token_pag = (d.get("meta") or {}).get("next_token")
+   224	        print(f"  [página {p}] tweets: {len(vistos)}")
+   225	        if not token_pag:
+   226	            break
+   227	        time.sleep(1.5)
+   228	    return vistos
+   229	
+   230	
+   231	def parse_fecha_nitter(titulo):
+   232	    m = re.match(r"([A-Z][a-z]{2} \d{1,2}, \d{4}) · (\d{1,2}:\d{2} [AP]M) UTC", titulo)
+   233	    if not m:
+   234	        return None
+   235	    try:
+   236	        return datetime.strptime(f"{m.group(1)} {m.group(2)}", "%b %d, %Y %I:%M %p") \
+   237	            .replace(tzinfo=timezone.utc)
+   238	    except ValueError:
+   239	        return None
+   240	
+   241	
+   242	def rel_a_utc(rel, ahora):
+   243	    """Convierte '2h', '3m', '1d', 'Aug 6', 'Aug 6, 2025' a datetime UTC."""
+   244	    rel = rel.strip()
+   245	    m = re.match(r"^(\d+)([smhd])$", rel)
+   246	    if m:
+   247	        n, u = int(m.group(1)), m.group(2)
+   248	        delta = {"s": 0, "m": 60, "h": 3600, "d": 86400}[u] * n
+   249	        return ahora - timedelta(seconds=delta)
+   250	    m = re.match(r"^([A-Z][a-z]{2}) (\d{1,2})(?:, (\d{4}))?$", rel)
+   251	    if m:
+   252	        mes, dia = MESES[m.group(1)], int(m.group(2))
+   253	        anio = int(m.group(3)) if m.group(3) else ahora.year
+   254	        try:
+   255	            ts = datetime(anio, mes, dia, tzinfo=timezone.utc)
+   256	        except ValueError:
+   257	            return None
+   258	        # si la fecha es claramente futura, es del año pasado
+   259	        if ts > ahora + timedelta(days=1):
+   260	            ts = ts.replace(year=anio - 1)
+   261	        return ts
+   262	    return None
+   263	
+   264	
+   265	# ---------------------------------------------------------------- procesado
+   266	
+   267	def conteo_diario(vistos, sin_reposts=False, modo_loop=False):
+   268	    """Agrupa por día ET.
+   269	    - Items con timestamp exacto (jina/x.com): created_at siempre.
+   270	    - Reposts de xcancel (fecha del original): primera_vista en modo_loop
+   271	      (≈ momento real, error < intervalo); si no, fecha del original."""
+   272	    dias = {}
+   273	    for v in vistos.values():
+   274	        if v.get("kind") == "repost" and sin_reposts:
+   275	            continue
+   276	        if v.get("exacto") or v.get("kind") != "repost" or not modo_loop:
+   277	            base = v["created_at"]
+   278	        else:
+   279	            base = v["primera_vista"]
+   280	        fecha = datetime.strptime(base, T_FMT).astimezone(ET).date()
+   281	        dias[fecha] = dias.get(fecha, 0) + 1
+   282	    return dias
+   283	
+   284	
+   285	def actualizar_csv(dias_conteo, completos=True):
+   286	    hoy = hoy_et()
+   287	    filas = {}
+   288	    if os.path.exists(CSV):
+   289	        with open(CSV, newline="", encoding="utf-8") as f:
+   290	            for fila in csv.DictReader(f):
+   291	                filas[fila["fecha"]] = int(fila["tweets"])
+   292	    nuevos = 0
+   293	    for fecha, n in sorted(dias_conteo.items()):
+   294	        if completos and fecha >= hoy:
+   295	            continue
+   296	        # MONÓTONO: el conteo directo es una cota inferior (subconteo parcial);
+   297	        # solo se actualiza si el nuevo valor es MAYOR. Así los días
+   298	        # reconstruidos desde los mercados resueltos no se degradan.
+   299	        if n > filas.get(fecha.isoformat(), -1):
+   300	            filas[fecha.isoformat()] = n
+   301	            nuevos += 1
+   302	    with open(CSV, "w", newline="", encoding="utf-8") as f:
+   303	        w = csv.writer(f)
+   304	        w.writerow(["fecha", "tweets"])
+   305	        for fecha in sorted(filas):
+   306	            w.writerow([fecha, filas[fecha]])
+   307	    return nuevos, len(filas)
+   308	
+   309	
+   310	def guardar_estado(vistos):
+   311	    os.makedirs(RAW_DIR, exist_ok=True)
+   312	    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+   313	    with open(os.path.join(RAW_DIR, f"tweets_{ts}.json"), "w", encoding="utf-8") as f:
+   314	        json.dump(vistos, f, ensure_ascii=False, indent=1)
+   315	    with open(ESTADO, "w", encoding="utf-8") as f:
+   316	        json.dump({"actualizado": datetime.now().isoformat(), "tweets": vistos}, f,
+   317	                  ensure_ascii=False, indent=1)
+   318	
+   319	
+   320	def cargar_estado():
+   321	    if not os.path.exists(ESTADO):
+   322	        return {}
+   323	    try:
+   324	        return json.load(open(ESTADO, encoding="utf-8")).get("tweets", {})
+   325	    except Exception:
+   326	        return {}
+   327	
+   328	
+   329	def fusionar(vistos_nuevos, sin_reposts=False):
+   330	    """Fusiona con el estado previo: por status id, gana el item nuevo
+   331	    (jina/x.com da el tiempo exacto del repost) pero se CONSERVA la
+   332	    primera_vista más antigua (el repost se atribuye al día en que se
+   333	    vio por PRIMERA vez). Si sin_reposts, elimina los reposts."""
+   334	    estado = cargar_estado()
+   335	    if sin_reposts:
+   336	        estado = {sid: v for sid, v in estado.items() if v.get("kind") != "repost"}
+   337	    for sid, v in vistos_nuevos.items():
+   338	        previo = estado.get(sid)
+   339	        if previo:
+   340	            v["primera_vista"] = min(v["primera_vista"], previo["primera_vista"])
+   341	        estado[sid] = v
+   342	    return estado
+   343	
+   344	
+   345	def resumen(dias=14):
+   346	    if not os.path.exists(CSV):
+   347	        print("Sin datos todavía. Ejecuta primero: recoger_tweets.py")
+   348	        return
+   349	    with open(CSV, newline="", encoding="utf-8") as f:
+   350	        filas = [(r["fecha"], int(r["tweets"])) for r in csv.DictReader(f)]
+   351	    hoy = hoy_et().isoformat()
+   352	    print(f"{'fecha':<12}{'tweets':>7}")
+   353	    for fecha, n in filas[-dias:]:
+   354	        marca = "  ← hoy (incompleto, no entra en la señal)" if fecha == hoy else ""
+   355	        print(f"{fecha:<12}{n:>7}{marca}")
+   356	    if len(filas) >= 9:
+   357	        ult7 = [n for _, n in filas[-7:]]
+   358	        ult2 = [n for _, n in filas[-2:]]
+   359	        avg7 = sum(ult7) / 7
+   360	        v2 = sum(ult2)
+   361	        r = v2 / (2 * avg7)
+   362	        aj = min(1.5, max(0.5, 1 + 0.5 * (r - 1)))
+   363	        lam = 2 * avg7 * aj
+   364	        print(f"\nAVG7 = {avg7:.2f}  V2 = {v2}  R = {r:.3f}  ajuste = {aj:.3f}  λ48 = {lam:.1f}")
+   365	    print("Días completos en CSV:", len(filas))
+   366	
+   367	
+   368	def main():
+   369	    ap = argparse.ArgumentParser(description="Recogida automática de tweets de @elonmusk")
+   370	    ap.add_argument("--fuente", choices=["jina", "xcancel", "api"], default="jina",
+   371	                    help="fuente de datos (api requiere X_BEARER_TOKEN)")
+   372	    ap.add_argument("--sin-reposts", action="store_true",
+   373	                    help="excluir reposts del conteo")
+   374	    ap.add_argument("--resumen", action="store_true", help="mostrar conteos y métricas")
+   375	    ap.add_argument("--loop", action="store_true", help="modo continuo (polling)")
+   376	    ap.add_argument("--intervalo", type=int, default=15, help="minutos entre pasadas")
+   377	    ap.add_argument("--mercado", action="store_true",
+   378	                    help="refrescar también los precios de Polymarket en cada pasada")
+   379	    ap.add_argument("--papel", action="store_true",
+   380	                    help="ejecutar también el paper trading (abrir/resolver apuestas simuladas)")
+   381	    ap.add_argument("--limpiar", action="store_true", help="borrar estado y CSV y empezar de cero")
+   382	    ap.add_argument("--manual", nargs=2, metavar=("FECHA", "N"),
+   383	                    help="añadir/corregir un día: --manual 2026-08-08 35")
+   384	    args = ap.parse_args()
+   385	
+   386	    if args.limpiar:
+   387	        for f in (CSV, ESTADO):
+   388	            if os.path.exists(f):
+   389	                os.remove(f)
+   390	        print("Estado y CSV borrados. Empieza de cero.")
+   391	        return
+   392	
+   393	    if args.manual:
+   394	        filas = {}
+   395	        if os.path.exists(CSV):
+   396	            with open(CSV, newline="", encoding="utf-8") as f:
+   397	                for r in csv.DictReader(f):
+   398	                    filas[r["fecha"]] = int(r["tweets"])
+   399	        filas[args.manual[0]] = int(args.manual[1])
+   400	        with open(CSV, "w", newline="", encoding="utf-8") as f:
+   401	            w = csv.writer(f)
+   402	            w.writerow(["fecha", "tweets"])
+   403	            for f_ in sorted(filas):
+   404	                w.writerow([f_, filas[f_]])
+   405	        print(f"Manual: {args.manual[0]} = {args.manual[1]} tweets. CSV actualizado.")
+   406	        return
+   407	
+   408	    if args.resumen:
+   409	        resumen()
+   410	        return
+   411	
+   412	    def una_pasada():
+   413	        print(f"[{datetime.now(ET).isoformat()}] Recogiendo @{SCREEN} (fuente: {args.fuente})…")
+   414	        vistos_n = {}
+   415	        if args.fuente in ("jina", "xcancel"):
+   416	            # fusionar todas las fuentes en cascada:
+   417	            # 1) jina twitter.com  2) jina x.com  3) espejos nitter (xcancel+)
+   418	            for nombre, fn in (("jina-tw", descargar_jina_tw),
+   419	                                ("jina-x", descargar_jina_x),
+   420	                                ("nitter", descargar_nitter)):
+   421	                try:
+   422	                    parcial = fn()
+   423	                    if parcial:
+   424	                        vistos_n.update(parcial)
+   425	                        print(f"  {nombre}: {len(parcial)} items")
+   426	                    else:
+   427	                        print(f"  {nombre}: sin items")
+   428	                except RuntimeError as e:
+   429	                    print(f"  {nombre}: [ERROR] {e}")
+   430	            if not vistos_n:
+   431	                print("  Sin datos de ninguna fuente. Reintenta en un rato.")
+   432	                if args.papel:
+   433	                    try:
+   434	                        subprocess.run([sys.executable, "papel.py"], check=False)
+   435	                    except Exception as e:
+   436	                        print(f"  papel: [ERROR] {e}")
+   437	                return
+   438	        else:
+   439	            vistos_n = descargar_api_v2()
+   440	            if not vistos_n:
+   441	                print("  Sin datos. Reintenta en un rato.")
+   442	                return
+   443	        vistos = fusionar(vistos_n, sin_reposts=args.sin_reposts)
+   444	        guardar_estado(vistos)
+   445	        dias = conteo_diario(vistos, sin_reposts=args.sin_reposts, modo_loop=args.loop)
+   446	        nuevos, total = actualizar_csv(dias)
+   447	        n_rep = sum(1 for v in vistos.values() if v["kind"] == "repost")
+   448	        print(f"  Tweets únicos: {len(vistos)} (reposts: {n_rep}) · días con datos: {len(dias)} "
+   449	              f"· filas CSV: {total} (nuevas/actualizadas: {nuevos})")
+   450	        if args.mercado and mp:
+   451	            try:
+   452	                mk = mp.actualizar_mercado()
+   453	                abiertos = [m for m in mk if not m["cerrado"] and m["tipo"] == "48h"]
+   454	                print(f"  Polymarket: {len(mk)} mercados · {len(abiertos)} de 48 h abiertos "
+   455	                      f"→ mercado_activo.json actualizado")
+   456	            except Exception as e:
+   457	                print(f"  Polymarket: [ERROR] {e}")
+   458	        if args.papel:
+   459	            try:
+   460	                subprocess.run([sys.executable, "papel.py"], check=False)
+   461	            except Exception as e:
+   462	                print(f"  papel: [ERROR] {e}")
+   463	        resumen(dias=12)
+   464	
+   465	    if args.loop:
+   466	        while True:
+   467	            try:
+   468	                una_pasada()
+   469	            except Exception as e:
+   470	                print(f"[ERROR general] {e}")
+   471	            print(f"[espera] {args.intervalo} min…")
+   472	            time.sleep(args.intervalo * 60)
+   473	    else:
+   474	        una_pasada()
+   475	
+   476	
+   477	
+   478	# === FIXT_ARENA (26/08 v2): jina con clave + pausas inteligentes ===
+   479	# Mejora sobre v1: la fuente buena (twitter.com via jina) se pregunta en
+   480	# CADA pasada; la que falla de forma persistente (x.com con Cloudflare)
+   481	# descansa sola 1 hora, sin activar la pausa general. La pausa general de
+   482	# 20 min solo entra si falla la fuente buena (averia real). Asi el bot no
+   483	# pasa pasadas "sin datos" y deja de mandar la alerta en tono de broma.
+   484	import json as _json_t
+   485	import os as _os_t
+   486	import time as _time_t
+   487	
+   488	JINA_KEY_FILE = "/opt/polymarket/.jina_key"
+   489	JINA_BACKOFF_FILE = "/opt/polymarket/.jina_backoff.json"
+   490	JINA_BACKOFF_MIN = 20
+   491	JINA_X_DESCANSO_S = 3600
+   492	_T_ESTADO = {"x_hasta": 0.0}
+   493	
+   494	
+   495	def _jina_token():
+   496	    try:
+   497	        t = open(JINA_KEY_FILE, encoding="utf-8").read().strip()
+   498	        if t:
+   499	            return t
+   500	    except Exception:
+   501	        pass
+   502	    return _os_t.environ.get("JINA_API_KEY", "").strip()
+   503	
+   504	
+   505	def _tbackoff_activo():
+   506	    try:
+   507	        d = _json_t.load(open(JINA_BACKOFF_FILE))
+   508	        return _time_t.time() < float(d.get("hasta", 0) or 0)
+   509	    except Exception:
+   510	        return False
+   511	
+   512	
+   513	def _tbackoff_activar():
+   514	    try:
+   515	        _json_t.dump({"hasta": _time_t.time() + JINA_BACKOFF_MIN * 60},
+   516	                     open(JINA_BACKOFF_FILE, "w"))
+   517	    except Exception:
+   518	        pass
+   519	
+   520	
+   521	# 1) curl con clave para jina (envuelve al original; no toca otras webs)
+   522	try:
+   523	    _curl_t_orig
+   524	except NameError:
+   525	    _curl_t_orig = curl
+   526	
+   527	
+   528	def curl(url, headers=None, timeout=60):
+   529	    hdrs = dict(headers or {})
+   530	    if "r.jina.ai" in url:
+   531	        tok = _jina_token()
+   532	        if tok:
+   533	            hdrs.setdefault("Authorization", "Bearer " + tok)
+   534	        hdrs.setdefault("x-no-cache", "true")
+   535	    return _curl_t_orig(url, hdrs, timeout)
+   536	
+   537	
+   538	# 2) jina con pausas inteligentes por fuente
+   539	try:
+   540	    _descargar_jina_t_orig
+   541	except NameError:
+   542	    _descargar_jina_t_orig = _descargar_jina
+   543	
+   544	
+   545	def _descargar_jina(url):
+   546	    es_x = "/https://x.com/" in url
+   547	    ahora = _time_t.time()
+   548	    if es_x and ahora < _T_ESTADO["x_hasta"]:
+   549	        raise RuntimeError("x.com en descanso (1h, Cloudflare)")
+   550	    if _tbackoff_activo():
+   551	        raise RuntimeError("jina en pausa (descanso tras fallos)")
+   552	    try:
+   553	        return _descargar_jina_t_orig(url)
+   554	    except Exception:
+   555	        if es_x:
+   556	            _T_ESTADO["x_hasta"] = ahora + JINA_X_DESCANSO_S
+   557	        else:
+   558	            _tbackoff_activar()
+   559	        raise
+   560	
+   561	
+   562	# 3) espejo nitter adicional (por si vuelve a responder)
+   563	try:
+   564	    if "nitter.tiekoetter.com" not in NITTER_ESPEJOS:
+   565	        NITTER_ESPEJOS.insert(0, "nitter.tiekoetter.com")
+   566	except Exception:
+   567	    pass
+   568	
+   569	if __name__ == "__main__":
+   570	    main()
+
+===== 11. CODIGO gestionar_posiciones.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""Gestor de cierre anticipado de posiciones de Elon en Polymarket.
+     4	
+     5	Cada N minutos:
+     6	  1. Lee las posiciones ABIERTAS de Elon del data-api.
+     7	  2. Para cada una, proyecta los tweets al final de la ventana usando el
+     8	     ritmo real de publicación (datos_elon.csv).
+     9	  3. Si la proyección queda FUERA del margen apostado (bin), vende la
+    10	     posición: en positivo si el precio actual lo permite, o con la
+    11	     mínima pérdida (mejor salir que esperar a 0).
+    12	
+    13	Reglas de seguridad:
+    14	  - No se vende en las últimas 2 horas de la ventana (se deja resolver).
+    15	  - Margen de tolerancia: no se cierra si la proyección roza el borde.
+    16	  - Solo gestiona posiciones de Elon Musk (las demás no se tocan).
+    17	
+    18	Uso:
+    19	  python3 gestionar_posiciones.py --dry      # simula (no vende)
+    20	  python3 gestionar_posiciones.py --loop N   # bucle cada N minutos
+    21	"""
+    22	import json
+    23	import re
+    24	import subprocess
+    25	import sys
+    26	import time
+    27	import urllib.parse
+    28	import urllib.request
+    29	from datetime import datetime, timedelta, timezone
+    30	from zoneinfo import ZoneInfo
+    31	
+    32	ET = ZoneInfo("America/New_York")
+    33	FUNDER = "0xb0E1197098E6d427c01720F1631cAD24CE740FA0"
+    34	TELEGRAM_BOT_TOKEN = __import__("os").environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    35	TELEGRAM_CHAT_ID = __import__("os").environ.get("TELEGRAM_CHAT_ID", "").strip()
+    36	
+    37	MARGEN_TWEETS = 2          # tolerancia en tweets para no cerrar por los pelos
+    38	MIN_HORAS_RESTANTES = 2    # no cerrar si quedan menos de 2 h (dejar resolver)
+    39	LOOP_MIN = 5
+    40	
+    41	
+    42	def _curl(url):
+    43	    r = subprocess.run(["curl", "-s", "--max-time", "40", url],
+    44	                       capture_output=True, text=True, encoding="utf-8",
+    45	                       errors="replace")
+    46	    if r.returncode != 0 or not r.stdout.strip():
+    47	        return None
+    48	    try:
+    49	        return json.loads(r.stdout)
+    50	    except Exception:
+    51	        return None
+    52	
+    53	
+    54	def tg_send(texto):
+    55	    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+    56	        return False
+    57	    try:
+    58	        data = urllib.parse.urlencode({"chat_id": TELEGRAM_CHAT_ID,
+    59	                                       "text": texto}).encode()
+    60	        req = urllib.request.Request(
+    61	            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+    62	            data=data)
+    63	        with urllib.request.urlopen(req, timeout=20) as r:
+    64	            return json.loads(r.read().decode()).get("ok", False)
+    65	    except Exception:
+    66	        return False
+    67	
+    68	
+    69	def get_client():
+    70	    sys.path.insert(0, "/opt/polymarket/bot-polymarket-elon")
+    71	    import operar_real as op
+    72	    return op.get_client()
+    73	
+    74	
+    75	def cargar_tweets():
+    76	    tweets = {}
+    77	    try:
+    78	        for line in open("/opt/polymarket/bot-polymarket-elon/datos_elon.csv",
+    79	                         encoding="utf-8"):
+    80	            line = line.strip()
+    81	            if not line or line.lower().startswith("fecha") or "," not in line:
+    82	                continue
+    83	            f, tw = line.split(",", 1)
+    84	            try:
+    85	                tweets[f.strip()] = int(tw)
+    86	            except ValueError:
+    87	                pass
+    88	    except Exception:
+    89	        pass
+    90	    return tweets
+    91	
+    92	
+    93	def cargar_ventanas():
+    94	    """{eventSlug: (inicio_iso, fin_iso)} de mercado_activo.json."""
+    95	    out = {}
+    96	    try:
+    97	        mercados = json.load(open(
+    98	            "/opt/polymarket/bot-polymarket-elon/mercado_activo.json",
+    99	            encoding="utf-8")).get("mercados", [])
+   100	        for m in mercados:
+   101	            slug = m.get("slug", "")
+   102	            if slug and m.get("inicio_iso") and m.get("fin_iso"):
+   103	                out[slug] = (m["inicio_iso"], m["fin_iso"])
+   104	    except Exception:
+   105	        pass
+   106	    return out
+   107	
+   108	
+   109	def parse_bin(question):
+   110	    """Extrae [lo, hi] de 'Will Elon Musk post 140-159 tweets from ...'."""
+   111	    m = re.search(r"post\s+<?(\d+)-(\d+)\s+tweets", question or "")
+   112	    if m:
+   113	        return int(m.group(1)), int(m.group(2))
+   114	    m = re.search(r"post\s+<(\d+)\s+tweets", question or "")
+   115	    if m:
+   116	        return 0, int(m.group(1)) - 1
+   117	    return None
+   118	
+   119	
+   120	def proyectar(event_slug, tweets_csv, ventanas):
+   121	    """Devuelve dict con proyección o None si no hay datos suficientes.
+   122	
+   123	    Usa días COMPLETOS (hasta ayer) para el ritmo, para no sobrestimar
+   124	    el día de hoy (que aún no ha terminado)."""
+   125	    if event_slug not in ventanas:
+   126	        return None
+   127	    inicio_iso, fin_iso = ventanas[event_slug]
+   128	    try:
+   129	        ini_dt = datetime.fromisoformat(inicio_iso.replace("Z", "+00:00"))
+   130	        fin_dt = datetime.fromisoformat(fin_iso.replace("Z", "+00:00"))
+   131	    except Exception:
+   132	        return None
+   133	    if ini_dt.tzinfo is None:
+   134	        ini_dt = ini_dt.replace(tzinfo=timezone.utc)
+   135	    if fin_dt.tzinfo is None:
+   136	        fin_dt = fin_dt.replace(tzinfo=timezone.utc)
+   137	    ahora = datetime.now(timezone.utc)
+   138	    dias_totales = max((fin_dt - ini_dt).total_seconds() / 86400, 0.05)
+   139	    # días completos transcurridos (hasta ayer)
+   140	    hoy = datetime.now(ET).date()
+   141	    ini_date = ini_dt.astimezone(ET).date()
+   142	    dias_completos = (hoy - ini_date).days
+   143	    if dias_completos < 1:
+   144	        return None
+   145	    # tweets en días completos (excluye hoy)
+   146	    tweets_comp = 0
+   147	    for fecha, tw in tweets_csv.items():
+   148	        try:
+   149	            d = datetime.strptime(fecha, "%Y-%m-%d").date()
+   150	        except Exception:
+   151	            continue
+   152	        if ini_date <= d < hoy:
+   153	            tweets_comp += tw
+   154	    ritmo = tweets_comp / dias_completos
+   155	    proyeccion = ritmo * dias_totales
+   156	    horas_rest = (fin_dt - ahora).total_seconds() / 3600
+   157	    return {
+   158	        "tweets_comp": tweets_comp,
+   159	        "dias_completos": dias_completos,
+   160	        "dias_totales": dias_totales,
+   161	        "ritmo": ritmo,
+   162	        "proyeccion": proyeccion,
+   163	        "horas_rest": horas_rest,
+   164	        "fin": fin_dt,
+   165	    }
+   166	
+   167	
+   168	def posiciones_elon():
+   169	    pos = _curl(f"https://data-api.polymarket.com/positions?user={FUNDER}") or []
+   170	    out = []
+   171	    for p in pos:
+   172	        try:
+   173	            cur = float(p.get("currentValue", 0) or 0)
+   174	        except Exception:
+   175	            continue
+   176	        if cur <= 0.001:
+   177	            continue
+   178	        title = (p.get("title") or "").lower()
+   179	        if "elon musk" not in title:
+   180	            continue
+   181	        out.append(p)
+   182	    return out
+   183	
+   184	
+   185	def vender(token_id, shares, cur_price, dry):
+   186	    """Vende shares a mercado. Devuelve (ok, detalle)."""
+   187	    if dry:
+   188	        return True, f"(seco) vendería {shares} shares @ ~{cur_price}"
+   189	    client = get_client()
+   190	    from py_clob_client_v2.clob_types import MarketOrderArgsV2
+   191	    try:
+   192	        resp = client.create_and_post_market_order(
+   193	            MarketOrderArgsV2(token_id=token_id, amount=shares, side="SELL",
+   194	                              order_type="FOK"))
+   195	        oid = resp.get("orderID") or resp.get("order_id") or str(resp)[:80]
+   196	        return True, f"vendidas {shares} shares (order {oid})"
+   197	    except Exception as e:
+   198	        # fallback: orden límite al precio actual
+   199	        try:
+   200	            from py_clob_client_v2.clob_types import OrderArgs
+   201	            resp = client.create_and_post_order(
+   202	                OrderArgs(token_id=token_id, price=round(cur_price, 4),
+   203	                          size=shares, side="SELL"))
+   204	            oid = resp.get("orderID") or resp.get("order_id") or str(resp)[:80]
+   205	            return True, f"orden límite SELL {shares} @ {cur_price} (order {oid})"
+   206	        except Exception as e2:
+   207	            return False, f"no se pudo vender: {e} / {e2}"
+   208	
+   209	
+   210	def evaluar(p, tweets_csv, ventanas, dry):
+   211	    """Evalúa una posición y devuelve (accion, texto). accion en
+   212	    {'vender', 'mantener', 'sin_datos', 'ultimas_horas'}."""
+   213	    bin_ = parse_bin(p.get("title"))
+   214	    if bin_ is None:
+   215	        return "mantener", "sin bin parseable"
+   216	    lo, hi = bin_
+   217	    event_slug = p.get("eventSlug", "")
+   218	    proy = proyectar(event_slug, tweets_csv, ventanas)
+   219	    if proy is None:
+   220	        return "mantener", "sin datos de ventana"
+   221	    proj = proy["proyeccion"]
+   222	    horas = proy["horas_rest"]
+   223	    if horas <= MIN_HORAS_RESTANTES:
+   224	        return "ultimas_horas", f"quedan {horas:.1f}h (dejar resolver)"
+   225	
+   226	    fuera_arriba = proj > hi + MARGEN_TWEETS
+   227	    fuera_abajo = proj < lo - MARGEN_TWEETS
+   228	    if not (fuera_arriba or fuera_abajo):
+   229	        return "mantener", (f"proyección {proj:.1f} dentro de [{lo},{hi}]")
+   230	
+   231	    # hay que cerrar
+   232	    side = p.get("outcome", "Yes")
+   233	    if side == "No":
+   234	        # para NO, gana si NO cae en el bin: fuera es BUENO, dentro es MALO
+   235	        return "mantener", "posición NO (no se gestiona)"
+   236	    cur = float(p.get("curPrice", 0) or 0)
+   237	    avg = float(p.get("avgPrice", 0) or 0)
+   238	    pnl_pct = (cur / avg - 1) * 100 if avg > 0 else 0
+   239	    shares = float(p.get("size", 0) or 0)
+   240	    token_id = p.get("asset", "")
+   241	    razon = (f"se pasa por arriba ({proj:.0f}>{hi})" if fuera_arriba
+   242	             else f"no llega al mínimo ({proj:.0f}<{lo})")
+   243	    if not token_id or shares <= 0:
+   244	        return "mantener", f"sin token/tamaño (token={bool(token_id)})"
+   245	    ok, detalle = vender(token_id, shares, cur, dry)
+   246	    init_val = float(p.get("initialValue", 0) or 0)
+   247	    cur_val = float(p.get("currentValue", 0) or 0)
+   248	    pnl = cur_val - init_val
+   249	    ic_bal = "🟢" if pnl >= 0 else "🔴"
+   250	    txt = (f"{'🧪 SECO' if dry else '🔻 CIERRE ANTICIPADO'} {p.get('title')}\n"
+   251	           f"   bin [{lo}-{hi}] · proyección {proj:.0f} → {razon}\n"
+   252	           f"   {shares:.1f} shares · entrada {avg:.4f} · ahora {cur:.4f} "
+   253	           f"({pnl_pct:+.0f}%)\n"
+   254	           f"   💰 Balance de la operación: {ic_bal} ${pnl:+.2f} "
+   255	           f"(invertido ${init_val:.2f} → ahora ${cur_val:.2f})\n"
+   256	           f"   → {detalle}")
+   257	    if ok and not dry:
+   258	        _guardar_cierre({
+   259	            "fecha": datetime.now(ET).strftime("%Y-%m-%d"),
+   260	            "titulo": (p.get("title") or "?").replace("Elon Musk # tweets ", "").replace("?", ""),
+   261	            "bin": f"{lo}-{hi}",
+   262	            "lado": p.get("outcome", "Yes"),
+   263	            "invertido": round(init_val, 2),
+   264	            "valor": round(cur_val, 2),
+   265	            "pnl": round(pnl, 2),
+   266	        })
+   267	    if ok:
+   268	        tg_send(txt)
+   269	    return ("vender" if ok else "fallo"), txt
+   270	
+   271	
+   272	def _guardar_cierre(registro):
+   273	    """Añade un cierre anticipado al registro mensual."""
+   274	    try:
+   275	        path = "/opt/polymarket/cierres_anticipados.json"
+   276	        try:
+   277	            d = json.load(open(path, encoding="utf-8"))
+   278	        except Exception:
+   279	            d = {"cierres": []}
+   280	        d.setdefault("cierres", []).append(registro)
+   281	        json.dump(d, open(path, "w", encoding="utf-8"),
+   282	                  ensure_ascii=False, indent=1)
+   283	    except Exception as e:
+   284	        print(f"  [aviso] no se pudo registrar el cierre: {e}")
+   285	
+   286	
+   287	def main():
+   288	    dry = "--dry" in sys.argv
+   289	    loop = "--loop" in sys.argv
+   290	    intervalo = LOOP_MIN
+   291	    if loop:
+   292	        for i, a in enumerate(sys.argv):
+   293	            if a == "--loop" and i + 1 < len(sys.argv):
+   294	                try:
+   295	                    intervalo = int(sys.argv[i + 1])
+   296	                except Exception:
+   297	                    pass
+   298	    tweets_csv = cargar_tweets()
+   299	    ventanas = cargar_ventanas()
+   300	
+   301	    while True:
+   302	        print(f"[{datetime.now(ET).strftime('%H:%M %Z')}] gestor pasada"
+   303	              f"{' (SECO)' if dry else ''}")
+   304	        try:
+   305	            for p in posiciones_elon():
+   306	                accion, texto = evaluar(p, tweets_csv, ventanas, dry)
+   307	                print(f"  · {p.get('title')[:60]} -> {accion}: {texto[:100]}")
+   308	        except Exception as e:
+   309	            print(f"  ERROR: {e}")
+   310	        if not loop:
+   311	            break
+   312	        print(f"  próxima pasada en {intervalo} min")
+   313	        time.sleep(intervalo * 60)
+   314	
+   315	
+   316	if __name__ == "__main__":
+   317	    try:
+   318	        sys.stdout.reconfigure(line_buffering=True)
+   319	    except Exception:
+   320	        pass
+   321	    main()
+
+===== 12. CODIGO check_integral.py =====
+     1	#!/usr/bin/env python3
+     2	# -*- coding: utf-8 -*-
+     3	"""TEST INTEGRAL DIARIO de Polymarket (bot-poly).
+     4	
+     5	Modos (cada uno vigila y notifica a su propio bot de Telegram):
+     6	  - por defecto (--elon):  bots de Elon (48h, semanal, mensual)
+     7	  - --zelen:               bot de Zelenskyy
+     8	
+     9	Comprueba:
+    10	  A. Servicios systemd del grupo activos.
+    11	  B. Proxy del PC + IP de salida (85.85.41.76) + CLOB responde.
+    12	  C. Telegram configurado en los bots del grupo (token no vacío).
+    13	  D. Motor de trading v2 presente (MOTOR_ACTUAL).
+    14	  E. mercado_activo.json del grupo fresco (< 30 min).
+    15	  F. CSV de datos del grupo fresco (último día dentro de 2 días).
+    16	  G. Lock compartido sin entradas caducadas.
+    17	  H. POSICIONES FANTASMA: bot con 'activa' pero la cuenta ya no tiene esa
+    18	     posición → bot atascado.
+    19	  I. Posiciones del grupo abiertas sin dueño (huérfanas).
+    20	  J. Las funciones del bot de Telegram del grupo no fallan.
+    21	
+    22	Uso:
+    23	  python3 check_integral.py               # grupo Elon
+    24	  python3 check_integral.py --zelen       # grupo Zelenskyy
+    25	  python3 check_integral.py --test        # imprime también por pantalla
+    26	  python3 check_integral.py --fix         # reconcilia los bots atascados
+    27	  python3 check_integral.py --solo-fantasmas [--zelen]  # solo fantasmas
+    28	"""
+    29	import json
+    30	import os
+    31	import subprocess
+    32	import sys
+    33	import time
+    34	import urllib.parse
+    35	import urllib.request
+    36	from datetime import datetime, timezone
+    37	from zoneinfo import ZoneInfo
+    38	
+    39	BASE = "/opt/polymarket"
+    40	TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
+    41	TOKEN_ZELEN = os.environ.get("ZELEN_BOT_TOKEN", "").strip()
+    42	CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+    43	FUNDER = "0xb0E1197098E6d427c01720F1631cAD24CE740FA0"
+    44	PROXY = "http://100.83.57.99:8888"
+    45	IP_CASA = "85.85.41.76"
+    46	MAD = ZoneInfo("Europe/Madrid")
+    47	
+    48	BOTS_ELON = [
+    49	    ("48h",       f"{BASE}/bot-polymarket-elon/real.json",                  "bot-polymarket-elon"),
+    50	    ("Semanal",   f"{BASE}/bot-polymarket-elon-semanal/real_semanal.json",  "bot-polymarket-elon-semanal"),
+    51	    ("Mensual",   f"{BASE}/bot-polymarket-elon-mensual/real_mensual.json",  "bot-polymarket-elon-mensual"),
+    52	]
+    53	BOTS_ZELEN = [
+    54	    ("Zelenskyy", f"{BASE}/bot-polymarket-zelenskyy/real_zelen.json",       "bot-polymarket-zelenskyy"),
+    55	]
+    56	SERVICIOS_ELON = ["poly-elon", "poly-semanal", "poly-mensual",
+    57	                  "poly-telegram", "poly-gestor"]
+    58	SERVICIOS_ZELEN = ["poly-zelenskyy", "poly-telegram-zelen"]
+    59	MOTOR_ESPERADO = "motor_v2_ev_escalones_tope10"
+    60	MESES = {"january", "february", "march", "april", "may", "june", "july",
+    61	         "august", "september", "october", "november", "december"}
+    62	MESES_ES = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+    63	            "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+    64	            "ago"}
+    65	LOCK = f"{BASE}/apuestas_compartidas.json"
+    66	
+    67	
+    68	# ------------------------------------------------------------------- estado
+    69	def _cfg():
+    70	    """Configuración según el modo (--zelen o no)."""
+    71	    zelen = "--zelen" in sys.argv
+    72	    if zelen:
+    73	        return {
+    74	            "nombre": "ZELENSKYY",
+    75	            "bots": BOTS_ZELEN,
+    76	            "servicios": SERVICIOS_ZELEN,
+    77	            "token": TOKEN_ZELEN,
+    78	            "clave_titulo": "zelenskyy",
+    79	            "mercado_json": f"{BASE}/bot-polymarket-zelenskyy/mercado_activo.json",
+    80	            "csv": f"{BASE}/bot-polymarket-zelenskyy/datos_zelen.csv",
+    81	            "csv_nombre": "datos_zelen.csv",
+    82	            "mercado_nombre": "mercado_activo.json Zelenskyy",
+    83	        }
+    84	    return {
+    85	        "nombre": "POLYMARKET",
+    86	        "bots": BOTS_ELON,
+    87	        "servicios": SERVICIOS_ELON,
+    88	        "token": TOKEN,
+    89	        "clave_titulo": "elon musk",
+    90	        "mercado_json": f"{BASE}/bot-polymarket-elon/mercado_activo.json",
+    91	        "csv": f"{BASE}/bot-polymarket-elon/datos_elon.csv",
+    92	        "csv_nombre": "datos_elon.csv",
+    93	        "mercado_nombre": "mercado_activo.json",
+    94	    }
+    95	
+    96	
+    97	def tg_send(texto, token):
+    98	    if not token or not CHAT_ID:
+    99	        return False
+   100	    try:
+   101	        data = urllib.parse.urlencode({"chat_id": CHAT_ID, "text": texto}).encode()
+   102	        req = urllib.request.Request(
+   103	            f"https://api.telegram.org/bot{token}/sendMessage", data=data)
+   104	        with urllib.request.urlopen(req, timeout=20) as r:
+   105	            return json.loads(r.read().decode()).get("ok", False)
+   106	    except Exception as e:
+   107	        print("tg error:", e)
+   108	        return False
+   109	
+   110	
+   111	def curl(url, proxy=True):
+   112	    cmd = ["curl", "-s", "--max-time", "35"]
+   113	    if proxy:
+   114	        cmd += ["-x", PROXY]
+   115	    cmd += [url]
+   116	    r = subprocess.run(cmd, capture_output=True, text=True,
+   117	                       encoding="utf-8", errors="replace")
+   118	    if r.returncode != 0 or not r.stdout.strip():
+   119	        return None
+   120	    try:
+   121	        return json.loads(r.stdout)
+   122	    except Exception:
+   123	        return None
+   124	
+   125	
+   126	# ------------------------------------------------------------- cheques A-J
+   127	def check_servicios(servicios):
+   128	    mal = []
+   129	    for s in servicios:
+   130	        r = subprocess.run(["systemctl", "is-active", s],
+   131	                           capture_output=True, text=True)
+   132	        if (r.stdout or "").strip() != "active":
+   133	            mal.append(f"servicio {s}: {r.stdout.strip()}")
+   134	    return mal
+   135	
+   136	
+   137	def check_proxy():
+   138	    mal = []
+   139	    try:
+   140	        r = subprocess.run(["curl", "-s", "--max-time", "15", "-x", PROXY,
+   141	                            "https://api.ipify.org"],
+   142	                           capture_output=True, text=True, timeout=20)
+   143	        ip = r.stdout.strip()
+   144	        if not ip or r.returncode != 0:
+   145	            mal.append("proxy del PC no responde")
+   146	        elif ip != IP_CASA:
+   147	            mal.append(f"IP de salida {ip} ≠ casa {IP_CASA}")
+   148	    except Exception as e:
+   149	        mal.append(f"proxy: {e}")
+   150	    try:
+   151	        r = subprocess.run(["curl", "-s", "--max-time", "15", "-x", PROXY,
+   152	                            "-o", "/dev/null", "-w", "%{http_code}",
+   153	                            "https://clob.polymarket.com/"],
+   154	                           capture_output=True, text=True, timeout=20)
+   155	        if r.stdout.strip() != "200":
+   156	            mal.append(f"clob via proxy: HTTP {r.stdout.strip()}")
+   157	    except Exception as e:
+   158	        mal.append(f"clob: {e}")
+   159	    return mal
+   160	
+   161	
+   162	def check_telegram_configs(bots):
+   163	    mal = []
+   164	    for nombre, _, repo in bots:
+   165	        p = f"{BASE}/{repo}/config.json"
+   166	        try:
+   167	            cfg = json.load(open(p, encoding="utf-8"))
+   168	            tg = cfg.get("telegram") or {}
+   169	            if not (tg.get("token") and tg.get("chat_id")):
+   170	                mal.append(f"{nombre}: telegram sin token/chat en config.json")
+   171	        except Exception as e:
+   172	            mal.append(f"{nombre}: config.json ilegible ({e})")
+   173	    return mal
+   174	
+   175	
+   176	def check_motores(bots):
+   177	    mal = []
+   178	    for nombre, _, repo in bots:
+   179	        p = f"{BASE}/{repo}/senal_vivo.py"
+   180	        try:
+   181	            src = open(p, encoding="utf-8").read()
+   182	        except Exception as e:
+   183	            mal.append(f"{nombre}: sin senal_vivo.py ({e})")
+   184	            continue
+   185	        if "MOTOR_ACTUAL" not in src:
+   186	            mal.append(f"{nombre}: senal_vivo.py sin motor")
+   187	        elif MOTOR_ESPERADO not in src:
+   188	            mal.append(f"{nombre}: motor distinto al esperado")
+   189	    return mal
+   190	
+   191	
+   192	def check_frescura(cfg):
+   193	    mal = []
+   194	    try:
+   195	        d = json.load(open(cfg["mercado_json"], encoding="utf-8"))
+   196	        ts = d.get("actualizado", "")
+   197	        dt = datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
+   198	        if (datetime.now(timezone.utc) - dt).total_seconds() > 1800:
+   199	            mal.append(f"{cfg['mercado_nombre']} viejo ({ts})")
+   200	    except Exception as e:
+   201	        mal.append(f"{cfg['mercado_nombre']}: {e}")
+   202	    try:
+   203	        import csv as _csv
+   204	        ultima = None
+   205	        with open(cfg["csv"], newline="", encoding="utf-8") as f:
+   206	            for fila in _csv.DictReader(f):
+   207	                ultima = fila.get("fecha", "")
+   208	        if not ultima:
+   209	            mal.append(f"{cfg['csv_nombre']} vacío")
+   210	        else:
+   211	            d = datetime.strptime(ultima, "%Y-%m-%d").date()
+   212	            hoy = datetime.now(MAD).date()
+   213	            if (hoy - d).days > 2:
+   214	                mal.append(f"{cfg['csv_nombre']} sin datos recientes (último {ultima})")
+   215	    except Exception as e:
+   216	        mal.append(f"{cfg['csv_nombre']}: {e}")
+   217	    return mal
+   218	
+   219	
+   220	def check_lock():
+   221	    mal = []
+   222	    try:
+   223	        d = json.load(open(LOCK, encoding="utf-8"))
+   224	    except Exception:
+   225	        return []  # sin lock no es error
+   226	    ahora = datetime.now(timezone.utc)
+   227	    for clave, ent in d.items():
+   228	        hasta = ent.get("hasta") or ""
+   229	        try:
+   230	            if hasta and datetime.fromisoformat(hasta).astimezone(timezone.utc) < ahora:
+   231	                mal.append(f"lock caducado: {clave}")
+   232	        except Exception:
+   233	            pass
+   234	    return mal
+   235	
+   236	
+   237	def tokens_de_slug(slug):
+   238	    partes = (slug or "").lower().split("-")
+   239	    toks = []
+   240	    for i, p in enumerate(partes):
+   241	        if p in MESES and i + 1 < len(partes) and partes[i + 1].isdigit():
+   242	            toks.append(f"{p} {partes[i + 1]}")
+   243	    return toks
+   244	
+   245	
+   246	def _orden_viva(order_id):
+   247	    """True si la orden sigue VIVA (resting) en el CLOB y sin llenar.
+   248	
+   249	    Si devuelve False puede ser porque: no existe (cancelada/expirada), ya se
+   250	    llenó (size_matched > 0) o no se pudo consultar."""
+   251	    if not order_id:
+   252	        return False
+   253	    try:
+   254	        sys.path.insert(0, f"{BASE}/bot-polymarket-elon")
+   255	        import operar_real as _op
+   256	        det = _op.get_client().get_order(order_id)
+   257	    except Exception:
+   258	        return False
+   259	    if not det:
+   260	        return False
+   261	    st = (det.get("status") or "").lower()
+   262	    sz = float(det.get("size_matched", 0) or 0)
+   263	    if sz > 0:
+   264	        return False                       # ya llenada → no es "viva"
+   265	    return st not in ("cancelled", "canceled", "expired", "cancelled_by_user")
+   266	
+   267	
+   268	def gamma_info(slug):
+   269	    d = curl(f"https://gamma-api.polymarket.com/events?slug={slug}")
+   270	    if not d:
+   271	        return None, None
+   272	    try:
+   273	        ev = d[0]
+   274	    except Exception:
+   275	        return None, None
+   276	    cerrado = bool(ev.get("closed"))
+   277	    ganador = None
+   278	    for m in ev.get("markets", []):
+   279	        try:
+   280	            p = json.loads(m.get("outcomePrices") or "[]")
+   281	        except Exception:
+   282	            continue
+   283	        if p and p[0] == "1":
+   284	            ganador = m.get("groupItemTitle")
+   285	    return cerrado, ganador
+   286	
+   287	
+   288	def posiciones_abiertas():
+   289	    d = curl(f"https://data-api.polymarket.com/positions?user={FUNDER}")
+   290	    abiertas = []
+   291	    for p in (d or []):
+   292	        try:
+   293	            cur = float(p.get("currentValue", 0) or 0)
+   294	        except Exception:
+   295	            continue
+   296	        if cur > 0.001:
+   297	            abiertas.append(p.get("title") or "")
+   298	    return abiertas
+   299	
+   300	
+   301	def coinciden(slug, bin_titulo, titulo):
+   302	    t = titulo.lower()
+   303	    toks = tokens_de_slug(slug)
+   304	    if not toks:
+   305	        return False
+   306	    for tok in toks:
+   307	        if tok not in t:
+   308	            return False
+   309	    if bin_titulo and bin_titulo.lower() not in t:
+   310	        return False
+   311	    return True
+   312	
+   313	
+   314	def check_fantasmas(cfg):
+   315	    """Devuelve (avisos, atascados). atascados = [(nombre, path, act)]."""
+   316	    abiertas = posiciones_abiertas()
+   317	    clave = cfg["clave_titulo"]
+   318	    grupo_abiertas = [t for t in abiertas if clave in t.lower()]
+   319	    avisos = []
+   320	    atascados = []
+   321	    reclamadas = []
+   322	    for nombre, path, _ in cfg["bots"]:
+   323	        try:
+   324	            estado = json.load(open(path, encoding="utf-8"))
+   325	        except FileNotFoundError:
+   326	            continue          # aún no ha operado: sin fichero de estado
+   327	        except Exception as e:
+   328	            avisos.append(f"{nombre}: real.json ilegible ({e})")
+   329	            continue
+   330	        act = estado.get("activa")
+   331	        if not act:
+   332	            continue
+   333	        slug = act.get("slug", "")
+   334	        bin_t = act.get("bin_titulo", "")
+   335	        # Orden PENDIENTE todavía viva en CLOB (aún sin llenar) → NO es
+   336	        # fantasma: es el estado normal de espera. No tocar.
+   337	        if act.get("pendiente") and _orden_viva(act.get("order_id")):
+   338	            continue
+   339	        ok = any(coinciden(slug, bin_t, t) for t in grupo_abiertas)
+   340	        if ok:
+   341	            reclamadas.append(slug)
+   342	            continue
+   343	        cerrado, ganador = gamma_info(slug)
+   344	        if cerrado:
+   345	            avisos.append(f"{nombre} ATASCADO: '{bin_t}' ya resuelto (ganó {ganador}) "
+   346	                          f"pero el bot sigue con la apuesta activa")
+   347	        else:
+   348	            avisos.append(f"{nombre} ATASCADO: '{bin_t}' {slug} ya no está en la cuenta "
+   349	                          f"(vendida por el gestor o fuera) y el bot sigue bloqueado")
+   350	        atascados.append((nombre, path, act))
+   351	    # huérfanas: posiciones abiertas del grupo que NINGÚN bot reclama
+   352	    for t in grupo_abiertas:
+   353	        reclamada = False
+   354	        for nombre, path, _ in cfg["bots"]:
+   355	            try:
+   356	                act = (json.load(open(path, encoding="utf-8")).get("activa") or {})
+   357	            except Exception:
+   358	                continue
+   359	            if coinciden(act.get("slug", ""), act.get("bin_titulo", ""), t):
+   360	                reclamada = True
+   361	                break
+   362	        if not reclamada:
+   363	            avisos.append(f"HUÉRFANA: posición abierta sin bot que la reclame: {t[:60]}")
+   364	    return avisos, atascados
+   365	
+   366	
+   367	def check_funciones(cfg):
+   368	    mal = []
+   369	    sys.path.insert(0, BASE)
+   370	    if cfg["nombre"] == "ZELENSKYY":
+   371	        try:
+   372	            sys.path.insert(0, f"{BASE}/bot-polymarket-elon")  # saldo_ntfy
+   373	            import poly_telegram_zelen as Z
+   374	            for fn, nom in ((Z.cmd_saldo, "saldo"), (Z.cmd_abiertas, "abiertas"),
+   375	                            (Z.cmd_ventanas, "ventanas"), (Z.cmd_finalizadas, "finalizadas")):
+   376	                try:
+   377	                    fn()
+   378	                except Exception as e:
+   379	                    mal.append(f"zelenskyy.{nom}: {e}")
+   380	        except Exception as e:
+   381	            mal.append(f"poly_telegram_zelen: {e}")
+   382	    else:
+   383	        try:
+   384	            import posiciones_reales as PR
+   385	            for fn, nom in ((PR.texto_saldo, "saldo"), (PR.texto_abiertas, "abiertas"),
+   386	                            (PR.texto_finalizadas, "finalizadas")):
+   387	                try:
+   388	                    fn()
+   389	                except Exception as e:
+   390	                    mal.append(f"posiciones_reales.{nom}: {e}")
+   391	        except Exception as e:
+   392	            mal.append(f"posiciones_reales: {e}")
+   393	    return mal
+   394	
+   395	
+   396	# ------------------------------------------------------------------- fix
+   397	def cierre_anticipado(slug, bin_t):
+   398	    import re as _re
+   399	    toks = tokens_de_slug(slug)
+   400	    nums = []
+   401	    for tok in toks:
+   402	        m = _re.findall(r"\d+", tok)
+   403	        if m:
+   404	            nums.append(m[-1])
+   405	    try:
+   406	        d = json.load(open(f"{BASE}/cierres_anticipados.json", encoding="utf-8"))
+   407	    except Exception:
+   408	        return None
+   409	    for c in d.get("cierres", []):
+   410	        t = (c.get("titulo") or "").lower()
+   411	        if bin_t.lower() not in t:
+   412	            continue
+   413	        tnums = _re.findall(r"\d+", t)
+   414	        if nums and all(n in tnums for n in nums):
+   415	            return float(c.get("pnl", 0) or 0)
+   416	        if any(m in t for m in MESES_ES):
+   417	            return float(c.get("pnl", 0) or 0)
+   418	    return None
+   419	
+   420	
+   421	def arreglar_atascado(nombre, path, act):
+   422	    slug = act.get("slug", "")
+   423	    bin_t = act.get("bin_titulo", "")
+   424	    lado = act.get("lado", "YES")
+   425	    # === FIXZELB_ARENA: apuesta PENDIENTE -> mirar el llenado REAL antes de nada ===
+   426	    if act.get("pendiente") and act.get("order_id"):
+   427	        _szb = 0.0
+   428	        try:
+   429	            sys.path.insert(0, f"{BASE}/bot-polymarket-elon")
+   430	            import operar_real as _opb
+   431	            _detb = _opb.get_client().get_order(act["order_id"])
+   432	            if _detb:
+   433	                _szb = float(_detb.get("size_matched", 0) or 0)
+   434	        except Exception:
+   435	            _szb = 0.0
+   436	        if _szb > 0 and act.get("precio"):
+   437	            act["size"] = round(_szb, 4)
+   438	            act["stake"] = round(_szb * float(act.get("precio") or 0), 2)
+   439	            act["pendiente"] = False
+   440	            try:
+   441	                _estb = json.load(open(path, encoding="utf-8"))
+   442	                if _estb.get("activa"):
+   443	                    _estb["activa"]["size"] = act["size"]
+   444	                    _estb["activa"]["stake"] = act["stake"]
+   445	                    _estb["activa"]["pendiente"] = False
+   446	                    json.dump(_estb, open(path, "w", encoding="utf-8"),
+   447	                              ensure_ascii=False, indent=1)
+   448	            except Exception:
+   449	                pass
+   450	    stake = float(act.get("stake", 0) or 0)
+   451	    cuota = float(act.get("cuota", 0) or 0)
+   452	
+   453	    cerrado, ganador = gamma_info(slug)
+   454	
+   455	    # Caso especial: orden "pendiente" que NUNCA se llenó (el mercado sigue
+   456	    # abierto y la orden ya no está en CLOB, cancelada o expirada). NO hay
+   457	    # pérdida real: solo limpiamos el estado y liberamos la ventana.
+   458	    if not cerrado and act.get("pendiente"):
+   459	        no_llena = False
+   460	        if act.get("order_id"):
+   461	            try:
+   462	                sys.path.insert(0, f"{BASE}/bot-polymarket-elon")
+   463	                import operar_real as _op
+   464	                det = _op.get_client().get_order(act["order_id"])
+   465	                st = (det.get("status") or "").lower() if det else ""
+   466	                sz = float(det.get("size_matched", 0) or 0) if det else 0.0
+   467	                llenada = st in ("matched", "filled") or sz > 0
+   468	                no_llena = (det is None) or (not llenada and st in
+   469	                            ("cancelled", "canceled", "expired",
+   470	                             "cancelled_by_user"))
+   471	            except Exception:
+   472	                no_llena = False
+   473	        if no_llena:
+   474	            try:
+   475	                estado = json.load(open(path, encoding="utf-8"))
+   476	            except Exception:
+   477	                return f"{nombre}: no pude leer {path}"
+   478	            estado["activa"] = None
+   479	            json.dump(estado, open(path, "w", encoding="utf-8"),
+   480	                      ensure_ascii=False, indent=1)
+   481	            try:
+   482	                lock = json.load(open(LOCK, encoding="utf-8"))
+   483	            except Exception:
+   484	                lock = {}
+   485	            lock.pop(f"{slug}|{bin_t}", None)
+   486	            json.dump(lock, open(LOCK, "w", encoding="utf-8"),
+   487	                      ensure_ascii=False, indent=1)
+   488	            return (f"{nombre}: orden '{bin_t}' {lado} nunca se llenó "
+   489	                    f"(cancelada/expirada) → estado limpiado, sin pérdida")
+   490	
+   491	    res = None
+   492	    detalle = ""
+   493	    if cerrado and ganador:
+   494	        gana = (ganador.lower() == bin_t.lower()) if lado == "YES" else \
+   495	               (ganador.lower() != bin_t.lower())
+   496	        res = "G" if gana else "P"
+   497	        detalle = f"resuelto por Polymarket: ganó {ganador}"
+   498	    else:
+   499	        pnl = cierre_anticipado(slug, bin_t)
+   500	        if pnl is not None and pnl > 0:
+   501	            res = "G"
+   502	            detalle = f"vendido por el gestor en positivo ({pnl:+.2f} a nivel cuenta)"
+   503	        else:
+   504	            res = "P"
+   505	            detalle = ("vendido por el gestor" if pnl is not None
+   506	                       else "vendido/desaparecido (sin registro del gestor)")
+   507	
+   508	    try:
+   509	        estado = json.load(open(path, encoding="utf-8"))
+   510	    except Exception:
+   511	        return f"{nombre}: no pude leer {path}"
+   512	
+   513	    if res == "G":
+   514	        benef = round(stake * (cuota - 1), 2) if cuota else round(stake, 2)
+   515	        paso = 1
+   516	    else:
+   517	        benef = -round(stake, 2)
+   518	        paso_ant = int(act.get("paso", 1))
+   519	        paso = 1 if paso_ant >= 7 else paso_ant + 1
+   520	    estado["saldo"] = round(float(estado.get("saldo", 500.0)) + benef, 2)
+   521	    estado["paso"] = paso
+   522	    reg = {
+   523	        "id": "reconc", "fecha": act.get("fecha", ""), "mercado": slug,
+   524	        "bin": bin_t, "lado": lado, "precio": act.get("precio", 0),
+   525	        "cuota": cuota, "p_modelo": act.get("p_modelo", 0),
+   526	        "paso": int(act.get("paso", 1)), "stake": round(stake, 2),
+   527	        "real": detalle, "resultado": res, "beneficio": benef,
+   528	        "saldo": round(estado["saldo"], 2),
+   529	    }
+   530	    estado.setdefault("historial", []).append(reg)
+   531	    estado["activa"] = None
+   532	    json.dump(estado, open(path, "w", encoding="utf-8"),
+   533	              ensure_ascii=False, indent=1)
+   534	    try:
+   535	        lock = json.load(open(LOCK, encoding="utf-8"))
+   536	    except Exception:
+   537	        lock = {}
+   538	    lock.pop(f"{slug}|{bin_t}", None)
+   539	    json.dump(lock, open(LOCK, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+   540	    return f"{nombre}: reconciliado '{bin_t}' → {res} ({benef:+.2f}) · paso {paso} · {detalle}"
+   541	
+   542	
+   543	# ------------------------------------------------------------------- main
+   544	def solo_fantasmas(test, fix, cfg):
+   545	    avisos_fantasma, atascados = check_fantasmas(cfg)
+   546	    hora = datetime.now(MAD).strftime("%d/%m/%Y %H:%M")
+   547	    if fix and atascados:
+   548	        lineas = [arreglar_atascado(nombre, path, act)
+   549	                  for nombre, path, act in atascados]
+   550	        texto = ("🔧 *FANTASMAS CORREGIDOS* " + cfg["nombre"] + "\n" + hora + "\n\n"
+   551	                 + "\n".join("• " + l for l in lineas))
+   552	        if test:
+   553	            print(texto)
+   554	        tg_send(texto, cfg["token"])
+   555	    elif avisos_fantasma:
+   556	        texto = ("⚠️ *POSICIONES FANTASMA SIN CORREGIR* " + cfg["nombre"] + "\n"
+   557	                 + hora + "\n\n" + "\n".join("• " + a for a in avisos_fantasma))
+   558	        if test:
+   559	            print(texto)
+   560	        tg_send(texto, cfg["token"])
+   561	    elif test:
+   562	        print(f"✅ FANTASMAS {cfg['nombre']}: OK · {hora} · sin posiciones fantasma")
+   563	    print("fantasmas:", "CORREGIDOS" if atascados
+   564	          else ("AVISOS" if avisos_fantasma else "OK"))
+   565	
+   566	
+   567	def main():
+   568	    test = "--test" in sys.argv
+   569	    fix = "--fix" in sys.argv
+   570	    cfg = _cfg()
+   571	
+   572	    if "--solo-fantasmas" in sys.argv:
+   573	        solo_fantasmas(test, fix, cfg)
+   574	        return
+   575	
+   576	    todos = []
+   577	    for fn, nom in [(lambda: check_servicios(cfg["servicios"]), "servicios"),
+   578	                    (check_proxy, "proxy/IP"),
+   579	                    (lambda: check_telegram_configs(cfg["bots"]), "telegram"),
+   580	                    (lambda: check_motores(cfg["bots"]), "motores"),
+   581	                    (lambda: check_frescura(cfg), "frescura"),
+   582	                    (check_lock, "lock"),
+   583	                    (lambda: check_funciones(cfg), "funciones")]:
+   584	        for x in fn():
+   585	            todos.append(f"• {x}")
+   586	
+   587	    avisos_fantasma, atascados = check_fantasmas(cfg)
+   588	    todos += [f"• {x}" for x in avisos_fantasma]
+   589	
+   590	    hora = datetime.now(MAD).strftime("%d/%m/%Y %H:%M")
+   591	    if fix and atascados:
+   592	        lineas_fix = []
+   593	        for nombre, path, act in atascados:
+   594	            lineas_fix.append(arreglar_atascado(nombre, path, act))
+   595	        if test:
+   596	            print("FIX aplicado:")
+   597	            for l in lineas_fix:
+   598	                print(" ", l)
+   599	        todos.append("• 🔧 Se reconciliaron " + str(len(atascados)) +
+   600	                     " bot(s) atascados")
+   601	
+   602	    ok = not todos
+   603	    n_bots = len(cfg["bots"])
+   604	    if ok:
+   605	        texto = (f"✅ *TEST DIARIO {cfg['nombre']}: TODO OK*\n{hora}\n\n"
+   606	                 f"• {n_bots} bot(s) + telegram activos\n"
+   607	                 f"• IP de salida {IP_CASA} · CLOB OK\n"
+   608	                 f"• Sin posiciones fantasma · sin huérfanas")
+   609	    else:
+   610	        texto = (f"⚠️ *TEST DIARIO {cfg['nombre']}: {len(todos)} aviso(s)*\n{hora}\n\n"
+   611	                 + "\n".join(todos))
+   612	    if test:
+   613	        print(texto)
+   614	    enviado = tg_send(texto, cfg["token"])
+   615	    if test:
+   616	        print("telegram enviado:", enviado)
+   617	    print("resultado:", "OK" if ok else "AVISOS")
+   618	
+   619	
+   620	if __name__ == "__main__":
+   621	    main()
+
+===== 13. MAPAS DE LOS OTROS MOTORES =====
+--- bot-polymarket-elon-semanal ---
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:43:def clamp(x, lo, hi):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:47:def poisson_cdf(k, lam):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:63:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:70:def tabla_apuestas(stake_inicial=STAKE_INICIAL, factor=FACTOR, pasos=PASOS_MAX):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:84:def cargar_csv(path):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:98:def metricas(datos):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:111:def decidir_bin(p, precio_yes, cuota_yes, cuota_no):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:143:def decision(m, lo, hi, precio_yes, ya_publicados=0, horas=0):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:160:def formatear_senal(m, lo, hi, precio_yes, ya_publicados, horas, paso=None):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:185:def backtest(datos, lo, hi, precio_yes):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:251:def main():
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:276:# === SENAL_EMP_ARENA (27/08): probabilidad empirica (dispersion real) ===
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:301:def _emp_dist(k, frac, dias):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:337:def metricas(datos):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:353:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-elon-semanal/senal.py:380:def emp_info():
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:44:def stake_motor_v2(stake_base, p_lado, cuota):
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:78:ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:81:def conteo_ventana(inicio_utc, ahora_utc):
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:138:def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:158:        if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 24.0):
+/opt/polymarket/bot-polymarket-elon-semanal/senal_vivo.py:196:def main():
+/opt/polymarket/bot-polymarket-elon-semanal/bot_semanal.py:62:def cargar_estado_bot():
+/opt/polymarket/bot-polymarket-elon-semanal/bot_semanal.py:69:def guardar_estado_bot(d):
+/opt/polymarket/bot-polymarket-elon-semanal/bot_semanal.py:77:def log(msg):
+--- bot-polymarket-elon-mensual ---
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:43:def clamp(x, lo, hi):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:47:def poisson_cdf(k, lam):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:63:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:70:def tabla_apuestas(stake_inicial=STAKE_INICIAL, factor=FACTOR, pasos=PASOS_MAX):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:84:def cargar_csv(path):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:98:def metricas(datos):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:111:def decidir_bin(p, precio_yes, cuota_yes, cuota_no):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:143:def decision(m, lo, hi, precio_yes, ya_publicados=0, horas=0):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:160:def formatear_senal(m, lo, hi, precio_yes, ya_publicados, horas, paso=None):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:185:def backtest(datos, lo, hi, precio_yes):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:251:def main():
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:276:# === SENAL_EMP_ARENA (27/08): probabilidad empirica (dispersion real) ===
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:301:def _emp_dist(k, frac, dias):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:337:def metricas(datos):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:353:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-elon-mensual/senal.py:380:def emp_info():
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:44:def stake_motor_v2(stake_base, p_lado, cuota):
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:78:ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:81:def conteo_ventana(inicio_utc, ahora_utc):
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:138:def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:158:        if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 24.0):
+/opt/polymarket/bot-polymarket-elon-mensual/senal_vivo.py:196:def main():
+/opt/polymarket/bot-polymarket-elon-mensual/bot_mensual.py:62:def cargar_estado_bot():
+/opt/polymarket/bot-polymarket-elon-mensual/bot_mensual.py:69:def guardar_estado_bot(d):
+/opt/polymarket/bot-polymarket-elon-mensual/bot_mensual.py:77:def log(msg):
+--- bot-polymarket-zelenskyy ---
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:43:def clamp(x, lo, hi):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:47:def poisson_cdf(k, lam):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:63:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:70:def tabla_apuestas(stake_inicial=STAKE_INICIAL, factor=FACTOR, pasos=PASOS_MAX):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:84:def cargar_csv(path):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:98:def metricas(datos):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:111:def decidir_bin(p, precio_yes, cuota_yes, cuota_no):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:143:def decision(m, lo, hi, precio_yes, ya_publicados=0, horas=0):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:160:def formatear_senal(m, lo, hi, precio_yes, ya_publicados, horas, paso=None):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:185:def backtest(datos, lo, hi, precio_yes):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:251:def main():
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:276:# === SENAL_EMP_ARENA (27/08): probabilidad empirica (dispersion real) ===
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:301:def _emp_dist(k, frac, dias):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:337:def metricas(datos):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:353:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-zelenskyy/senal.py:380:def emp_info():
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:44:def stake_motor_v2(stake_base, p_lado, cuota):
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:78:ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:81:def conteo_ventana(inicio_utc, ahora_utc):
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:138:def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:158:        if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 24.0):
+/opt/polymarket/bot-polymarket-zelenskyy/senal_vivo.py:196:def main():
+/opt/polymarket/bot-polymarket-zelenskyy/bot_semanal.py:62:def cargar_estado_bot():
+/opt/polymarket/bot-polymarket-zelenskyy/bot_semanal.py:69:def guardar_estado_bot(d):
+/opt/polymarket/bot-polymarket-zelenskyy/bot_semanal.py:77:def log(msg):
+--- bot-polymarket-elon-v2 ---
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:62:def clamp(x, lo, hi):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:66:def poisson_cdf(k, lam):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:82:def p_bin(lo, hi, lam):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:89:def tabla_apuestas(stake_inicial=STAKE_INICIAL, factor=FACTOR, pasos=PASOS_MAX):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:103:def cargar_csv(path):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:117:def metricas(datos):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:130:def decision(m, lo, hi, precio_yes, ya_publicados=0, horas=0):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:157:def formatear_senal(m, lo, hi, precio_yes, ya_publicados, horas, paso=None):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:182:def backtest(datos, lo, hi, precio_yes):
+/opt/polymarket/bot-polymarket-elon-v2/senal.py:248:def main():
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:41:def stake_motor_v2(stake_base, p_lado, cuota):
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:75:ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:78:def conteo_ventana(inicio_utc, ahora_utc):
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:133:def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:153:        if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+/opt/polymarket/bot-polymarket-elon-v2/senal_vivo.py:206:def main():
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:62:def cargar_estado_bot():
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:69:def guardar_estado_bot(d):
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:77:def log(msg):
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:88:def recoger(opts):
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:120:def actualizar_mercado():
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:139:def trading(opts):
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:187:def mostrar_estado():
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:195:def avisar_casi_senal():
+/opt/polymarket/bot-polymarket-elon-v2/bot.py:209:def avisar_resumen_diario():
+
+===== 14. LOGS =====
+--- bot.log (elon, ultimas 150 lineas) ---
+[2026-08-30 06:18:07 EDT]       · jina-x: 5 items
+[2026-08-30 06:19:27 EDT]       · nitter: sin items
+[2026-08-30 06:19:27 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:19:27 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:19:49 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:19:49 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:19:49 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:19:49 EDT] 4/4 · Estado:
+[2026-08-30 06:19:49 EDT] Pasada completada en 120.7 s
+[2026-08-30 06:19:49 EDT] Próxima pasada en 5 min…
+[2026-08-30 06:24:49 EDT] ==============================================================
+[2026-08-30 06:24:49 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 06:24:49 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 06:24:58 EDT]       · jina-tw: 5 items
+[2026-08-30 06:25:09 EDT]       · jina-x: 5 items
+[2026-08-30 06:26:29 EDT]       · nitter: sin items
+[2026-08-30 06:26:29 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:26:29 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:26:51 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:26:51 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:26:51 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:26:51 EDT] 4/4 · Estado:
+[2026-08-30 06:26:51 EDT] Pasada completada en 121.9 s
+[2026-08-30 06:26:51 EDT] Próxima pasada en 5 min…
+[2026-08-30 06:31:51 EDT] ==============================================================
+[2026-08-30 06:31:51 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 06:31:51 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 06:31:59 EDT]       · jina-tw: 5 items
+[2026-08-30 06:32:06 EDT]       · jina-x: 5 items
+[2026-08-30 06:33:26 EDT]       · nitter: sin items
+[2026-08-30 06:33:26 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:33:26 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:33:47 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:33:47 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:33:47 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:33:47 EDT] 4/4 · Estado:
+[2026-08-30 06:33:47 EDT] Pasada completada en 116.7 s
+[2026-08-30 06:33:47 EDT] Próxima pasada en 5 min…
+[2026-08-30 06:38:47 EDT] ==============================================================
+[2026-08-30 06:38:47 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 06:38:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 06:38:56 EDT]       · jina-tw: 5 items
+[2026-08-30 06:39:04 EDT]       · jina-x: 5 items
+[2026-08-30 06:40:24 EDT]       · nitter: sin items
+[2026-08-30 06:40:24 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:40:24 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:40:45 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:40:45 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:40:46 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:40:46 EDT] 4/4 · Estado:
+[2026-08-30 06:40:46 EDT] Pasada completada en 118.1 s
+[2026-08-30 06:40:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 06:45:46 EDT] ==============================================================
+[2026-08-30 06:45:46 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 06:45:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 06:46:22 EDT]       · jina-tw: 5 items
+[2026-08-30 06:46:33 EDT]       · jina-x: 5 items
+[2026-08-30 06:47:53 EDT]       · nitter: sin items
+[2026-08-30 06:47:53 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:47:53 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:48:13 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:48:13 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:48:13 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:48:13 EDT] 4/4 · Estado:
+[2026-08-30 06:48:13 EDT] Pasada completada en 147.5 s
+[2026-08-30 06:48:13 EDT] Próxima pasada en 5 min…
+[2026-08-30 06:53:13 EDT] ==============================================================
+[2026-08-30 06:53:13 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 06:53:13 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 06:53:24 EDT]       · jina-tw: 5 items
+[2026-08-30 06:53:33 EDT]       · jina-x: 5 items
+[2026-08-30 06:54:53 EDT]       · nitter: sin items
+[2026-08-30 06:54:53 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 06:54:53 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 06:55:13 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 06:55:13 EDT] 3/4 · Trading REAL…
+[2026-08-30 06:55:13 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 06:55:13 EDT] 4/4 · Estado:
+[2026-08-30 06:55:13 EDT] Pasada completada en 119.7 s
+[2026-08-30 06:55:13 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:00:13 EDT] ==============================================================
+[2026-08-30 07:00:13 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:00:13 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:00:19 EDT]       · jina-tw: 5 items
+[2026-08-30 07:00:25 EDT]       · jina-x: 5 items
+[2026-08-30 07:01:45 EDT]       · nitter: sin items
+[2026-08-30 07:01:45 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:01:45 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:02:05 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:02:05 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:02:05 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:02:05 EDT] 4/4 · Estado:
+[2026-08-30 07:02:05 EDT] Pasada completada en 112.4 s
+[2026-08-30 07:02:05 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:07:05 EDT] ==============================================================
+[2026-08-30 07:07:05 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:07:05 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:07:15 EDT]       · jina-tw: 5 items
+[2026-08-30 07:07:24 EDT]       · jina-x: 5 items
+[2026-08-30 07:08:44 EDT]       · nitter: sin items
+[2026-08-30 07:08:44 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:08:44 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:09:04 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:09:04 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:09:04 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:09:04 EDT] 4/4 · Estado:
+[2026-08-30 07:09:04 EDT] Pasada completada en 119.2 s
+[2026-08-30 07:09:04 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:14:04 EDT] ==============================================================
+[2026-08-30 07:14:04 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:14:04 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:14:15 EDT]       · jina-tw: 5 items
+[2026-08-30 07:14:23 EDT]       · jina-x: 5 items
+[2026-08-30 07:15:44 EDT]       · nitter: sin items
+[2026-08-30 07:15:44 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:15:44 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:16:03 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:16:03 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:16:03 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:16:03 EDT] 4/4 · Estado:
+[2026-08-30 07:16:03 EDT] Pasada completada en 118.9 s
+[2026-08-30 07:16:03 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:21:03 EDT] ==============================================================
+[2026-08-30 07:21:03 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:21:03 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:21:11 EDT]       · jina-tw: 5 items
+[2026-08-30 07:21:20 EDT]       · jina-x: 5 items
+[2026-08-30 07:22:41 EDT]       · nitter: sin items
+[2026-08-30 07:22:41 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:22:41 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:23:00 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:23:00 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:23:00 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:23:00 EDT] 4/4 · Estado:
+[2026-08-30 07:23:00 EDT] Pasada completada en 117.3 s
+[2026-08-30 07:23:00 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:28:00 EDT] ==============================================================
+[2026-08-30 07:28:00 EDT] PASADA COMPLETA  ·  MODO: REAL
+[2026-08-30 07:28:00 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:28:08 EDT]       · jina-tw: 5 items
+[2026-08-30 07:28:18 EDT]       · jina-x: 5 items
+[2026-08-30 07:29:38 EDT]       · nitter: sin items
+[2026-08-30 07:29:38 EDT]       · tweets únicos: 613 (reposts 383) · CSV: 39 días (nuevos/mejorados: 0)
+[2026-08-30 07:29:38 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:29:58 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:29:58 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:29:58 EDT]       · Excel historial actualizado: Historial_Operaciones.xlsx (añadidas 0, total 3)
+[2026-08-30 07:29:58 EDT] 4/4 · Estado:
+[2026-08-30 07:29:58 EDT] Pasada completada en 117.6 s
+[2026-08-30 07:29:58 EDT] Próxima pasada en 5 min…
+--- logs de bot-polymarket-elon-semanal ---
+[/opt/polymarket/bot-polymarket-elon-semanal/bot_semanal.log]
+[2026-08-30 07:13:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:13:58 EDT]       · jina-tw: 5 items
+[2026-08-30 07:14:06 EDT]       · jina-x: 5 items
+[2026-08-30 07:15:27 EDT]       · nitter: sin items
+[2026-08-30 07:15:27 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:15:27 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:15:48 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:15:48 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:15:48 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 07:15:48 EDT] 4/4 · Estado:
+[2026-08-30 07:15:48 EDT] Pasada completada en 120.6 s
+[2026-08-30 07:15:48 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:20:48 EDT] ==============================================================
+[2026-08-30 07:20:48 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 07:20:48 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:20:53 EDT]       · jina-tw: 5 items
+[2026-08-30 07:21:03 EDT]       · jina-x: 5 items
+[2026-08-30 07:22:24 EDT]       · nitter: sin items
+[2026-08-30 07:22:24 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:22:24 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:22:46 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:22:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:22:46 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 07:22:46 EDT] 4/4 · Estado:
+[2026-08-30 07:22:46 EDT] Pasada completada en 118.0 s
+[2026-08-30 07:22:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:27:46 EDT] ==============================================================
+[2026-08-30 07:27:46 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 07:27:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:27:54 EDT]       · jina-tw: 5 items
+[2026-08-30 07:28:03 EDT]       · jina-x: 5 items
+[2026-08-30 07:29:23 EDT]       · nitter: sin items
+[2026-08-30 07:29:23 EDT]       · tweets únicos: 608 (reposts 380) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:29:23 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:29:44 EDT]       · 7 mercados · 1 de 48 h abiertos → mercado_activo.json
+[2026-08-30 07:29:44 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:29:44 EDT]       · Excel historial actualizado: Historial_Operaciones_Semanal.xlsx (añadidas 0, total 0)
+[2026-08-30 07:29:44 EDT] 4/4 · Estado:
+[2026-08-30 07:29:44 EDT] Pasada completada en 118.5 s
+[2026-08-30 07:29:44 EDT] Próxima pasada en 5 min…
+--- logs de bot-polymarket-elon-mensual ---
+[/opt/polymarket/bot-polymarket-elon-mensual/bot_mensual.log]
+[2026-08-30 07:13:47 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:13:56 EDT]       · jina-tw: 5 items
+[2026-08-30 07:14:04 EDT]       · jina-x: 5 items
+[2026-08-30 07:15:25 EDT]       · nitter: sin items
+[2026-08-30 07:15:25 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:15:25 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:15:48 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 07:15:48 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:15:48 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 07:15:48 EDT] 4/4 · Estado:
+[2026-08-30 07:15:48 EDT] Pasada completada en 120.6 s
+[2026-08-30 07:15:48 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:20:48 EDT] ==============================================================
+[2026-08-30 07:20:48 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
+[2026-08-30 07:20:48 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:20:57 EDT]       · jina-tw: 5 items
+[2026-08-30 07:21:04 EDT]       · jina-x: 5 items
+[2026-08-30 07:22:25 EDT]       · nitter: sin items
+[2026-08-30 07:22:25 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:22:25 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:22:46 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 07:22:46 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:22:46 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 07:22:46 EDT] 4/4 · Estado:
+[2026-08-30 07:22:46 EDT] Pasada completada en 118.1 s
+[2026-08-30 07:22:46 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:27:46 EDT] ==============================================================
+[2026-08-30 07:27:46 EDT] PASADA COMPLETA (MENSUAL)  ·  MODO: REAL
+[2026-08-30 07:27:46 EDT] 1/4 · Recogiendo tweets de @elonmusk…
+[2026-08-30 07:27:52 EDT]       · jina-tw: 5 items
+[2026-08-30 07:28:01 EDT]       · jina-x: 5 items
+[2026-08-30 07:29:22 EDT]       · nitter: sin items
+[2026-08-30 07:29:22 EDT]       · tweets únicos: 493 (reposts 323) · CSV: 37 días (nuevos/mejorados: 0)
+[2026-08-30 07:29:22 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:29:44 EDT]       · 7 mercados · 2 mensuales abiertos → mercado_activo.json
+[2026-08-30 07:29:44 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:29:44 EDT]       · Excel historial actualizado: Historial_Operaciones_Mensual.xlsx (añadidas 0, total 0)
+[2026-08-30 07:29:44 EDT] 4/4 · Estado:
+[2026-08-30 07:29:44 EDT] Pasada completada en 118.5 s
+[2026-08-30 07:29:44 EDT] Próxima pasada en 5 min…
+--- logs de bot-polymarket-zelenskyy ---
+[/opt/polymarket/bot-polymarket-zelenskyy/bot_zelen.log]
+[2026-08-30 07:14:28 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 07:14:28 EDT] 4/4 · Estado:
+[2026-08-30 07:14:28 EDT] Pasada completada en 23.9 s
+[2026-08-30 07:14:28 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:19:28 EDT] ==============================================================
+[2026-08-30 07:19:28 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 07:19:28 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 07:19:30 EDT]       · xtracker: 1968 items
+[2026-08-30 07:19:30 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 07:19:30 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:19:52 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 07:19:52 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:19:52 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 07:19:52 EDT] 4/4 · Estado:
+[2026-08-30 07:19:52 EDT] Pasada completada en 24.1 s
+[2026-08-30 07:19:52 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:24:52 EDT] ==============================================================
+[2026-08-30 07:24:52 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 07:24:52 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 07:24:56 EDT]       · xtracker: 1968 items
+[2026-08-30 07:24:56 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 07:24:56 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:25:18 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 07:25:18 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:25:19 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 07:25:19 EDT] 4/4 · Estado:
+[2026-08-30 07:25:19 EDT] Pasada completada en 26.4 s
+[2026-08-30 07:25:19 EDT] Próxima pasada en 5 min…
+[2026-08-30 07:30:19 EDT] ==============================================================
+[2026-08-30 07:30:19 EDT] PASADA COMPLETA (SEMANAL)  ·  MODO: REAL
+[2026-08-30 07:30:19 EDT] 1/4 · Recogiendo posts de @ZelenskyyUa…
+[2026-08-30 07:30:20 EDT]       · xtracker: 1968 items
+[2026-08-30 07:30:20 EDT]       · tweets únicos: 1968 (reposts 0) · CSV: 163 días (nuevos/mejorados: 0)
+[2026-08-30 07:30:20 EDT] 2/4 · Actualizando mercados de Polymarket…
+[2026-08-30 07:30:43 EDT]       · 3 mercados · 3 semanales abiertas → mercado_activo.json
+[2026-08-30 07:30:43 EDT] 3/4 · Trading REAL…
+[2026-08-30 07:30:43 EDT]       · Excel historial actualizado: Historial_Operaciones_Zelenskyy.xlsx (añadidas 0, total 0)
+[2026-08-30 07:30:43 EDT] 4/4 · Estado:
+[2026-08-30 07:30:43 EDT] Pasada completada en 24.8 s
+[2026-08-30 07:30:43 EDT] Próxima pasada en 5 min…
+
+===== FIN =====
