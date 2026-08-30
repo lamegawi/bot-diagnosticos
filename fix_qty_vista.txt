@@ -1,0 +1,38 @@
+== ANTES del parche (lineas qty_vista en demo bot) ==
+501:        qty_ant = float(m.get("qty_vista", qty) or qty)
+507:        m["qty_vista"] = qty
+
+== DESPUES del parche ==
+400:                changed = True
+434:            changed = True
+439:            changed = True
+464:                            changed = True
+487:                                    changed = True
+501:        qty_ant = float(m.get("qty_vista", qty) or qty)
+507:        m["qty_vista"] = qty
+508:        changed = True
+525:                changed = True
+
+== Verificacion de sintaxis ==
+SINTAXIS OK
+
+== Corrigiendo qty_vista en managed.json ahora mismo ==
+  ETC: SHORT: qty_vista=8.0 -> actualizar con qty real
+  HYPE: LONG: qty_vista=37.0 -> actualizar con qty real
+  ETC: SHORT: qty_vista corregida a 6.0
+managed.json actualizado
+
+== Reiniciando okx-demo-bot ==
+active
+
+== Ultimas lineas del log demo ==
+Aug 29 08:09:47 bot-vm4 systemd[1]: Stopping okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget...
+Aug 29 08:09:47 bot-vm4 systemd[1]: okx-demo-bot.service: Deactivated successfully.
+Aug 29 08:09:47 bot-vm4 systemd[1]: Stopped okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget.
+Aug 29 08:09:47 bot-vm4 systemd[1]: okx-demo-bot.service: Consumed 4.383s CPU time.
+Aug 29 08:09:47 bot-vm4 systemd[1]: Started okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget.
+Aug 30 12:23:20 bot-vm4 systemd[1]: Stopping okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget...
+Aug 30 12:23:20 bot-vm4 systemd[1]: okx-demo-bot.service: Deactivated successfully.
+Aug 30 12:23:20 bot-vm4 systemd[1]: Stopped okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget.
+Aug 30 12:23:20 bot-vm4 systemd[1]: okx-demo-bot.service: Consumed 3min 23.697s CPU time, 16.3M memory peak, 0B memory swap peak.
+Aug 30 12:23:21 bot-vm4 systemd[1]: Started okx-demo-bot.service - Bot DEMO OKX (X-Perps) - migrado de Bitget.
