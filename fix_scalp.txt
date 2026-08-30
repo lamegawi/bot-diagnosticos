@@ -1,0 +1,34 @@
+== ANTES: funcion velas_cerradas actual ==
+105:def velas_cerradas(client, inst, barra, n):
+393:            d = permiso_1h(velas_cerradas(client, inst, "1H", 250))
+396:            s = setup_5m(velas_cerradas(client, inst, "5M", 60), d)
+399:            if gatillo_1m(velas_cerradas(client, inst, "1M", 55), d):
+PARCHE OK: funcion velas_cerradas reemplazada
+
+== DESPUES: funcion velas_cerradas nueva ==
+105:def velas_cerradas(client, inst, barra, n):
+108:    if n <= 199:
+112:    # Para n > 199: primera tanda (200 mas recientes)
+116:    ts_pivot = primera[0]["time"]   # la mas antigua de la primera tanda
+117:    # Segunda tanda: 200 velas anteriores al pivot
+119:                    % (inst, barra, ts_pivot))
+120:    segunda = []
+123:            segunda.append({"time": int(row[0]), "open": float(row[1]),
+128:    segunda.sort(key=lambda k: k["time"])
+129:    todas = segunda + primera
+424:            d = permiso_1h(velas_cerradas(client, inst, "1H", 250))
+427:            s = setup_5m(velas_cerradas(client, inst, "5M", 60), d)
+430:            if gatillo_1m(velas_cerradas(client, inst, "1M", 55), d):
+
+== Verificacion de sintaxis ==
+SINTAXIS OK
+
+== Reiniciando okx-scalp-bot ==
+active
+
+== Primeras lineas del log tras reinicio ==
+Aug 30 12:33:19 bot-vm4 systemd[1]: Stopping okx-scalp-bot.service - Bot scalping OKX demo (XPERPs)...
+Aug 30 12:33:19 bot-vm4 systemd[1]: okx-scalp-bot.service: Deactivated successfully.
+Aug 30 12:33:19 bot-vm4 systemd[1]: Stopped okx-scalp-bot.service - Bot scalping OKX demo (XPERPs).
+Aug 30 12:33:19 bot-vm4 systemd[1]: okx-scalp-bot.service: Consumed 1min 59.938s CPU time, 12.3M memory peak, 0B memory swap peak.
+Aug 30 12:33:19 bot-vm4 systemd[1]: Started okx-scalp-bot.service - Bot scalping OKX demo (XPERPs).
