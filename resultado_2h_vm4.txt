@@ -1,0 +1,11 @@
+== timer instalado ==
+NEXT                            LEFT LAST PASSED UNIT                ACTIVATES
+Sun 2026-08-30 14:00:00 UTC 1h 46min -         - vm4-backup-2h.timer vm4-backup-github.service
+
+1 timers listed.
+Pass --all to see loaded but inactive timers, too.
+
+== los 3 timers originales, intactos ==
+vm4-backup.timer: enabled
+vm4-backup-github.timer: enabled
+vm4-backup-cruzado.timer: enabled
