@@ -1,0 +1,317 @@
+==================================================
+FIXWIN_ARENA - 2026-08-30 17:15 UTC
+==================================================
+
+=== RESULTADOS FIXWIN ===
+  elon-48h: funciones FIXWIN insertadas, hook en pasada_real OK | SINTAXIS OK
+  zelenskyy-semanal: funciones FIXWIN insertadas, hook en pasada_real OK | SINTAXIS OK
+
+=== senal_vivo.py ELON (primeras 100 lineas) ===
+Total: 294 lineas
+  71: T_FMT = "%a %b %d %H:%M:%S +0000 %Y"
+  72: 
+  73: # Entrada solo al INICIO de cada ventana (evita bins ya casi decididos y
+  74: # minimiza el error de t0 cuando ya hay muchos tweets publicados).
+  75: ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+  76: 
+  77: 
+  78: def conteo_ventana(inicio_utc, ahora_utc):
+  79:     """T0 = tweets dentro de la ventana del mercado (posts + reposts + quotes).
+  80: 
+  ---
+  73: # Entrada solo al INICIO de cada ventana (evita bins ya casi decididos y
+  74: # minimiza el error de t0 cuando ya hay muchos tweets publicados).
+  75: ENTRADA_MAX_H = {"48h": 12.0, "semanal": 24.0, "mensual": 72.0}
+  76: 
+  77: 
+  78: def conteo_ventana(inicio_utc, ahora_utc):
+  79:     """T0 = tweets dentro de la ventana del mercado (posts + reposts + quotes).
+  80: 
+  81:     Estrategia robusta:
+  82:       · días COMPLETOS estrictamente dentro de la ventana → datos_elon.csv
+  ---
+  76: 
+  77: 
+  78: def conteo_ventana(inicio_utc, ahora_utc):
+  79:     """T0 = tweets dentro de la ventana del mercado (posts + reposts + quotes).
+  80: 
+  81:     Estrategia robusta:
+  82:       · días COMPLETOS estrictamente dentro de la ventana → datos_elon.csv
+  83:         (el CSV solo guarda días terminados)
+  84:       · día de inicio y día actual (parciales) → estado_tweets.json con
+  85:         timestamps exactos, SIN saltar reposts (la regla del mercado cuenta
+  ---
+  77: 
+  78: def conteo_ventana(inicio_utc, ahora_utc):
+  79:     """T0 = tweets dentro de la ventana del mercado (posts + reposts + quotes).
+  80: 
+  81:     Estrategia robusta:
+  82:       · días COMPLETOS estrictamente dentro de la ventana → datos_elon.csv
+  83:         (el CSV solo guarda días terminados)
+  84:       · día de inicio y día actual (parciales) → estado_tweets.json con
+  85:         timestamps exactos, SIN saltar reposts (la regla del mercado cuenta
+  86:         posts + quote posts + reposts).
+  ---
+  80: 
+  81:     Estrategia robusta:
+  82:       · días COMPLETOS estrictamente dentro de la ventana → datos_elon.csv
+  83:         (el CSV solo guarda días terminados)
+  84:       · día de inicio y día actual (parciales) → estado_tweets.json con
+  85:         timestamps exactos, SIN saltar reposts (la regla del mercado cuenta
+  86:         posts + quote posts + reposts).
+  87:     Devuelve (n, total_estado)."""
+  88:     try:
+  89:         estado = json.load(open("estado_tweets.json", encoding="utf-8")).get("tweets", {})
+  ---
+  97:     incluye_dia_inicio = (inicio_et.hour == 0 and inicio_et.minute == 0)
+  98:     n = 0
+  99:     # ---- días completos dentro de la ventana (datos_elon.csv) ----
+  100:     try:
+  101:         import csv as _csv
+  102:         with open("datos_elon.csv", newline="", encoding="utf-8") as f:
+  103:             for fila in _csv.DictReader(f):
+  104:                 try:
+  105:                     d = datetime.strptime(fila["fecha"].strip(), "%Y-%m-%d").date()
+  106:                 except Exception:
+  ---
+  115:     except Exception:
+  116:         pass
+  117:     # ---- día de inicio y día actual (parciales), contando TODOS los tipos ----
+  118:     for v in estado.values():
+  119:         try:
+  120:             ts = datetime.strptime(v["created_at"], T_FMT).replace(tzinfo=timezone.utc)
+  121:         except Exception:
+  122:             continue
+  123:         d_ts = ts.astimezone(ET).date()
+  124:         if d_ts not in (d_inicio, hoy):
+  ---
+  133: def evaluar(avg7, v2, ajuste, lam48, mercados, paso, t0_override=-1, ahora=None):
+  134:     """Evalúa todos los mercados abiertos y devuelve (evaluados, candidatas).
+  135:     - evaluados: lista de dicts {titulo, tipo, inicio, fin, horas_rest,
+  136:       lam_rest, t0, bins:[{titulo, lo, hi, precio_yes, cuota_yes, cuota_no,
+  137:       p_modelo, veredicto}]}
+  138:     - candidatas: lista de dicts {mercado, bin, lado, precio, cuota, p_modelo}
+  139:       que cumplen las reglas R3+R4 (para abrir apuesta de papel)."""
+  140:     ahora = ahora or datetime.now(timezone.utc)
+  141:     tabla = senal.tabla_apuestas()
+  142:     _, stake_base, _, _ = tabla[paso - 1] if 1 <= paso <= len(tabla) else tabla[0]
+  ---
+  149:         if ahora < inicio or ahora > fin:
+  150:             continue
+  151:         horas_rest = (fin - ahora).total_seconds() / 3600
+  152:         horas_elapsed = (ahora - inicio).total_seconds() / 3600
+  153:         if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  ---
+  150:             continue
+  151:         horas_rest = (fin - ahora).total_seconds() / 3600
+  152:         horas_elapsed = (ahora - inicio).total_seconds() / 3600
+  153:         if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  ---
+  151:         horas_rest = (fin - ahora).total_seconds() / 3600
+  152:         horas_elapsed = (ahora - inicio).total_seconds() / 3600
+  153:         if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  ---
+  152:         horas_elapsed = (ahora - inicio).total_seconds() / 3600
+  153:         if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  ---
+  153:         if horas_elapsed > ENTRADA_MAX_H.get(mk["tipo"], 12.0):
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  ---
+  154:             continue  # entrada solo al inicio de la ventana
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  163:         bins = []
+  ---
+  155:         if mk["tipo"] == "48h":
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  163:         bins = []
+  164:         for b in mk["bins"]:
+  ---
+  156:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  157:         elif mk["tipo"] == "semanal":
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  163:         bins = []
+  164:         for b in mk["bins"]:
+  165:             hi = b["hi"] if b["hi"] != float("inf") else math.inf
+  ---
+  158:             lam_rest = 7 * avg7 * ajuste * max(0.0, horas_rest) / 168.0
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  163:         bins = []
+  164:         for b in mk["bins"]:
+  165:             hi = b["hi"] if b["hi"] != float("inf") else math.inf
+  166:             # Guarda: bin ya decidido por los tweets publicados (t0).
+  167:             #   hi finito y t0 > hi  -> [lo,hi] superado: YES imposible, NO ya decidido
+  ---
+  159:         else:
+  160:             lam_rest = lam48 * max(0.0, horas_rest) / 48.0
+  161:         t0_auto, total_estado = conteo_ventana(inicio, ahora)
+  162:         t0 = t0_override if t0_override >= 0 else t0_auto
+  163:         bins = []
+  164:         for b in mk["bins"]:
+  165:             hi = b["hi"] if b["hi"] != float("inf") else math.inf
+  166:             # Guarda: bin ya decidido por los tweets publicados (t0).
+  167:             #   hi finito y t0 > hi  -> [lo,hi] superado: YES imposible, NO ya decidido
+  168:             #   hi = inf  y t0 >= lo -> "≥ lo" ya cumplido: YES ya decidido
+  ---
+  193:                     continue  # EV por debajo del mínimo: no entrar
+  194:                 candidatas.append({"mercado": mk["titulo"], "slug": mk["slug"],
+  195:                                    "ventana": (inicio, fin), "tipo": mk["tipo"],
+  196:                                    "bin_titulo": b["titulo"], "lo": b["lo"], "hi": b["hi"],
+  197:                                    "lado": lado, "precio": (b["precio_yes"] if lado == "YES" else 1 - b["precio_yes"]),
+  198:                                    "cuota": cuota_lado, "p_modelo": p,
+  199:                                    "stake": stake, "ev": ev, "motor": MOTOR_ACTUAL})
+  200:         evaluados.append({"titulo": mk["titulo"], "slug": mk.get("slug", ""), "tipo": mk["tipo"],
+  201:                           "inicio": inicio, "fin": fin, "horas_rest": horas_rest,
+  202:                           "lam_rest": lam_rest, "t0": t0, "bins": bins})
+  ---
+  198:                                    "cuota": cuota_lado, "p_modelo": p,
+  199:                                    "stake": stake, "ev": ev, "motor": MOTOR_ACTUAL})
+  200:         evaluados.append({"titulo": mk["titulo"], "slug": mk.get("slug", ""), "tipo": mk["tipo"],
+  201:                           "inicio": inicio, "fin": fin, "horas_rest": horas_rest,
+  202:                           "lam_rest": lam_rest, "t0": t0, "bins": bins})
+  203:     return evaluados, candidatas
+  204: 
+  205: 
+  206: def main():
+  207:     ap = argparse.ArgumentParser(description="Señal en vivo Polymarket · @elonmusk")
+  ---
+  199:                                    "stake": stake, "ev": ev, "motor": MOTOR_ACTUAL})
+  200:         evaluados.append({"titulo": mk["titulo"], "slug": mk.get("slug", ""), "tipo": mk["tipo"],
+  201:                           "inicio": inicio, "fin": fin, "horas_rest": horas_rest,
+  202:                           "lam_rest": lam_rest, "t0": t0, "bins": bins})
+  203:     return evaluados, candidatas
+  204: 
+  205: 
+  206: def main():
+  207:     ap = argparse.ArgumentParser(description="Señal en vivo Polymarket · @elonmusk")
+  208:     ap.add_argument("--csv", default="datos_elon.csv", help="CSV de tweets (por defecto datos_elon.csv)")
+  ---
+  212:     ap.add_argument("--avg7", type=float, default=None, help="override AVG7 (pruebas)")
+  213:     ap.add_argument("--v2", type=float, default=None, help="override V2 (pruebas)")
+  214:     ap.add_argument("--t0", type=int, default=-1, help="override tweets ya publicados en la ventana (-1 = automático)")
+  215:     ap.add_argument("--sin-reposts", action="store_true", help="excluir reposts")
+  216:     args = ap.parse_args()
+  217: 
+  218:     # ---------------------------------------------------------- 1) tweets
+  219:     if args.recoger:
+  220:         print("[1/4] Refrescando datos de tweets…")
+  221:         subprocess.run([sys.executable, "recoger_tweets.py", "--fuente", "jina"], check=False)
+  ---
+  266:                                     t0_override=args.t0)
+  267:     for ev in evaluados:
+  268:         print(f"■ {ev['titulo']}  [{ev['tipo']}]")
+  269:         print(f"  ventana: {ev['inicio'].astimezone(ET).strftime('%m-%d %H:%M %Z')} → "
+  270:               f"{ev['fin'].astimezone(ET).strftime('%m-%d %H:%M %Z')}  ·  "
+  271:               f"ahora: {ahora.astimezone(ET).strftime('%m-%d %H:%M %Z')}")
+  272:         etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+  273:         print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+  274:               f"· tweets ya en ventana (T0): {ev['t0']}")
+  275:         print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+  ---
+  267:     for ev in evaluados:
+  268:         print(f"■ {ev['titulo']}  [{ev['tipo']}]")
+  269:         print(f"  ventana: {ev['inicio'].astimezone(ET).strftime('%m-%d %H:%M %Z')} → "
+  270:               f"{ev['fin'].astimezone(ET).strftime('%m-%d %H:%M %Z')}  ·  "
+  271:               f"ahora: {ahora.astimezone(ET).strftime('%m-%d %H:%M %Z')}")
+  272:         etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+  273:         print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+  274:               f"· tweets ya en ventana (T0): {ev['t0']}")
+  275:         print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+  276:         for b in ev["bins"]:
+  ---
+  270:               f"{ev['fin'].astimezone(ET).strftime('%m-%d %H:%M %Z')}  ·  "
+  271:               f"ahora: {ahora.astimezone(ET).strftime('%m-%d %H:%M %Z')}")
+  272:         etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+  273:         print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+  274:               f"· tweets ya en ventana (T0): {ev['t0']}")
+  275:         print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+  276:         for b in ev["bins"]:
+  277:             cy = ("{:.2f}".format(b['cuota_yes']) if b['cuota_yes'] else '—')
+  278:             cn = ("{:.2f}".format(b['cuota_no']) if b['cuota_no'] else '—')
+  279:             print("  {:<10}{:>10.1%}{:>9.3f}{:>8}{:>8}   {}".format(
+  ---
+  271:               f"ahora: {ahora.astimezone(ET).strftime('%m-%d %H:%M %Z')}")
+  272:         etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+  273:         print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+  274:               f"· tweets ya en ventana (T0): {ev['t0']}")
+  275:         print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+  276:         for b in ev["bins"]:
+  277:             cy = ("{:.2f}".format(b['cuota_yes']) if b['cuota_yes'] else '—')
+  278:             cn = ("{:.2f}".format(b['cuota_no']) if b['cuota_no'] else '—')
+  279:             print("  {:<10}{:>10.1%}{:>9.3f}{:>8}{:>8}   {}".format(
+  280:                 b['titulo'], b['p_modelo'], b['precio_yes'], cy, cn, b['veredicto']))
+  ---
+  272:         etiq = f"λ48={lam48:.1f}" if ev['tipo'] == "48h" else f"λ7={7*avg7*ajuste:.1f}"
+  273:         print(f"  {etiq} → λ restante={ev['lam_rest']:.1f} · horas restantes: {ev['horas_rest']:.1f} "
+  274:               f"· tweets ya en ventana (T0): {ev['t0']}")
+  275:         print(f"  {'bin':<10}{'p_modelo':>10}{'precio':>9}{'cuotaY':>8}{'cuotaN':>8}   veredicto")
+  276:         for b in ev["bins"]:
+  277:             cy = ("{:.2f}".format(b['cuota_yes']) if b['cuota_yes'] else '—')
+  278:             cn = ("{:.2f}".format(b['cuota_no']) if b['cuota_no'] else '—')
+  279:             print("  {:<10}{:>10.1%}{:>9.3f}{:>8}{:>8}   {}".format(
+  280:                 b['titulo'], b['p_modelo'], b['precio_yes'], cy, cn, b['veredicto']))
+  281:         print()
+  ---
+
+=== REINICIANDO SERVICIOS (modo real en pausa - solo recarga modulos) ===
+  poly-elon: OK
+  poly-semanal: OK
+  poly-mensual: OK
+  poly-zelenskyy: OK
+
+=== ESTADO ===
+  poly-elon: active
+  poly-zelenskyy: active
