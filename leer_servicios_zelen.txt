@@ -1,0 +1,83 @@
+--- /etc/systemd/system/poly-salud-zelen.service ---
+[Unit]
+Description=Chequeo de salud Zelenskyy (bot-poly)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/polymarket.env
+Environment=ZELEN_BOT_TOKEN=8945807929:AAHU9mmI6yLi8-e99sOFwSxmYqhzw7AV7J0
+ExecStart=/usr/bin/python3 /opt/polymarket/check_salud.py --zelen
+StandardOutput=append:/var/log/poly-salud-zelen.log
+StandardError=append:/var/log/poly-salud-zelen.log
+--- /etc/systemd/system/poly-fantasmas-zelen.service ---
+[Unit]
+Description=Comprobación de posiciones fantasma de Zelenskyy (auto-reparación)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/polymarket.env
+Environment=ZELEN_BOT_TOKEN=8945807929:AAHU9mmI6yLi8-e99sOFwSxmYqhzw7AV7J0
+ExecStart=/usr/bin/python3 /opt/polymarket/check_integral.py --solo-fantasmas --zelen --fix
+StandardOutput=append:/var/log/poly-fantasmas-zelen.log
+StandardError=append:/var/log/poly-fantasmas-zelen.log
+--- /etc/systemd/system/poly-test-diario-zelen.service ---
+[Unit]
+Description=Test integral diario de Zelenskyy (detección y auto-reparación)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/polymarket.env
+Environment=ZELEN_BOT_TOKEN=8945807929:AAHU9mmI6yLi8-e99sOFwSxmYqhzw7AV7J0
+ExecStart=/usr/bin/python3 /opt/polymarket/check_integral.py --zelen --fix
+StandardOutput=append:/var/log/poly-test-diario-zelen.log
+StandardError=append:/var/log/poly-test-diario-zelen.log
+--- /etc/systemd/system/poly-salud-diario.service ---
+[Unit]
+Description=Informe de salud diario Polymarket (08:00 y 22:00 Madrid)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/polymarket.env
+ExecStart=/usr/bin/python3 /opt/polymarket/check_salud.py --test
+StandardOutput=append:/var/log/poly-salud-diario.log
+StandardError=append:/var/log/poly-salud-diario.log
+
+--- gestionar_posiciones.py (primeras 30 lineas) ---
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Gestor de cierre anticipado de posiciones de Elon en Polymarket.
+
+Cada N minutos:
+  1. Lee las posiciones ABIERTAS de Elon del data-api.
+  2. Para cada una, proyecta los tweets al final de la ventana usando el
+     ritmo real de publicación (datos_elon.csv).
+  3. Si la proyección queda FUERA del margen apostado (bin), vende la
+     posición: en positivo si el precio actual lo permite, o con la
+     mínima pérdida (mejor salir que esperar a 0).
+
+Reglas de seguridad:
+  - No se vende en las últimas 2 horas de la ventana (se deja resolver).
+  - Margen de tolerancia: no se cierra si la proyección roza el borde.
+  - Solo gestiona posiciones de Elon Musk (las demás no se tocan).
+
+Uso:
+  python3 gestionar_posiciones.py --dry      # simula (no vende)
+  python3 gestionar_posiciones.py --loop N   # bucle cada N minutos
+"""
+import json
+import re
+import subprocess
+import sys
+import time
+import urllib.parse
+import urllib.request
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
