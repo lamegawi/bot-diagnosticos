@@ -1,0 +1,108 @@
+== backup_github.sh COMPLETO ==
+#!/bin/bash
+# Backup SEMANAL del CÓDIGO de los bots (bot-poly) a GitHub (repo privado).
+# Sube solo código y configs NO secretos. NUNCA: tokens, claves, sesiones,
+# bases de datos, Excel ni estado de trading.
+set -e
+TOKEN_FILE=/root/.gh_backup_token
+REPO_USER=lamegawi
+REPO_NAME=bot-trading-bitget-demo
+BRANCH=main
+WORK=/root/gh_backup
+STAMP=$(date +%Y%m%d_%H%M)
+
+[ -f "$TOKEN_FILE" ] || { echo "falta $TOKEN_FILE"; exit 1; }
+TOKEN=$(cat "$TOKEN_FILE")
+URL="https://x-access-token:${TOKEN}@github.com/${REPO_USER}/${REPO_NAME}.git"
+
+mkdir -p "$WORK"; cd "$WORK"
+if [ -d .git ]; then
+    git remote set-url origin "$URL"
+    git fetch --quiet origin "$BRANCH"
+    git reset --quiet --hard "origin/$BRANCH" 2>/dev/null || true
+else
+    git clone --quiet "$URL" .
+fi
+
+# ---- snapshot bot-poly ----
+SNAP="$WORK/backup-bots/bot-poly"
+rm -rf "$SNAP"; mkdir -p "$SNAP"
+
+# scripts principales de /opt/polymarket
+mkdir -p "$SNAP/polymarket"
+tar -C /opt/polymarket \
+    --exclude='__pycache__' --exclude='*.pyc' \
+    --exclude='bot-polymarket-*' --exclude='*.json' --exclude='*.log' \
+    --exclude='*.db' --exclude='*.xlsx' --exclude='*.csv' \
+    -cf - . | tar -C "$SNAP/polymarket" -xf -
+# motores.json (documentación de versiones) sí interesa
+[ -f /opt/polymarket/motores/motores.json ] && mkdir -p "$SNAP/motores" && cp /opt/polymarket/motores/motores.json "$SNAP/motores/"
+
+# código de los bots (elon, semanal, mensual, zelenskyy) — sin secretos ni estado
+mkdir -p "$SNAP/bots"
+for b in bot-polymarket-elon bot-polymarket-elon-semanal bot-polymarket-elon-mensual bot-polymarket-zelenskyy; do
+    mkdir -p "$SNAP/bots/$b"
+    tar -C "/opt/polymarket/$b" \
+        --exclude='__pycache__' --exclude='*.pyc' --exclude='.git' \
+        --exclude='config.json' --exclude='config_real.json' \
+        --exclude='*.db' --exclude='*.csv' --exclude='*.xlsx' --exclude='*.zip' \
+        --exclude='real*.json' --exclude='estado_tweets*.json' --exclude='estado_bot*.json' \
+        --exclude='mercado_activo.json' --exclude='ventanas_vistas.json' \
+        --exclude='apuestas_compartidas.json' --exclude='avisos_cooldown.json' \
+        --exclude='datos_raw' --exclude='debug_ocr' --exclude='*.log' \
+        -cf - . | tar -C "$SNAP/bots/$b" -xf -
+done
+
+# unidades systemd
+mkdir -p "$SNAP/systemd"
+for u in /etc/systemd/system/poly-*.{service,timer}; do
+    [ -f "$u" ] && cp "$u" "$SNAP/systemd/"
+done
+
+# resumen de tareas y horarios
+systemctl list-timers --all --no-pager > "$SNAP/tareas_horarios.txt" 2>/dev/null
+
+# ---- commit y push ----
+cd "$WORK"
+git add -A backup-bots/bot-poly
+if git diff --cached --quiet; then
+    echo "bot-poly: sin cambios"
+else
+    git -c user.name="backup-bot" -c user.email="backup@local" commit --quiet -m "backup bot-poly $STAMP"
+    git push --quiet "$URL" "HEAD:$BRANCH"
+    echo "bot-poly: push OK ($STAMP)"
+fi
+
+== backup_poly.sh COMPLETO ==
+#!/bin/bash
+# BACKUP POLY (compacto) - codigo+datos sin secretos, sube a GitHub
+REPO=/root/bots-repo
+BASE=/opt/polymarket
+DEST="$REPO/poly"
+mkdir -p "$DEST/codigo" "$DEST/datos"
+cp "$BASE"/*.py "$DEST/codigo/" 2>/dev/null
+for r in bot-polymarket-elon bot-polymarket-elon-semanal bot-polymarket-elon-mensual bot-polymarket-zelenskyy; do
+    mkdir -p "$DEST/codigo/$r"
+    cp "$BASE/$r"/*.py "$BASE/$r"/datos_*.csv "$DEST/codigo/$r/" 2>/dev/null
+done
+cp /root/recolector_poly.sh /root/enviar_poly.sh "$DEST/codigo/" 2>/dev/null
+cp "$BASE"/cierres_anticipados.json "$BASE"/motores/motores.json "$DEST/datos/" 2>/dev/null
+{
+    echo "# POLY $(date -u '+%F %H:%M UTC')"
+    for s in poly-elon poly-semanal poly-mensual poly-zelenskyy poly-telegram; do
+        echo "- $s: $(systemctl is-active $s.service)"
+    done
+    tail -10 "$BASE/bot-polymarket-elon/datos_elon.csv" 2>/dev/null
+    grep "jina-tw" "$BASE/bot-polymarket-elon/bot.log" 2>/dev/null | tail -3
+} > "$DEST/ESTADO.md"
+cd "$REPO"
+git add -A 2>/dev/null
+git -c user.name=backup -c user.email=b@b commit -m "backup poly $(date -u '+%F')" >/dev/null 2>&1
+git pull --rebase origin 2>/dev/null
+git push origin HEAD 2>/dev/null && echo "OK: subido a GitHub." || echo "AVISO: push fallo"
+
+== .gh_backup_token existe? ==
+SI (93 bytes)
+
+== crontabs relacionados con backup ==
+30 4 * * * /bin/bash /root/backup_poly.sh >> /root/backup_poly.log 2>&1
